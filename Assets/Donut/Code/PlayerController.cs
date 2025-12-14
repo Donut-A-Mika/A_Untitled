@@ -56,12 +56,18 @@ public class PlayerController : MonoBehaviour
                 Jump();
                 hasDoubleJumped = false;
             }
-            else if (!hasDoubleJumped)
+            else
             {
-                StartGlide();
+                if (isGliding)
+                {
+                    CancelGlide();     // ✅ กดยกเลิกบิน
+                }
+                else if (!hasDoubleJumped)
+                {
+                    StartGlide();     // เริ่มบิน
+                }
             }
         }
-
         HandleGlide();
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && CanDash())
@@ -146,6 +152,11 @@ public class PlayerController : MonoBehaviour
         hasDoubleJumped = true;
         isGliding = true;
         glideTimer = maxGlideTime;
+    }
+    void CancelGlide()
+    {
+        isGliding = false;
+        glideTimer = 0f;
     }
     IEnumerator Dash()
     {

@@ -5,7 +5,7 @@ public class ThirdPersonCamera : MonoBehaviour
     public Transform player;
     public float mouseSensitivity = 3f;
     public float minPitch = -10f;   // ก้ม
-    public float maxPitch = 30f;    // เงย
+    public float maxPitch = 10f;    // เงย
 
     private float xRotation = 0f;
     private float yRotation = 0f;
