@@ -68,6 +68,7 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
+
         HandleGlide();
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && CanDash())
