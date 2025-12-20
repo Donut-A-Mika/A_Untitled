@@ -10,9 +10,9 @@ public class Health : MonoBehaviour
         currentHealth = maxHealth;
     }
 
-    public void TakeDamage(float amount)
+    public void TakeDamage(float damage)
     {
-        currentHealth -= amount;
+        currentHealth -= damage;
         Debug.Log(gameObject.name + " เลือดเหลือ: " + currentHealth);
 
         if (currentHealth <= 0)
