@@ -1,39 +1,19 @@
 ﻿using UnityEngine;
 
-public class RangedWeapon : MonoBehaviour
+public class RangedWeapon : MonoBehaviour, IWeapon
 {
-    public GameObject bulletPrefab; // เช็คว่าลากไฟล์กระสุนมาใส่ในช่องนี้หรือยัง
-    public Transform firePoint;     // เช็คว่าลากจุดปลายกระบอกปืนมาใส่หรือยัง
+    public GameObject bulletPrefab;
+    public Transform firePoint;
     public float bulletForce = 20f;
 
-    void Update()
+    public void Attack()
     {
-        // ต้องมีส่วนนี้เพื่อให้ปืน "ฟัง" คำสั่งคลิกเมาส์
-        if (Input.GetButtonDown("Fire1"))
+        Debug.Log("ยิงปืน!");
+        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        Rigidbody rb = bullet.GetComponent<Rigidbody>();
+        if (rb != null)
         {
-            Shoot();
-        }
-    }
-
-    public void Shoot()
-    {
-        if (bulletPrefab != null && firePoint != null)
-        {
-            // สร้างกระสุน
-            GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-
-            // สั่งให้กระสุนพุ่งไป
-            Rigidbody rb = bullet.GetComponent<Rigidbody>();
-            if (rb != null)
-            {
-                rb.AddForce(firePoint.forward * bulletForce, ForceMode.Impulse);
-            }
-
-            Debug.Log("ยิงกระสุนออกไปแล้ว!");
-        }
-        else
-        {
-            Debug.LogWarning("ลืมใส่ Bullet Prefab หรือ Fire Point หรือเปล่า?");
+            rb.AddForce(firePoint.forward * bulletForce, ForceMode.Impulse);
         }
     }
 }

@@ -39,6 +39,11 @@ public class PlayerController : MonoBehaviour
     private Vector3 moveInput;
     private bool isGrounded;
 
+    [Header("Weapon System")]
+    public GameObject currentWeaponObject; // อาวุธที่ติดตั้งอยู่ปัจจุบัน
+    private IWeapon currentWeaponInterface;
+    public WeaponManager weaponSwitcher;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -67,6 +72,11 @@ public class PlayerController : MonoBehaviour
                     StartGlide();     // เริ่มบิน
                 }
             }
+        }
+
+        if (Input.GetButtonDown("Fire1"))
+        {
+            TryUseWeapon();
         }
 
         HandleGlide();
@@ -188,6 +198,40 @@ public class PlayerController : MonoBehaviour
         {
             isGliding = false;
             hasDoubleJumped = false;
+        }
+    }
+    void TryUseWeapon()
+    {
+        if (weaponSwitcher != null && weaponSwitcher.currentWeapon != null)
+        {
+            IWeapon weapon = weaponSwitcher.currentWeapon.GetComponent<IWeapon>();
+            if (weapon != null)
+            {
+                Debug.Log("สั่งโจมตีไปที่: " + weaponSwitcher.currentWeapon.name);
+                weapon.Attack();
+            }
+            else
+            {
+                Debug.LogError("อาวุธที่ถืออยู่ไม่มี Script ที่เป็น IWeapon!");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("ไม่มีอาวุธติดตั้งอยู่ หรือลืมลาก WeaponManager ใส่ Player");
+        }
+    }
+
+    void TryAttack()
+    {
+        // เช็คเงื่อนไขพิเศษ เช่น ห้ามยิงขณะ Dash
+        if (isDashing) return;
+
+        // หา Component อาวุธในวัตถุที่ถืออยู่
+        currentWeaponInterface = currentWeaponObject.GetComponent<IWeapon>();
+
+        if (currentWeaponInterface != null)
+        {
+            currentWeaponInterface.Attack();
         }
     }
 }
