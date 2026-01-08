@@ -16,8 +16,6 @@ public class PlayerController : MonoBehaviour
 
     [Header("Camera Flight Control")]
     public float flightVerticalSpeed = 4f;
-    public float maxUpAngle = 60f;
-    public float maxDownAngle = -45f;
 
     [Header("Rotation")]
     public float rotationSpeed = 10f;
@@ -136,25 +134,18 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        Camera cam = Camera.main;
-
-        // มุมก้มเงยของกล้อง
-        float pitch = cam.transform.eulerAngles.x;
-        if (pitch > 180) pitch -= 360; // แปลงเป็น -180 ถึง 180
-
-        // จำกัดมุม
-        float clampedPitch = Mathf.Clamp(pitch, maxDownAngle, maxUpAngle);
-
-        // แปลงมุม → แรงขึ้นลง
-        float verticalInput = -clampedPitch / maxUpAngle;
-
         Vector3 velocity = rb.linearVelocity;
 
-        // คุมการบินขึ้นลงตามกล้อง
-        velocity.y = verticalInput * flightVerticalSpeed;
-
-        // ยังมีแรงร่อนอยู่
-        velocity += Vector3.up * Physics.gravity.y * (1 - glideGravityMultiplier) * Time.deltaTime;
+        if (Input.GetKey(KeyCode.Space))
+        {
+            // ✅ กดค้าง = ลอยขึ้น
+            velocity.y = flightVerticalSpeed;
+        }
+        else
+        {
+            // ✅ ปล่อย = ค่อย ๆ ร่อนลง
+            velocity.y += Physics.gravity.y * glideGravityMultiplier * Time.deltaTime;
+        }
 
         rb.linearVelocity = velocity;
     }
