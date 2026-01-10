@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class Playstate
 {
-    public GameObject gunslot1;
-    public GameObject gunslot2;
-    public GameObject gunslot3;
-    public GameObject gunslot4;
-    public GameObject robotType;
+    public static GameObject gunslot1;
+    public static GameObject gunslot2;
+    public static GameObject gunslot3;
+    public static GameObject gunslot4;
+    public static GameObject robotType;
 }

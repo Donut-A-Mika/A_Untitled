@@ -10,6 +10,8 @@ public class Customization : MonoBehaviour
     public GameObject Gun3;
     public GameObject Gun4;
 
+    
+
     private int slotGun1 = 0;
     private int slotGun2 = 0;
     private int slotGun3 = 0;
@@ -18,7 +20,18 @@ public class Customization : MonoBehaviour
 
 
 
-
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            Debug.Log("Player");
+            Debug.Log("gunslot1" + Playstate.gunslot1.name);
+            Debug.Log("gunslot2" + Playstate.gunslot2.name);
+            Debug.Log("gunslot3" + Playstate.gunslot3.name);
+            Debug.Log("gunslot4" + Playstate.gunslot4.name);
+            //Debug.Log("robotType" + Playstate.robotType.name);
+        }  
+    }
     // Update is called once per frame
     void previview(int slot)
     {
@@ -48,7 +61,7 @@ public class Customization : MonoBehaviour
                 Debug.Log("switch slotGun2", customePart[slotGun2]);
                 if (true)
                 {
-                    foreach (Transform child in Gun1.transform)
+                    foreach (Transform child in Gun2.transform)
                     {
 
                         Destroy(child.gameObject);
@@ -58,7 +71,7 @@ public class Customization : MonoBehaviour
                 {
 
 
-                    GameObject newChild = Instantiate(customePart[slotGun2], Gun1.transform);
+                    GameObject newChild = Instantiate(customePart[slotGun2], Gun2.transform);
 
                     // รีเซ็ตตำแหน่งให้อยู่ตรงกลางของตัวแม่ (ถ้าต้องการ)
                     newChild.transform.localPosition = Vector3.zero;
@@ -68,7 +81,7 @@ public class Customization : MonoBehaviour
                 Debug.Log("switch slotGun3", customePart[slotGun3]);
                 if (true)
                 {
-                    foreach (Transform child in Gun1.transform)
+                    foreach (Transform child in Gun3.transform)
                     {
 
                         Destroy(child.gameObject);
@@ -78,7 +91,7 @@ public class Customization : MonoBehaviour
                 {
 
 
-                    GameObject newChild = Instantiate(customePart[slotGun3], Gun1.transform);
+                    GameObject newChild = Instantiate(customePart[slotGun3], Gun3.transform);
 
                     // รีเซ็ตตำแหน่งให้อยู่ตรงกลางของตัวแม่ (ถ้าต้องการ)
                     newChild.transform.localPosition = Vector3.zero;
@@ -88,7 +101,7 @@ public class Customization : MonoBehaviour
                 Debug.Log("switch slotGun4", customePart[slotGun4]);
                 if (true)
                 {
-                    foreach (Transform child in Gun1.transform)
+                    foreach (Transform child in Gun4.transform)
                     {
 
                         Destroy(child.gameObject);
@@ -98,7 +111,7 @@ public class Customization : MonoBehaviour
                 {
 
 
-                    GameObject newChild = Instantiate(customePart[slotGun4], Gun1.transform);
+                    GameObject newChild = Instantiate(customePart[slotGun4], Gun4.transform);
 
                     // รีเซ็ตตำแหน่งให้อยู่ตรงกลางของตัวแม่ (ถ้าต้องการ)
                     newChild.transform.localPosition = Vector3.zero;
@@ -150,5 +163,35 @@ public class Customization : MonoBehaviour
         }
         previview(4);
     }
+    public void saveState ()
+    {
+        if (customePart[slotGun1] != null)
+        {
+            Playstate.gunslot1 = customePart[slotGun1];
+        }
+        if (customePart[slotGun2] != null)
+        {
+            Playstate.gunslot2 = customePart[slotGun2];
+        }
+        if (customePart[slotGun3] != null)
+        {
+            Playstate.gunslot3 = customePart[slotGun3];
+        }
+        if (customePart[slotGun4] != null)
+        {
+            Playstate.gunslot4 = customePart[slotGun4];
+        }
+        
+
+
+
+        Debug.Log("Player");
+        Debug.Log("gunslot1"+ Playstate.gunslot1.name);
+        Debug.Log("gunslot2"+ Playstate.gunslot2.name);
+        Debug.Log("gunslot3" + Playstate.gunslot3.name);
+        Debug.Log("gunslot4"+  Playstate.gunslot4.name);
+        //Debug.Log("robotType" + Playstate.robotType.name);
+    }
+
 
 }
