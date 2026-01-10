@@ -950,7 +950,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1875087479}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bb1734ee4600144aa53b61a241a36ed, type: 3}
+  m_Script: {fileID: 11500000, guid: 7fd6c6594939a9648aecbe8535037d61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAI
   agent: {fileID: 1875087482}

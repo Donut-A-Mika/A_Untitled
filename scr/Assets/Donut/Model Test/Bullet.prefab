@@ -150,8 +150,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 3486900916380485162}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3983b7b60941d5b4c889a3558cf054be, type: 3}
+  m_Script: {fileID: 11500000, guid: d4484bcd73c0c9d4db5b10c0908406d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Bullet
   damage: 10
-  lifeTime: 10
+  lifeTime: 20
