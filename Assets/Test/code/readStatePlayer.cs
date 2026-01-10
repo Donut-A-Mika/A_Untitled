@@ -31,24 +31,35 @@ public class readStatePlayer : MonoBehaviour
             //Debug.Log("robotType" + Playstate.robotType.name);
         }
     }
-    void setUpGun (GameObject gunsoulid , GameObject gunperfab)
+    void setUpGun(GameObject gunsoulid, GameObject gunperfab)
     {
-        if (true)
+        // 1. เช็คก่อนว่า Parameter ที่ส่งมามีค่าไหม (ป้องกัน Error)
+        if (gunsoulid == null || gunperfab == null)
         {
-            foreach (Transform child in gunsoulid.transform)
+            if (gunsoulid == null)
             {
-
-                Destroy(child.gameObject);
+                Debug.Log("gunsoulid == null");
             }
+            if (gunperfab == null)
+            {
+                Debug.Log("gunperfab == null");
+            }
+            Debug.LogWarning("ข้อมูลไม่ครบ: กรุณาใส่ทั้งจุดวางปืนและ Prefab ปืน");
+            return;
         }
-        if (gunperfab != null)
+
+        // 2. ลบลูกที่มีอยู่เดิมออกให้หมด
+        foreach (Transform child in gunsoulid.transform)
         {
-
-
-            GameObject newChild = Instantiate(gunperfab, gunsoulid.transform);
-
-            // รีเซ็ตตำแหน่งให้อยู่ตรงกลางของตัวแม่ (ถ้าต้องการ)
-            newChild.transform.localPosition = Vector3.zero;
+            // แนะนำให้ใช้ Destroy เฉยๆ ใน Play Mode
+            Destroy(child.gameObject);
         }
+
+        // 3. สร้างปืนใหม่เข้าไปเป็นลูก
+        GameObject newChild = Instantiate(gunperfab, gunsoulid.transform);
+
+        // 4. รีเซ็ตตำแหน่งและมุมหมุนให้ตรงตามตัวแม่
+        newChild.transform.localPosition = Vector3.zero;
+        newChild.transform.localRotation = Quaternion.identity; // เพิ่มบรรทัดนี้เพื่อให้ปืนไม่เอียง
     }
 }

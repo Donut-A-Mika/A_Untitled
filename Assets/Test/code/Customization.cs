@@ -1,4 +1,7 @@
+using NUnit.Framework.Internal;
+using Unity.VectorGraphics;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Customization : MonoBehaviour
 {
@@ -31,6 +34,10 @@ public class Customization : MonoBehaviour
             Debug.Log("gunslot4" + Playstate.gunslot4.name);
             //Debug.Log("robotType" + Playstate.robotType.name);
         }  
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            lordSreen();
+        }
     }
     // Update is called once per frame
     void previview(int slot)
@@ -163,35 +170,36 @@ public class Customization : MonoBehaviour
         }
         previview(4);
     }
-    public void saveState ()
+    public void saveState()
     {
         if (customePart[slotGun1] != null)
         {
-            Playstate.gunslot1 = customePart[slotGun1];
+            Playstate.SaveToPlaystate(customePart[slotGun1], 1);
         }
         if (customePart[slotGun2] != null)
         {
-            Playstate.gunslot2 = customePart[slotGun2];
+            Playstate.SaveToPlaystate(customePart[slotGun2], 2);
         }
         if (customePart[slotGun3] != null)
         {
-            Playstate.gunslot3 = customePart[slotGun3];
+            Playstate.SaveToPlaystate(customePart[slotGun3], 3);
         }
         if (customePart[slotGun4] != null)
         {
-            Playstate.gunslot4 = customePart[slotGun4];
+            Playstate.SaveToPlaystate(customePart[slotGun4], 4);
         }
-        
-
-
 
         Debug.Log("Player");
-        Debug.Log("gunslot1"+ Playstate.gunslot1.name);
-        Debug.Log("gunslot2"+ Playstate.gunslot2.name);
-        Debug.Log("gunslot3" + Playstate.gunslot3.name);
-        Debug.Log("gunslot4"+  Playstate.gunslot4.name);
-        //Debug.Log("robotType" + Playstate.robotType.name);
+        if (Playstate.gunslot1 != null) Debug.Log("gunslot1: " + Playstate.gunslot1.name);
+        if (Playstate.gunslot2 != null) Debug.Log("gunslot2: " + Playstate.gunslot2.name);
+        if (Playstate.gunslot3 != null) Debug.Log("gunslot3: " + Playstate.gunslot3.name);
+        if (Playstate.gunslot4 != null) Debug.Log("gunslot4: " + Playstate.gunslot4.name);
+        //if (Playstate.robotType != null) Debug.Log("robotType: " + Playstate.robotType.name);
     }
 
+    void lordSreen()
+    {
+        SceneManager.LoadScene("Test");
+    }
 
 }
