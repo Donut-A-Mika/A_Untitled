@@ -905,6 +905,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Health
   maxHealth: 1000
+--- !u!1 &1543512432
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1543512433}
+  m_Layer: 0
+  m_Name: SpawnPoint
+  m_TagString: Respawn
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1543512433
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1543512432}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.3537, y: 2.59, z: -3.24133}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1875087479
 GameObject:
   m_ObjectHideFlags: 0
@@ -1104,7 +1135,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6429088519451864308, guid: b7e86e63e95ea084fa3f13cada2acbeb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 1.61
       objectReference: {fileID: 0}
     - target: {fileID: 6429088519451864308, guid: b7e86e63e95ea084fa3f13cada2acbeb, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1157,3 +1188,4 @@ SceneRoots:
   - {fileID: 1014131546}
   - {fileID: 618478477}
   - {fileID: 1474944853}
+  - {fileID: 1543512433}

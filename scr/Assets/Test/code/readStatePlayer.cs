@@ -1,4 +1,4 @@
-using UnityEngine;
+๏ปฟusing UnityEngine;
 
 public class readStatePlayer : MonoBehaviour
 {
@@ -33,7 +33,7 @@ public class readStatePlayer : MonoBehaviour
     }
     void setUpGun(GameObject gunsoulid, GameObject gunperfab)
     {
-        // 1. เช็คก่อนว่า Parameter ที่ส่งมามีค่าไหม (ป้องกัน Error)
+        // 1. ร ยชรงยคยกรจรยนรรจร’ Parameter ยทร•รจรรจยงรร’รร•ยครจร’รครร (ยปรฉรยงยกร‘ยน Error)
         if (gunsoulid == null || gunperfab == null)
         {
             if (gunsoulid == null)
@@ -44,23 +44,23 @@ public class readStatePlayer : MonoBehaviour
             {
                 Debug.Log("gunperfab == null");
             }
-            Debug.LogWarning("ข้อมูลไม่ครบ: กรุณาใส่ทั้งจุดวางปืนและ Prefab ปืน");
+            Debug.LogWarning("ยขรฉรรรร…รครรจยครยบ: ยกรรยณร’รฃรรจยทร‘รฉยงยจรยดรร’ยงยปร—ยนรกร…ร Prefab ยปร—ยน");
             return;
         }
 
-        // 2. ลบลูกที่มีอยู่เดิมออกให้หมด
+        // 2. ร…ยบร…รยกยทร•รจรร•รรรรจร ยดร”รรรยกรฃรรฉรรยด
         foreach (Transform child in gunsoulid.transform)
         {
-            // แนะนำให้ใช้ Destroy เฉยๆ ใน Play Mode
+            // รกยนรยนร“รฃรรฉรฃยชรฉ Destroy ร ยฉรรฆ รฃยน Play Mode
             Destroy(child.gameObject);
         }
 
-        // 3. สร้างปืนใหม่เข้าไปเป็นลูก
+        // 3. รรรฉร’ยงยปร—ยนรฃรรรจร ยขรฉร’รคยปร ยปรงยนร…รยก
         GameObject newChild = Instantiate(gunperfab, gunsoulid.transform);
 
-        // 4. รีเซ็ตตำแหน่งและมุมหมุนให้ตรงตามตัวแม่
+        // 4. รร•ร ยซรงยตยตร“รกรยนรจยงรกร…รรรรรรรยนรฃรรฉยตรยงยตร’รยตร‘รรกรรจ
         newChild.transform.localPosition = Vector3.zero;
         //newChild.transform.localScale = Vector3.one;
-        //newChild.transform.localRotation = Quaternion.identity; // เพิ่มบรรทัดนี้เพื่อให้ปืนไม่เอียง
+        //newChild.transform.localRotation = Quaternion.identity; // ร ยพร”รจรยบรรยทร‘ยดยนร•รฉร ยพร—รจรรฃรรฉยปร—ยนรครรจร รร•รยง
     }
 }

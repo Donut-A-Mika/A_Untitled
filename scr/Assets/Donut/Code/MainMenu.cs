@@ -5,6 +5,10 @@ public class MainMenu : MonoBehaviour
 {
     public void PlayGame()
     {
+        SceneManager.LoadScene("Lodout");
+    }
+    public void GoGame()
+    {
         SceneManager.LoadScene("GameScene");
     }
 

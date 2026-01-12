@@ -1,4 +1,4 @@
-using NUnit.Framework.Internal;
+๏ปฟusing NUnit.Framework.Internal;
 using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -13,7 +13,7 @@ public class Customization : MonoBehaviour
     public GameObject Gun3;
     public GameObject Gun4;
 
-    
+
 
     private int slotGun1 = 0;
     private int slotGun2 = 0;
@@ -33,7 +33,7 @@ public class Customization : MonoBehaviour
             Debug.Log("gunslot3" + Playstate.gunslot3.name);
             Debug.Log("gunslot4" + Playstate.gunslot4.name);
             //Debug.Log("robotType" + Playstate.robotType.name);
-        }  
+        }
         if (Input.GetKeyDown(KeyCode.S))
         {
             lordSreen();
@@ -47,7 +47,7 @@ public class Customization : MonoBehaviour
             case 1:
                 Debug.Log("switch slotGun1 now ", customePart[slotGun1]);
                 if (true)
-                { 
+                {
                     foreach (Transform child in Gun1.transform)
                     {
 
@@ -60,7 +60,7 @@ public class Customization : MonoBehaviour
 
                     GameObject newChild = Instantiate(customePart[slotGun1], Gun1.transform);
 
-                    // รีเซ็ตตำแหน่งให้อยู่ตรงกลางของตัวแม่ (ถ้าต้องการ)
+                    // รร•ร ยซรงยตยตร“รกรยนรจยงรฃรรฉรรรรจยตรยงยกร…ร’ยงยขรยงยตร‘รรกรรจ (ยถรฉร’ยตรฉรยงยกร’ร)
                     newChild.transform.localPosition = Vector3.zero;
                 }
                 break;
@@ -80,7 +80,7 @@ public class Customization : MonoBehaviour
 
                     GameObject newChild = Instantiate(customePart[slotGun2], Gun2.transform);
 
-                    // รีเซ็ตตำแหน่งให้อยู่ตรงกลางของตัวแม่ (ถ้าต้องการ)
+                    // รร•ร ยซรงยตยตร“รกรยนรจยงรฃรรฉรรรรจยตรยงยกร…ร’ยงยขรยงยตร‘รรกรรจ (ยถรฉร’ยตรฉรยงยกร’ร)
                     newChild.transform.localPosition = Vector3.zero;
                 }
                 break;
@@ -100,7 +100,7 @@ public class Customization : MonoBehaviour
 
                     GameObject newChild = Instantiate(customePart[slotGun3], Gun3.transform);
 
-                    // รีเซ็ตตำแหน่งให้อยู่ตรงกลางของตัวแม่ (ถ้าต้องการ)
+                    // รร•ร ยซรงยตยตร“รกรยนรจยงรฃรรฉรรรรจยตรยงยกร…ร’ยงยขรยงยตร‘รรกรรจ (ยถรฉร’ยตรฉรยงยกร’ร)
                     newChild.transform.localPosition = Vector3.zero;
                 }
                 break;
@@ -120,7 +120,7 @@ public class Customization : MonoBehaviour
 
                     GameObject newChild = Instantiate(customePart[slotGun4], Gun4.transform);
 
-                    // รีเซ็ตตำแหน่งให้อยู่ตรงกลางของตัวแม่ (ถ้าต้องการ)
+                    // รร•ร ยซรงยตยตร“รกรยนรจยงรฃรรฉรรรรจยตรยงยกร…ร’ยงยขรยงยตร‘รรกรรจ (ยถรฉร’ยตรฉรยงยกร’ร)
                     newChild.transform.localPosition = Vector3.zero;
                 }
                 break;
@@ -130,11 +130,11 @@ public class Customization : MonoBehaviour
         }
     }
 
-    public void nextweaponslotGun1 ()
+    public void nextweaponslotGun1()
     {
         Debug.Log("slot 1 ");
         slotGun1++;
-        if (slotGun1 == customePart.Length )
+        if (slotGun1 == customePart.Length)
         {
             slotGun1 = 0;
         }
