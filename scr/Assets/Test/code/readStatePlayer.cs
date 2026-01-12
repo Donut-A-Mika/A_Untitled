@@ -60,6 +60,7 @@ public class readStatePlayer : MonoBehaviour
 
         // 4. รีเซ็ตตำแหน่งและมุมหมุนให้ตรงตามตัวแม่
         newChild.transform.localPosition = Vector3.zero;
-        newChild.transform.localRotation = Quaternion.identity; // เพิ่มบรรทัดนี้เพื่อให้ปืนไม่เอียง
+        //newChild.transform.localScale = Vector3.one;
+        //newChild.transform.localRotation = Quaternion.identity; // เพิ่มบรรทัดนี้เพื่อให้ปืนไม่เอียง
     }
 }
