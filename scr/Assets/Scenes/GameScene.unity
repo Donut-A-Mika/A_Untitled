@@ -1114,9 +1114,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 282c1a7aae52aa046bea4003a884a77c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAttack
-  damage: 10
-  attackRange: 1.5
-  attackCooldown: 1
 --- !u!1001 &3187618031642162429
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1128,6 +1125,10 @@ PrefabInstance:
     - target: {fileID: 2845605553315518285, guid: b7e86e63e95ea084fa3f13cada2acbeb, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 4412394120255090950, guid: b7e86e63e95ea084fa3f13cada2acbeb, type: 3}
+      propertyPath: mouseSensitivity
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 6429088519451864308, guid: b7e86e63e95ea084fa3f13cada2acbeb, type: 3}
       propertyPath: m_LocalPosition.x
