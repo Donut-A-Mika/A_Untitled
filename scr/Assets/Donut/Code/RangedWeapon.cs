@@ -5,7 +5,7 @@ public class RangedWeapon : MonoBehaviour, IWeapon
     public GameObject bulletPrefab;
     public Transform firePoint;
     public float bulletForce = 20f;
-
+    public Texture2D logo;
     public void Attack()
     {
         Debug.Log("ยิงปืน!");

@@ -2,6 +2,7 @@
 using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Customization : MonoBehaviour
 {
@@ -12,6 +13,11 @@ public class Customization : MonoBehaviour
     public GameObject Gun2;
     public GameObject Gun3;
     public GameObject Gun4;
+
+    public RawImage targetRawImageslotGun1;
+    public RawImage targetRawImageslotGun2;
+    public RawImage targetRawImageslotGun3;
+    public RawImage targetRawImageslotGun4;
 
 
 
@@ -36,97 +42,69 @@ public class Customization : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
+
             lordSreen();
         }
     }
     // Update is called once per frame
     void previview(int slot)
     {
+        GameObject parentObj = null;
+        RawImage currentUI = null; // เพิ่มตัวแปรเพื่อเก็บ RawImage ที่จะเปลี่ยน
+        int currentSlotIndex = 0;
+
+        // เลือก Parent, Index และ UI ให้ตรงกับ Slot ที่ส่งมา
         switch (slot)
         {
             case 1:
-                Debug.Log("switch slotGun1 now ", customePart[slotGun1]);
-                if (true)
-                {
-                    foreach (Transform child in Gun1.transform)
-                    {
-
-                        Destroy(child.gameObject);
-                    }
-                }
-                if (customePart[slotGun1] != null)
-                {
-
-
-                    GameObject newChild = Instantiate(customePart[slotGun1], Gun1.transform);
-
-                    // ÃÕà«çµµÓáË¹è§ãËéÍÂÙèµÃ§¡ÅÒ§¢Í§µÑÇáÁè (¶éÒµéÍ§¡ÒÃ)
-                    newChild.transform.localPosition = Vector3.zero;
-                }
+                parentObj = Gun1;
+                currentUI = targetRawImageslotGun1;
+                currentSlotIndex = slotGun1;
                 break;
             case 2:
-                Debug.Log("switch slotGun2", customePart[slotGun2]);
-                if (true)
-                {
-                    foreach (Transform child in Gun2.transform)
-                    {
-
-                        Destroy(child.gameObject);
-                    }
-                }
-                if (customePart[slotGun2] != null)
-                {
-
-
-                    GameObject newChild = Instantiate(customePart[slotGun2], Gun2.transform);
-
-                    // ÃÕà«çµµÓáË¹è§ãËéÍÂÙèµÃ§¡ÅÒ§¢Í§µÑÇáÁè (¶éÒµéÍ§¡ÒÃ)
-                    newChild.transform.localPosition = Vector3.zero;
-                }
+                parentObj = Gun2;
+                currentUI = targetRawImageslotGun2;
+                currentSlotIndex = slotGun2;
                 break;
             case 3:
-                Debug.Log("switch slotGun3", customePart[slotGun3]);
-                if (true)
-                {
-                    foreach (Transform child in Gun3.transform)
-                    {
-
-                        Destroy(child.gameObject);
-                    }
-                }
-                if (customePart[slotGun3] != null)
-                {
-
-
-                    GameObject newChild = Instantiate(customePart[slotGun3], Gun3.transform);
-
-                    // ÃÕà«çµµÓáË¹è§ãËéÍÂÙèµÃ§¡ÅÒ§¢Í§µÑÇáÁè (¶éÒµéÍ§¡ÒÃ)
-                    newChild.transform.localPosition = Vector3.zero;
-                }
+                parentObj = Gun3;
+                currentUI = targetRawImageslotGun3;
+                currentSlotIndex = slotGun3;
                 break;
             case 4:
-                Debug.Log("switch slotGun4", customePart[slotGun4]);
-                if (true)
-                {
-                    foreach (Transform child in Gun4.transform)
-                    {
-
-                        Destroy(child.gameObject);
-                    }
-                }
-                if (customePart[slotGun4] != null)
-                {
-
-
-                    GameObject newChild = Instantiate(customePart[slotGun4], Gun4.transform);
-
-                    // ÃÕà«çµµÓáË¹è§ãËéÍÂÙèµÃ§¡ÅÒ§¢Í§µÑÇáÁè (¶éÒµéÍ§¡ÒÃ)
-                    newChild.transform.localPosition = Vector3.zero;
-                }
+                parentObj = Gun4;
+                currentUI = targetRawImageslotGun4;
+                currentSlotIndex = slotGun4;
                 break;
-            default:
-                Debug.Log("Default case (no match)");
-                break;
+        }
+
+        if (parentObj == null || currentUI == null) return;
+
+        // 1. ลบ Model เก่าใน Scene ออก
+        foreach (Transform child in parentObj.transform)
+        {
+            Destroy(child.gameObject);
+        }
+
+        // 2. ตรวจสอบข้อมูลใน Array
+        if (customePart[currentSlotIndex] != null)
+        {
+            // 3. สร้าง Model ใหม่ใน Scene
+            GameObject newChild = Instantiate(customePart[currentSlotIndex], parentObj.transform);
+            newChild.transform.localPosition = Vector3.zero;
+
+            // 4. ดึงสคริปต์ RangedWeapon จากตัวที่เพิ่งสร้าง
+            RangedWeapon weaponScript = newChild.GetComponent<RangedWeapon>();
+
+            if (weaponScript != null)
+            {
+                // เปลี่ยนรูปใน RawImage ของ Slot นั้นๆ ให้เป็น logo ของอาวุธ
+                currentUI.texture = weaponScript.logo;
+            }
+            else
+            {
+                Debug.LogWarning(newChild.name + " ไม่มีสคริปต์ RangedWeapon!");
+            }
         }
     }
 

@@ -139,6 +139,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 3486900916380485162, guid: 4115090176a5e31488e25c95b6118c8b, type: 3}
   firePoint: {fileID: 3934778837261150165}
   bulletForce: 20
+  logo: {fileID: 2800000, guid: 7cd326c68b760e744950ae0362857d71, type: 3}
 --- !u!1001 &6907425910127323481
 PrefabInstance:
   m_ObjectHideFlags: 0
