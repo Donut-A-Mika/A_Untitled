@@ -33,6 +33,8 @@ public class PlayerController : MonoBehaviour
     public float groundDistance = 0.3f;
     public LayerMask groundMask;
 
+    public Animator animatorPlayer;
+
     private Rigidbody rb;
     private Vector3 moveInput;
     private bool isGrounded;
@@ -45,6 +47,10 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        if (animatorPlayer != null)
+        {
+            animatorPlayer = GetComponent<Animator>();
+        }
     }
 
     void Update()
@@ -200,6 +206,10 @@ public class PlayerController : MonoBehaviour
             {
                 Debug.Log("สั่งโจมตีไปที่: " + weaponSwitcher.currentWeapon.name);
                 weapon.Attack();
+                if (animatorPlayer != null)
+                {
+                    animatorPlayer.SetTrigger("attack");
+                }
             }
             else
             {
