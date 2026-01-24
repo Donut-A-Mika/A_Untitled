@@ -177,7 +177,7 @@ public class Customization : MonoBehaviour
 
     void lordSreen()
     {
-        SceneManager.LoadScene("Test");
+        SceneManager.LoadScene("GameScene");
     }
 
 }
