@@ -140,6 +140,12 @@ MonoBehaviour:
   firePoint: {fileID: 3934778837261150165}
   bulletForce: 20
   logo: {fileID: 2800000, guid: ce622cd50c2df6642adf0a56d43cb07c, type: 3}
+  currentMode: 1
+  fireRate: 10
+  burstCount: 3
+  useShotgunSpread: 0
+  pelletsCount: 8
+  spreadAmount: 0.1
 --- !u!1001 &3471870906067645711
 PrefabInstance:
   m_ObjectHideFlags: 0

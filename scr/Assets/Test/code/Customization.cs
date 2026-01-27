@@ -11,13 +11,13 @@ public class Customization : MonoBehaviour
 
     public GameObject Gun1;
     public GameObject Gun2;
-    public GameObject Gun3;
-    public GameObject Gun4;
+    private GameObject Gun3;
+    private GameObject Gun4;
 
     public RawImage targetRawImageslotGun1;
     public RawImage targetRawImageslotGun2;
-    public RawImage targetRawImageslotGun3;
-    public RawImage targetRawImageslotGun4;
+    private RawImage targetRawImageslotGun3;
+    private RawImage targetRawImageslotGun4;
 
 
 
