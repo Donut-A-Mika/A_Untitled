@@ -2,6 +2,9 @@
 using System.Collections;
 public class PlayerController : MonoBehaviour
 {
+    public Transform cameraTransform;
+    public float rotateSpeed = 10f;
+
     [Header("Movement")]
     public float moveSpeed = 6f;
 
@@ -57,6 +60,7 @@ public class PlayerController : MonoBehaviour
     {
         CheckGround();
         GetInput();
+        RotatePlayerToCamera();
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -234,5 +238,21 @@ public class PlayerController : MonoBehaviour
         {
             currentWeaponInterface.Attack();
         }
+    }
+    void RotatePlayerToCamera()
+    {
+        Vector3 camForward = cameraTransform.forward;
+        camForward.y = 0f; // ❗ ตัดการเงย/ก้ม
+        camForward.Normalize();
+
+        if (camForward.magnitude < 0.1f)
+            return;
+
+        Quaternion targetRotation = Quaternion.LookRotation(camForward);
+        transform.rotation = Quaternion.Slerp(
+            transform.rotation,
+            targetRotation,
+            rotateSpeed * Time.deltaTime
+        );
     }
 }

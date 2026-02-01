@@ -47,7 +47,6 @@ GameObject:
   - component: {fileID: 3127635363727907021}
   - component: {fileID: 9079107520333996185}
   - component: {fileID: 6114734865765841232}
-  - component: {fileID: 4580560130502167367}
   - component: {fileID: 8103032573202966035}
   m_Layer: 0
   m_Name: Player
@@ -71,8 +70,6 @@ Transform:
   m_Children:
   - {fileID: 3420581334846765552}
   - {fileID: 8535549939344980661}
-  - {fileID: 1958178623692627671}
-  - {fileID: 3995872904537555427}
   - {fileID: 8073155142823730492}
   - {fileID: 101810263713007433}
   - {fileID: 5552573799856795280}
@@ -242,33 +239,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WeaponManager
   weaponSlot1: {fileID: 3420581334846765552}
   weaponSlot2: {fileID: 8535549939344980661}
-  weaponSlot3: {fileID: 1958178623692627671}
-  weaponSlot4: {fileID: 3995872904537555427}
   currentWeapon: {fileID: 0}
---- !u!114 &4580560130502167367
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2845605553315518285}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a28742fc8241b4d4c8df2fc666ec03b8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Customization
-  customePart:
-  - {fileID: 0}
-  - {fileID: 3585573940298008246, guid: 4af4b09d741983e4abcb7e9e0b4ed0a2, type: 3}
-  - {fileID: 6138300021332112147, guid: ad4d167942355d84ab390e6dedbe134f, type: 3}
-  Gun1: {fileID: 8251284803453491621}
-  Gun2: {fileID: 4405212782604411423}
-  Gun3: {fileID: 9214983037197455942}
-  Gun4: {fileID: 4173691012242062597}
-  targetRawImageslotGun1: {fileID: 0}
-  targetRawImageslotGun2: {fileID: 0}
-  targetRawImageslotGun3: {fileID: 0}
-  targetRawImageslotGun4: {fileID: 0}
 --- !u!114 &8103032573202966035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -312,37 +283,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6429088519451864308}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &4173691012242062597
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3995872904537555427}
-  m_Layer: 0
-  m_Name: WeaponSold4
-  m_TagString: Untagged
-  m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3995872904537555427
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4173691012242062597}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.9863999, y: -0.11420827, z: 0}
-  m_LocalScale: {x: 1, y: 0.6288945, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 6429088519451864308}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4405212782604411423
 GameObject:
   m_ObjectHideFlags: 0
@@ -368,7 +308,7 @@ Transform:
   m_GameObject: {fileID: 4405212782604411423}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.176, y: -0.11420827, z: 0}
+  m_LocalPosition: {x: -1.096, y: -0.048, z: 0}
   m_LocalScale: {x: 1, y: 0.6288945, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -430,38 +370,7 @@ Transform:
   m_GameObject: {fileID: 8251284803453491621}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.176, y: 0.6189693, z: 0}
-  m_LocalScale: {x: 1, y: 0.6288945, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 6429088519451864308}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &9214983037197455942
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1958178623692627671}
-  m_Layer: 0
-  m_Name: WeaponSold3
-  m_TagString: Untagged
-  m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1958178623692627671
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9214983037197455942}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.98639965, y: 0.6189693, z: 0}
+  m_LocalPosition: {x: 1.07, y: -0.045030653, z: 0}
   m_LocalScale: {x: 1, y: 0.6288945, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

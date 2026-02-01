@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class Health : MonoBehaviour
 {
     public float maxHealth = 100f;
     private float currentHealth;
+
+    public Action onDeath;   // ⭐ เพิ่มบรรทัดนี้
 
     [Header("Hit Flash Setting")]
     public bool enableHitFlash = true;      // ✅ เปิด/ปิดเอฟเฟกต์เปลี่ยนสี
@@ -56,6 +59,7 @@ public class Health : MonoBehaviour
 
     void Die()
     {
+        onDeath?.Invoke();   // ⭐ แจ้งว่า “ตายแล้ว”
         Destroy(gameObject);
         Debug.Log(gameObject.name + " ตายแล้ว!");
     }
