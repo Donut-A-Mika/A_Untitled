@@ -61,6 +61,6 @@ public class Health : MonoBehaviour
     {
         onDeath?.Invoke();   // ⭐ แจ้งว่า “ตายแล้ว”
         Destroy(gameObject);
-        Debug.Log(gameObject.name + " ตายแล้ว!");
+        Debug.Log(gameObject.name + "Dead");
     }
 }
