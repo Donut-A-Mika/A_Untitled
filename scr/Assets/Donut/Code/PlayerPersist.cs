@@ -62,14 +62,6 @@ public class PlayerPersist : MonoBehaviour
         PlayerController controller = GetComponent<PlayerController>();
         if (controller != null) controller.enabled = true;
 
-        // เปิด Camera Script
-        ThirdPersonCamera camScript = FindObjectOfType<ThirdPersonCamera>();
-        if (camScript != null)
-        {
-            camScript.player = transform;
-            camScript.enabled = true;
-        }
-
         // ปิด Customization Script (ไม่ต้องใช้ในเกม)
         Customization custom = GetComponent<Customization>();
         if (custom != null) custom.enabled = false;
