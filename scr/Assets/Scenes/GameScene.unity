@@ -1622,7 +1622,7 @@ MonoBehaviour:
   IgnoreTimeScale: 0
   WorldUpOverride: {fileID: 0}
   ChannelMask: -1
-  UpdateMethod: 2
+  UpdateMethod: 0
   BlendUpdateMethod: 1
   LensModeOverride:
     Enabled: 0
@@ -1748,8 +1748,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1439161360}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.045477718, y: 0.04481302, z: -0.0020421646, w: 0.99795765}
-  m_LocalPosition: {x: 0.52, y: 3.4749389, z: -2.8891811}
+  m_LocalRotation: {x: 0.02890206, y: 0.08321363, z: -0.0024144384, w: 0.9961096}
+  m_LocalPosition: {x: 0, y: 3.483033, z: -4.635919}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1988,8 +1988,8 @@ MonoBehaviour:
         CancelDeltaTime: 0
       InputValue: 0
       Driver:
-        AccelTime: 0.2
-        DecelTime: 0.2
+        AccelTime: 0.8
+        DecelTime: 1
     - Name: Look Orbit Y
       Owner: {fileID: 1594126889}
       Enabled: 1
@@ -2001,8 +2001,8 @@ MonoBehaviour:
         CancelDeltaTime: 0
       InputValue: 0
       Driver:
-        AccelTime: 0.2
-        DecelTime: 0.2
+        AccelTime: 0.8
+        DecelTime: 1
     - Name: Orbit Scale
       Owner: {fileID: 1594126889}
       Enabled: 1
@@ -2025,7 +2025,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1594126885}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a076c17fe76165e4f8ed21498b877bf9, type: 3}
   m_Name: 
@@ -2076,7 +2076,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b5d7c088409d9a40b7b09aa707777f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineOrbitalFollow
-  TargetOffset: {x: 0.52, y: 0, z: 1.75}
+  TargetOffset: {x: 0, y: 0, z: 0}
   TrackerSettings:
     BindingMode: 4
     PositionDamping: {x: 1, y: 1, z: 1}
@@ -2108,7 +2108,7 @@ MonoBehaviour:
       Time: 2
     Restrictions: 0
   VerticalAxis:
-    Value: 21.9
+    Value: 22
     Center: 17.5
     Range: {x: -10, y: 45}
     Wrap: 0
@@ -2178,8 +2178,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1594126885}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.045477718, y: 0.04481301, z: -0.0020421643, w: 0.99795765}
-  m_LocalPosition: {x: 0.52, y: 3.4749389, z: -2.8891811}
+  m_LocalRotation: {x: 0.02890206, y: 0.083213635, z: -0.0024144375, w: 0.9961096}
+  m_LocalPosition: {x: 0, y: 3.483033, z: -4.635919}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
