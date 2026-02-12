@@ -1,5 +1,6 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
+using UnityEngine.AdaptivePerformance;
 public class FlyingDiveEnemy : MonoBehaviour
 {
     [Header("Target")]
@@ -11,13 +12,20 @@ public class FlyingDiveEnemy : MonoBehaviour
     public float diveSpeed = 18f;
     public float returnSpeed = 6f;
 
+    [Header("Detection")]
+    public float detectionRange = 15f;     // ระยะเริ่มสนใจผู้เล่น
+    public float loseRange = 22f;          // ระยะเลิกไล่ (ต้องมากกว่า detection)
+
     [Header("Behavior")]
-    public float detectionRange = 15f;
     public float attackCooldown = 3f;
 
+    private Vector3 startPoint;
     private Vector3 hoverPoint;
+
+    private bool playerDetected = false;
     private bool isDiving = false;
     private bool isReturning = false;
+
     private float cooldownTimer;
 
     void Start()
@@ -25,16 +33,37 @@ public class FlyingDiveEnemy : MonoBehaviour
         if (player == null)
             player = GameObject.FindGameObjectWithTag("Player").transform;
 
-        hoverPoint = player.position + Vector3.up * hoverHeight;
+        startPoint = transform.position;
     }
 
     void Update()
     {
         cooldownTimer -= Time.deltaTime;
 
-        float distance = Vector3.Distance(transform.position, player.position);
+        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
-        if (!isDiving && !isReturning && distance <= detectionRange && cooldownTimer <= 0f)
+        // ✅ ตรวจจับผู้เล่น
+        if (!playerDetected && distanceToPlayer <= detectionRange)
+        {
+            playerDetected = true;
+        }
+
+        // ❌ ผู้เล่นหนีไกล → เลิกสนใจ
+        if (playerDetected && distanceToPlayer >= loseRange)
+        {
+            playerDetected = false;
+            isDiving = false;
+            isReturning = true;
+        }
+
+        // 🎯 โหมดพฤติกรรม
+        if (!playerDetected)
+        {
+            IdleHover();
+            return;
+        }
+
+        if (!isDiving && !isReturning && cooldownTimer <= 0f)
         {
             StartDive();
         }
@@ -49,43 +78,55 @@ public class FlyingDiveEnemy : MonoBehaviour
         }
         else
         {
-            Hover();
+            HoverAbovePlayer();
         }
     }
 
+    // 💤 อยู่จุดเดิม
+    void IdleHover()
+    {
+        Vector3 idlePoint = startPoint + Vector3.up * hoverHeight;
+
+        transform.position = Vector3.Lerp(
+            transform.position,
+            idlePoint,
+            hoverSpeed * Time.deltaTime
+        );
+    }
+
     // 🟢 ลอยเหนือหัวผู้เล่น
-    void Hover()
+    void HoverAbovePlayer()
     {
         hoverPoint = player.position + Vector3.up * hoverHeight;
+
         transform.position = Vector3.Lerp(
             transform.position,
             hoverPoint,
             hoverSpeed * Time.deltaTime
         );
+
+        Vector3 lookDir = player.position - transform.position;
+        lookDir.y = 0f;
+        transform.rotation = Quaternion.LookRotation(lookDir);
     }
 
-    // 💥 เริ่มโฉบ
     void StartDive()
     {
         isDiving = true;
     }
 
-    // 💥 โฉบเข้าหาผู้เล่น
     void DiveToPlayer()
     {
         Vector3 dir = (player.position - transform.position).normalized;
         transform.position += dir * diveSpeed * Time.deltaTime;
-
         transform.rotation = Quaternion.LookRotation(dir);
 
-        // 🔁 เมื่อโฉบถึงระดับใกล้พื้น → ให้ EnemyAttack จัดการเอง
         if (Vector3.Distance(transform.position, player.position) < 1.5f)
         {
             EndDive();
         }
     }
 
-    // ⏸️ จบการโจมตี
     void EndDive()
     {
         isDiving = false;
@@ -93,10 +134,14 @@ public class FlyingDiveEnemy : MonoBehaviour
         cooldownTimer = attackCooldown;
     }
 
-    // ⬆️ บินกลับขึ้นไป
     void ReturnToHover()
     {
-        Vector3 target = player.position + Vector3.up * hoverHeight;
+        Vector3 target;
+
+        if (playerDetected)
+            target = player.position + Vector3.up * hoverHeight;
+        else
+            target = startPoint + Vector3.up * hoverHeight;
 
         transform.position = Vector3.MoveTowards(
             transform.position,
@@ -108,5 +153,14 @@ public class FlyingDiveEnemy : MonoBehaviour
         {
             isReturning = false;
         }
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, detectionRange);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, loseRange);
     }
 }
