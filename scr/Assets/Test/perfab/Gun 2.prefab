@@ -59,8 +59,8 @@ Transform:
   m_GameObject: {fileID: 6138300021332112147}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.5996438, y: 0.13667, z: -46.3}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0.5996438, y: 0.13667, z: -46.219}
+  m_LocalScale: {x: 0.22115336, y: 0.22115336, z: 0.22115336}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3934778837261150165}
@@ -140,6 +140,7 @@ MonoBehaviour:
   firePoint: {fileID: 3934778837261150165}
   bulletForce: 20
   logo: {fileID: 2800000, guid: a6251e1a37b44c741b75de1e00ddb35d, type: 3}
+  weaponScale: {x: 0.1, y: 0.1, z: 0.1}
   currentMode: 0
   fireRate: 2
   burstCount: 3

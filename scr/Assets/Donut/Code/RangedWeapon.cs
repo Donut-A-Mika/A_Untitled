@@ -9,6 +9,8 @@ public class RangedWeapon : MonoBehaviour, IWeapon
     public Transform firePoint;
     public float bulletForce = 20f;
     public Texture2D logo;
+    // เพิ่มตัวแปรสำหรับตั้งค่าขนาดปืน
+    public Vector3 weaponScale = Vector3.one;
 
     // --- ระบบโหมดการยิง (Fire Mode) ---
     public enum FireMode { Single, Auto, Burst }
@@ -28,15 +30,12 @@ public class RangedWeapon : MonoBehaviour, IWeapon
     [Range(0f, 0.5f)] public float spreadAmount = 0.1f;
 
     private float nextFireTime = 0f;
-    private bool isFiring = false; // นำมาใช้เช็คสถานะการยิง (โดยเฉพาะ Burst)
+    private bool isFiring = false;
 
-    // Interface Method: เรียกใช้ใน Update() ของ PlayerController
     public void Attack()
     {
-        // 1. ถ้ายังไม่ถึงเวลาหน่วง (Cooldown) หรือกำลังยิง Burst ค้างอยู่ ให้หยุดทำงาน
         if (Time.time < nextFireTime || isFiring) return;
 
-        // 2. คำนวณช่วงว่างระหว่างนัด (Interval)
         float fireInterval = 1f / Mathf.Max(fireRate, 0.01f);
 
         switch (currentMode)
@@ -53,8 +52,6 @@ public class RangedWeapon : MonoBehaviour, IWeapon
         }
     }
 
-    // --- แยก Method ตามโหมดการยิง ---
-
     private void SingleFire(float interval)
     {
         ExecuteShot();
@@ -63,15 +60,13 @@ public class RangedWeapon : MonoBehaviour, IWeapon
 
     private void AutoFire(float interval)
     {
-        // โหมด Auto จะทำงานเหมือน Single แต่เมื่อเรียกใน Update() ต่อเนื่อง จะยิงรัวตาม interval
         ExecuteShot();
         nextFireTime = Time.time + interval;
     }
 
     private IEnumerator BurstFireRoutine(float interval)
     {
-        isFiring = true; // เริ่มการยิง Burst (ล็อคไม่ให้ Attack() ซ้อนกัน)
-
+        isFiring = true;
         float burstDelay = 0.08f;
 
         for (int i = 0; i < burstCount; i++)
@@ -80,12 +75,10 @@ public class RangedWeapon : MonoBehaviour, IWeapon
             yield return new WaitForSeconds(burstDelay);
         }
 
-        // ตั้งเวลา Cooldown หลังจากยิงครบชุด และปลดล็อค isFiring
         nextFireTime = Time.time + interval;
         isFiring = false;
     }
 
-    // --- Method ตัดสินใจรูปแบบกระสุน ---
     private void ExecuteShot()
     {
         if (useShotgunSpread)
@@ -101,7 +94,6 @@ public class RangedWeapon : MonoBehaviour, IWeapon
         }
     }
 
-    // --- Method สร้างกระสุน ---
     private void CreateAndFireBullet(bool applySpread)
     {
         if (bulletPrefab == null || firePoint == null) return;
