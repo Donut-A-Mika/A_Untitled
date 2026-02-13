@@ -6569,6 +6569,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CinemachineTargetSetter
   vcam: {fileID: 1594126890}
   targetTag: Player
+--- !u!1 &1596199500
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1596199501}
+  m_Layer: 7
+  m_Name: BackSold
+  m_TagString: Untagged
+  m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1596199501
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1596199500}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0.1, y: 0.20400006, z: -0.446}
+  m_LocalScale: {x: 1, y: 0.6288945, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1433175529}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &1609299005
 GameObject:
   m_ObjectHideFlags: 0
@@ -9060,6 +9091,10 @@ PrefabInstance:
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6114734865765841232, guid: b7e86e63e95ea084fa3f13cada2acbeb, type: 3}
+      propertyPath: backSlot
+      value: 
+      objectReference: {fileID: 1596199501}
+    - target: {fileID: 6114734865765841232, guid: b7e86e63e95ea084fa3f13cada2acbeb, type: 3}
       propertyPath: weaponSlot1
       value: 
       objectReference: {fileID: 1854779985}
@@ -9151,6 +9186,9 @@ PrefabInstance:
     - {fileID: 4412394120255090950, guid: b7e86e63e95ea084fa3f13cada2acbeb, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 6429088519451864308, guid: b7e86e63e95ea084fa3f13cada2acbeb, type: 3}
+      insertIndex: 1
+      addedObject: {fileID: 1596199501}
     - targetCorrespondingSourceObject: {fileID: 6429088519451864308, guid: b7e86e63e95ea084fa3f13cada2acbeb, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1884350827}
