@@ -192,6 +192,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c92a868169ceb004c897bd040eac3136, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
+  cameraTransform: {fileID: 0}
+  rotateSpeed: 10
   moveSpeed: 6
   jumpForce: 10
   glideGravityMultiplier: 6
@@ -308,7 +310,7 @@ Transform:
   m_GameObject: {fileID: 4405212782604411423}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.096, y: -0.048, z: 0}
+  m_LocalPosition: {x: -0.67, y: -0.048, z: -0.92}
   m_LocalScale: {x: 1, y: 0.6288945, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -370,7 +372,7 @@ Transform:
   m_GameObject: {fileID: 8251284803453491621}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.07, y: -0.045030653, z: 0}
+  m_LocalPosition: {x: 0.73, y: -0.045030653, z: -0.92}
   m_LocalScale: {x: 1, y: 0.6288945, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
