@@ -5,8 +5,7 @@ public class WeaponManager : MonoBehaviour
     [Header("Weapon Hold Points")]
     public Transform weaponSlot1;
     public Transform weaponSlot2;
-    public Transform weaponSlot3;
-    public Transform weaponSlot4;
+    public Transform backSlot; // ⭐ จุดติดปืนสำรอง
 
     [Header("Current Weapon")]
     public GameObject currentWeapon;
@@ -24,16 +23,12 @@ public class WeaponManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha1)) SwitchToSlot(1);
         if (Input.GetKeyDown(KeyCode.Alpha2)) SwitchToSlot(2);
-        if (Input.GetKeyDown(KeyCode.Alpha3)) SwitchToSlot(3);
-        if (Input.GetKeyDown(KeyCode.Alpha4)) SwitchToSlot(4);
     }
 
     void LoadWeaponsFromPlaystate()
     {
         if (Playstate.gunslot1 != null) EquipWeaponToSlot(Playstate.gunslot1, 1);
         if (Playstate.gunslot2 != null) EquipWeaponToSlot(Playstate.gunslot2, 2);
-        if (Playstate.gunslot3 != null) EquipWeaponToSlot(Playstate.gunslot3, 3);
-        if (Playstate.gunslot4 != null) EquipWeaponToSlot(Playstate.gunslot4, 4);
     }
 
     void EquipWeaponToSlot(GameObject weaponPrefab, int slotNumber)
@@ -46,26 +41,16 @@ public class WeaponManager : MonoBehaviour
             Destroy(equippedWeapons[slotNumber - 1]);
         }
 
-        // 1. สร้างปืนออกมา
         GameObject newWeapon = Instantiate(weaponPrefab, targetSlot);
         newWeapon.transform.localPosition = Vector3.zero;
         newWeapon.transform.localRotation = Quaternion.identity;
 
-        // 2. ดึงค่า Scale จากสคริปต์ RangedWeapon มาใช้
         RangedWeapon weaponScript = newWeapon.GetComponent<RangedWeapon>();
         if (weaponScript != null)
-        {
-            // ใช้ขนาดที่บันทึกไว้ในตัวปืน (Prefab)
             newWeapon.transform.localScale = weaponScript.weaponScale;
-        }
         else
-        {
-            // ถ้าหาไม่เจอ ให้ใช้ขนาดมาตรฐาน 1, 1, 1
             newWeapon.transform.localScale = Vector3.one;
-            Debug.LogWarning($"{newWeapon.name} ไม่มีสคริปต์ RangedWeapon จึงใช้ Scale 1");
-        }
 
-        newWeapon.SetActive(false);
         equippedWeapons[slotNumber - 1] = newWeapon;
     }
 
@@ -73,23 +58,47 @@ public class WeaponManager : MonoBehaviour
     {
         if (slotNumber < 1 || slotNumber > equippedWeapons.Length) return;
 
+        currentSlotIndex = slotNumber;
+
         for (int i = 0; i < equippedWeapons.Length; i++)
         {
-            if (equippedWeapons[i] != null) equippedWeapons[i].SetActive(false);
-        }
+            GameObject weapon = equippedWeapons[i];
+            if (weapon == null) continue;
 
-        currentSlotIndex = slotNumber;
-        GameObject selectedWeapon = equippedWeapons[slotNumber - 1];
+            bool isActiveWeapon = (i == slotNumber - 1);
 
-        if (selectedWeapon != null)
-        {
-            selectedWeapon.SetActive(true);
-            currentWeapon = selectedWeapon;
+            if (isActiveWeapon)
+            {
+                MoveWeaponToHand(weapon, GetSlotTransform(slotNumber));
+                EnableWeaponUse(weapon, true);
+                currentWeapon = weapon;
+            }
+            else
+            {
+                MoveWeaponToBack(weapon);
+                EnableWeaponUse(weapon, false);
+            }
         }
-        else
-        {
-            currentWeapon = null;
-        }
+    }
+
+    void MoveWeaponToHand(GameObject weapon, Transform handSlot)
+    {
+        weapon.transform.SetParent(handSlot);
+        weapon.transform.localPosition = Vector3.zero;
+        weapon.transform.localRotation = Quaternion.identity;
+    }
+
+    void MoveWeaponToBack(GameObject weapon)
+    {
+        weapon.transform.SetParent(backSlot);
+        weapon.transform.localPosition = Vector3.zero;
+        weapon.transform.localRotation = Quaternion.identity;
+    }
+
+    void EnableWeaponUse(GameObject weapon, bool enable)
+    {
+        RangedWeapon rw = weapon.GetComponent<RangedWeapon>();
+        if (rw != null) rw.enabled = enable;
     }
 
     Transform GetSlotTransform(int slotNumber)
@@ -98,8 +107,6 @@ public class WeaponManager : MonoBehaviour
         {
             case 1: return weaponSlot1;
             case 2: return weaponSlot2;
-            case 3: return weaponSlot3;
-            case 4: return weaponSlot4;
             default: return null;
         }
     }
