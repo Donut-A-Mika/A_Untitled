@@ -2500,10 +2500,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Customization
   customePart:
-  - {fileID: 3585573940298008246, guid: fc3a8a7b60b8dd24ea39f79799d58fd1, type: 3}
+  - {fileID: 6138300021332112147, guid: 5680664ba7080e542841c09556c0294f, type: 3}
   - {fileID: 6138300021332112147, guid: 44f0f02cf5f14b340bdcb0aed4ae919c, type: 3}
   - {fileID: 6138300021332112147, guid: 4b98f1f5cc7a1af4aaef5f10ca3e26a3, type: 3}
-  - {fileID: 6138300021332112147, guid: 44c3a8c0eb4483f4d9a3a911fd7e3b7c, type: 3}
+  - {fileID: 6138300021332112147, guid: bc22a3ce77e163348ba419a6d1bdfbe9, type: 3}
   partScales:
   - {x: 0.5, y: 0.5, z: 0.5}
   - {x: 0.5, y: 0.5, z: 0.5}
