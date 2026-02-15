@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class Bullet1 : MonoBehaviour
 {
     public float damage = 10f;
-    public float lifeTime = 20f;
+    public float knockbackForce = 15f;
+    public float lifeTime = 5f;
 
     void Start()
     {
@@ -12,22 +13,17 @@ public class Bullet : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        // --- ส่วนที่แก้ไข: ป้องกันการชนตัวเองและพวกเดียวกัน ---
-        // 1. ถ้าชนกับสิ่งที่มี Tag ว่า "Player" (ตัวเรา) ให้ข้ามไป
-        // 2. ถ้าชนกับสิ่งที่มี Tag ว่า "Bullet" (กระสุนนัดอื่น) ให้ข้ามไป
-        if (other.CompareTag("Player") || other.CompareTag("Bullet"))
-        {
-            return;
-        }
+        // ข้ามถ้าเป็นพวกเดียวกัน
+        if (other.CompareTag("Player") || other.CompareTag("Bullet")) return;
 
-        // ถ้าชนอะไรที่มีระบบเลือด
+        // 1. จัดการเรื่องความเสียหาย
         Health health = other.GetComponent<Health>();
         if (health != null)
         {
             health.TakeDamage(damage);
         }
 
-        // โดนอะไรก็ตามที่ไม่ใช่ Player หรือ Bullet ให้ทำลายกระสุนทิ้ง
+        // 2. ทำลายตัวเอง (EnemyAI จะดึงค่า Knockback ไปใช้ในจังหวะเดียวกันนี้)
         Destroy(gameObject);
     }
 }
