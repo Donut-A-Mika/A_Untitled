@@ -734,7 +734,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-<<<<<<< HEAD
 =======
 >>>>>>> parent of 6b0d6b1 (update ai)
 =======
@@ -743,8 +742,6 @@ Transform:
 >>>>>>> parent of 6b0d6b1 (update ai)
 =======
 >>>>>>> parent of 6b0d6b1 (update ai)
-=======
->>>>>>> parent of 71de1b0 (Revert "Add zoom")
 --- !u!1001 &139798556
 PrefabInstance:
   m_ObjectHideFlags: 0
