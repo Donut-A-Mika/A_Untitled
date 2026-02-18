@@ -22,8 +22,13 @@ MonoBehaviour:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   m_Title: Game
   m_RootView: {fileID: 2}
+=======
+  m_Title: Project
+  m_RootView: {fileID: 4}
+>>>>>>> parent of 6b0d6b1 (update ai)
 =======
   m_Title: Project
   m_RootView: {fileID: 4}
@@ -103,6 +108,9 @@ MonoBehaviour:
   m_Enabled: 1
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of 6b0d6b1 (update ai)
+=======
 >>>>>>> parent of 6b0d6b1 (update ai)
 =======
 >>>>>>> parent of 6b0d6b1 (update ai)
@@ -116,9 +124,15 @@ MonoBehaviour:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   - {fileID: 3}
   - {fileID: 5}
   - {fileID: 4}
+=======
+  - {fileID: 5}
+  - {fileID: 7}
+  - {fileID: 6}
+>>>>>>> parent of 6b0d6b1 (update ai)
 =======
   - {fileID: 5}
   - {fileID: 7}
@@ -149,7 +163,11 @@ MonoBehaviour:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 --- !u!114 &3
+=======
+--- !u!114 &5
+>>>>>>> parent of 6b0d6b1 (update ai)
 =======
 --- !u!114 &5
 >>>>>>> parent of 6b0d6b1 (update ai)
@@ -183,7 +201,11 @@ MonoBehaviour:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 --- !u!114 &4
+=======
+--- !u!114 &6
+>>>>>>> parent of 6b0d6b1 (update ai)
 =======
 --- !u!114 &6
 >>>>>>> parent of 6b0d6b1 (update ai)
@@ -216,7 +238,11 @@ MonoBehaviour:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 --- !u!114 &5
+=======
+--- !u!114 &7
+>>>>>>> parent of 6b0d6b1 (update ai)
 =======
 --- !u!114 &7
 >>>>>>> parent of 6b0d6b1 (update ai)
@@ -241,7 +267,11 @@ MonoBehaviour:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   - {fileID: 6}
+=======
+  - {fileID: 8}
+>>>>>>> parent of 6b0d6b1 (update ai)
 =======
   - {fileID: 8}
 >>>>>>> parent of 6b0d6b1 (update ai)
@@ -264,10 +294,13 @@ MonoBehaviour:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   controlID: 107
   draggingID: 0
 --- !u!114 &6
 =======
+=======
+>>>>>>> parent of 6b0d6b1 (update ai)
 =======
 >>>>>>> parent of 6b0d6b1 (update ai)
 =======
@@ -434,6 +467,7 @@ MonoBehaviour:
   m_Selected: 0
   m_LastSelected: 0
 --- !u!114 &14
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 >>>>>>> parent of 6b0d6b1 (update ai)
@@ -648,6 +682,8 @@ MonoBehaviour:
   m_Selected: 0
   m_LastSelected: 0
 --- !u!114 &14
+=======
+>>>>>>> parent of 6b0d6b1 (update ai)
 =======
 >>>>>>> parent of 6b0d6b1 (update ai)
 =======
@@ -955,8 +991,13 @@ MonoBehaviour:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     x: 768.8
     y: 459.2
+=======
+    x: 769.8
+    y: 24
+>>>>>>> parent of 6b0d6b1 (update ai)
 =======
     x: 769.8
     y: 24
@@ -1045,7 +1086,11 @@ MonoBehaviour:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   m_LastWindowPixelSize: {x: 477.50006, y: 388.5}
+=======
+  m_LastWindowPixelSize: {x: 382.00006, y: 310.8}
+>>>>>>> parent of 6b0d6b1 (update ai)
 =======
   m_LastWindowPixelSize: {x: 382.00006, y: 310.8}
 >>>>>>> parent of 6b0d6b1 (update ai)
@@ -1086,7 +1131,11 @@ MonoBehaviour:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     y: 79.200005
+=======
+    y: 24
+>>>>>>> parent of 6b0d6b1 (update ai)
 =======
     y: 24
 >>>>>>> parent of 6b0d6b1 (update ai)
@@ -1114,6 +1163,7 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1149,6 +1199,8 @@ MonoBehaviour:
 >>>>>>> parent of 6b0d6b1 (update ai)
 =======
 >>>>>>> parent of 6b0d6b1 (update ai)
+=======
+>>>>>>> parent of 6b0d6b1 (update ai)
       m_SelectedIDs: []
       m_LastClickedID:
         m_Data: 0
@@ -1162,6 +1214,9 @@ MonoBehaviour:
       - m_Data: -1294
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of 6b0d6b1 (update ai)
+=======
 >>>>>>> parent of 6b0d6b1 (update ai)
 =======
 >>>>>>> parent of 6b0d6b1 (update ai)
@@ -1187,7 +1242,11 @@ MonoBehaviour:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         m_ClientGUIView: {fileID: 8}
+=======
+        m_ClientGUIView: {fileID: 10}
+>>>>>>> parent of 6b0d6b1 (update ai)
 =======
         m_ClientGUIView: {fileID: 10}
 >>>>>>> parent of 6b0d6b1 (update ai)
@@ -1228,8 +1287,13 @@ MonoBehaviour:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     x: 332
     y: 79.200005
+=======
+    x: 333
+    y: 24
+>>>>>>> parent of 6b0d6b1 (update ai)
 =======
     x: 333
     y: 24
@@ -1817,9 +1881,15 @@ MonoBehaviour:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     m_Target: {x: 4.249789, y: 3.3236058, z: -8.745699}
     speed: 2
     m_Value: {x: 4.249789, y: 3.3236058, z: -8.745699}
+=======
+    m_Target: {x: -3.222801, y: -9.032381, z: 17.041027}
+    speed: 2
+    m_Value: {x: 184.41031, y: 67.7146, z: -2.6635673}
+>>>>>>> parent of 6b0d6b1 (update ai)
 =======
     m_Target: {x: -3.222801, y: -9.032381, z: 17.041027}
     speed: 2
@@ -1883,6 +1953,7 @@ MonoBehaviour:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     m_Target: {x: -0.03540284, y: 0.9097597, z: 0.07934056, w: 0.4059475}
     speed: 2
     m_Value: {x: -0.035402764, y: 0.90975773, z: 0.07934039, w: 0.40594664}
@@ -1895,6 +1966,8 @@ MonoBehaviour:
     speed: 2
     m_Value: 0
 =======
+=======
+>>>>>>> parent of 6b0d6b1 (update ai)
 =======
 >>>>>>> parent of 6b0d6b1 (update ai)
 =======
@@ -1912,6 +1985,9 @@ MonoBehaviour:
     m_Value: 1
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of 6b0d6b1 (update ai)
+=======
 >>>>>>> parent of 6b0d6b1 (update ai)
 =======
 >>>>>>> parent of 6b0d6b1 (update ai)
@@ -1971,7 +2047,11 @@ MonoBehaviour:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     y: 459.2
+=======
+    y: 24
+>>>>>>> parent of 6b0d6b1 (update ai)
 =======
     y: 24
 >>>>>>> parent of 6b0d6b1 (update ai)
@@ -2010,7 +2090,11 @@ MonoBehaviour:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     - Packages/com.unity.test-framework/UnityEditor.TestRunner/TestRun/Tasks/Scene
+=======
+    - Assets/Scenes
+>>>>>>> parent of 6b0d6b1 (update ai)
 =======
     - Assets/Scenes
 >>>>>>> parent of 6b0d6b1 (update ai)
@@ -2032,7 +2116,11 @@ MonoBehaviour:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   - Packages/com.unity.test-framework/UnityEditor.TestRunner/TestRun/Tasks/Scene
+=======
+  - Assets/Scenes
+>>>>>>> parent of 6b0d6b1 (update ai)
 =======
   - Assets/Scenes
 >>>>>>> parent of 6b0d6b1 (update ai)
@@ -2048,6 +2136,7 @@ MonoBehaviour:
     m_IsLocked: 0
   m_LastLocalAssetsSearchArea: 1
   m_FolderTreeState:
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2073,6 +2162,8 @@ MonoBehaviour:
 >>>>>>> parent of 6b0d6b1 (update ai)
 =======
 >>>>>>> parent of 6b0d6b1 (update ai)
+=======
+>>>>>>> parent of 6b0d6b1 (update ai)
     scrollPos: {x: 0, y: 79}
     m_SelectedIDs:
     - m_Data: 50066
@@ -2083,6 +2174,9 @@ MonoBehaviour:
     - m_Data: 53454
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of 6b0d6b1 (update ai)
+=======
 >>>>>>> parent of 6b0d6b1 (update ai)
 =======
 >>>>>>> parent of 6b0d6b1 (update ai)
@@ -2108,7 +2202,11 @@ MonoBehaviour:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       m_ClientGUIView: {fileID: 11}
+=======
+      m_ClientGUIView: {fileID: 12}
+>>>>>>> parent of 6b0d6b1 (update ai)
 =======
       m_ClientGUIView: {fileID: 12}
 >>>>>>> parent of 6b0d6b1 (update ai)
@@ -2135,7 +2233,11 @@ MonoBehaviour:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     - m_Data: 50454
+=======
+    - m_Data: 53454
+>>>>>>> parent of 6b0d6b1 (update ai)
 =======
     - m_Data: 53454
 >>>>>>> parent of 6b0d6b1 (update ai)
@@ -2174,9 +2276,14 @@ MonoBehaviour:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     m_SelectedInstanceIDs:
     - m_Data: 42540
     m_LastClickedInstanceID: 42540
+=======
+    m_SelectedInstanceIDs: []
+    m_LastClickedInstanceID: 0
+>>>>>>> parent of 6b0d6b1 (update ai)
 =======
     m_SelectedInstanceIDs: []
     m_LastClickedInstanceID: 0
@@ -2218,7 +2325,11 @@ MonoBehaviour:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       m_ClientGUIView: {fileID: 11}
+=======
+      m_ClientGUIView: {fileID: 12}
+>>>>>>> parent of 6b0d6b1 (update ai)
 =======
       m_ClientGUIView: {fileID: 12}
 >>>>>>> parent of 6b0d6b1 (update ai)
@@ -2264,9 +2375,15 @@ MonoBehaviour:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     y: 459.2
     width: 767.8
     height: 310.8
+=======
+    y: 425.6
+    width: 766.2
+    height: 344.4
+>>>>>>> parent of 6b0d6b1 (update ai)
 =======
     y: 425.6
     width: 766.2
@@ -2451,8 +2568,13 @@ MonoBehaviour:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     x: 1152.8
     y: 79.200005
+=======
+    x: 1153.8
+    y: 24
+>>>>>>> parent of 6b0d6b1 (update ai)
 =======
     x: 1153.8
     y: 24
@@ -2490,7 +2612,11 @@ MonoBehaviour:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   m_LastVerticalScrollValue: 594
+=======
+  m_LastVerticalScrollValue: 0
+>>>>>>> parent of 6b0d6b1 (update ai)
 =======
   m_LastVerticalScrollValue: 0
 >>>>>>> parent of 6b0d6b1 (update ai)
