@@ -24,7 +24,7 @@ public class CinemachineTargetSetter : MonoBehaviour
         // ค้นหา Object ตาม Tag
         GameObject target = GameObject.FindWithTag(targetTag);
 
-        if (target != null && vcam != null)
+        /*if (target != null && vcam != null)
         {
             // สำหรับ Cinemachine 3.0+ การเซต 'Tracking Target' ใน Inspector 
             // จะต้องเซตผ่านค่า Follow และ LookAt ในโค้ดครับ
@@ -37,6 +37,6 @@ public class CinemachineTargetSetter : MonoBehaviour
         {
             if (target == null) Debug.LogError($"[Cinemachine] ไม่พบ Object ที่มี Tag: {targetTag}");
             if (vcam == null) Debug.LogError("[Cinemachine] ไม่ได้ระบุ CinemachineCamera ใน Script");
-        }
+        }*/
     }
 }
