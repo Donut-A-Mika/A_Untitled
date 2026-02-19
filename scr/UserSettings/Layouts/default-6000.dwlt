@@ -19,11 +19,7 @@ MonoBehaviour:
     width: 1536
     height: 772.8
   m_ShowMode: 4
-<<<<<<< Updated upstream
-  m_Title: Inspector
-=======
   m_Title: Game
->>>>>>> Stashed changes
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -123,11 +119,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 112}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-<<<<<<< Updated upstream
-  controlID: 170
-=======
   controlID: 121
->>>>>>> Stashed changes
   draggingID: 0
 --- !u!114 &6
 MonoBehaviour:
@@ -153,11 +145,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 112}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-<<<<<<< Updated upstream
-  controlID: 68
-=======
   controlID: 122
->>>>>>> Stashed changes
   draggingID: 0
 --- !u!114 &7
 MonoBehaviour:
@@ -261,11 +249,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 56}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-<<<<<<< Updated upstream
-  controlID: 69
-=======
   controlID: 123
->>>>>>> Stashed changes
   draggingID: 0
 --- !u!114 &11
 MonoBehaviour:
@@ -699,7 +683,7 @@ MonoBehaviour:
     m_HSlider: 0
     m_VSlider: 0
     m_IgnoreScrollWheelUntilClicked: 0
-    m_EnableMouseInput: 0
+    m_EnableMouseInput: 1
     m_EnableSliderZoomHorizontal: 0
     m_EnableSliderZoomVertical: 0
     m_UniformScale: 1
@@ -772,25 +756,16 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-<<<<<<< Updated upstream
       m_SelectedIDs:
-      - m_Data: -1722
-      m_LastClickedID:
-        m_Data: -1722
-      m_ExpandedIDs:
-=======
-      m_SelectedIDs: []
+      - m_Data: 42540
       m_LastClickedID:
         m_Data: 0
       m_ExpandedIDs:
-      - m_Data: -6882
-      - m_Data: -5130
->>>>>>> Stashed changes
-      - m_Data: -1296
+      - m_Data: -1298
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: 
-        m_OriginalName: 
+        m_Name: FreeLook Camera
+        m_OriginalName: FreeLook Camera
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
@@ -798,10 +773,10 @@ MonoBehaviour:
           width: 0
           height: 0
         m_UserData:
-          m_Data: 0
+          m_Data: 48152
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
-        m_OriginalEventType: 11
+        m_OriginalEventType: 0
         m_IsRenamingFilename: 0
         m_TrimLeadingAndTrailingWhitespace: 0
         m_ClientGUIView: {fileID: 8}
@@ -907,21 +882,12 @@ MonoBehaviour:
       displayed: 1
       id: unity-transform-toolbar
       index: 0
-<<<<<<< Updated upstream
-      contents: '{"m_Layout":2,"m_Collapsed":false,"m_Folded":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":24.0,"y":-327.1999816894531},"m_SnapOffsetDelta":{"x":0.0,"y":0.0},"m_FloatingSnapCorner":2,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
-      floating: 0
-      collapsed: 0
-      snapOffset: {x: 24, y: -327.19998}
-      snapOffsetDelta: {x: 0, y: 0}
-      snapCorner: 2
-=======
       contents: '{"m_Layout":2,"m_Collapsed":false,"m_Folded":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":24.0,"y":27.20001220703125},"m_SnapOffsetDelta":{"x":0.0,"y":0.0},"m_FloatingSnapCorner":0,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
       floating: 0
       collapsed: 0
       snapOffset: {x: 24, y: 27.200012}
       snapOffsetDelta: {x: 0, y: 0}
       snapCorner: 0
->>>>>>> Stashed changes
       layout: 2
       size: {x: 0, y: 0}
       sizeOverridden: 0
@@ -1416,9 +1382,9 @@ MonoBehaviour:
   m_AudioPlay: 0
   m_DebugDrawModesUseInteractiveLightBakingData: 0
   m_Position:
-    m_Target: {x: -1.1733427, y: -1.7238464, z: 13.585472}
+    m_Target: {x: 0, y: 0, z: 0}
     speed: 2
-    m_Value: {x: -1.1733427, y: -1.7238464, z: 13.585472}
+    m_Value: {x: 0, y: 0, z: 0}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -1464,13 +1430,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.22330295, y: 0.6682262, z: -0.22130194, w: -0.67426825}
+    m_Target: {x: -0.08717229, y: 0.89959055, z: -0.21045254, w: -0.3726226}
     speed: 2
-    m_Value: {x: -0.22330265, y: 0.6682253, z: -0.22130166, w: -0.67426735}
+    m_Value: {x: -0.08717229, y: 0.89959055, z: -0.21045254, w: -0.3726226}
   m_Size:
-    m_Target: 14.134788
+    m_Target: 10
     speed: 2
-    m_Value: 14.134788
+    m_Value: 10
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -1553,11 +1519,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-<<<<<<< Updated upstream
-    - Assets/Donut/Code
-=======
-    - Assets/Scenes
->>>>>>> Stashed changes
+    - Packages/com.unity.test-framework/UnityEditor.TestRunner/TestRun/Tasks/Scene
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -1567,46 +1529,26 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-<<<<<<< Updated upstream
-  - Assets/Donut/Code
-=======
-  - Assets/Scenes
->>>>>>> Stashed changes
+  - Packages/com.unity.test-framework/UnityEditor.TestRunner/TestRun/Tasks/Scene
   m_LastFoldersGridSize: -1
   m_LastProjectPath: E:\Perforjack\A_Untitled\scr
   m_LockTracker:
     m_IsLocked: 0
   m_LastLocalAssetsSearchArea: 1
   m_FolderTreeState:
-<<<<<<< Updated upstream
-    scrollPos: {x: 0, y: 79}
+    scrollPos: {x: 0, y: 541.2}
     m_SelectedIDs:
-    - m_Data: 50170
+    - m_Data: 50138
     m_LastClickedID:
-      m_Data: 50170
-=======
-    scrollPos: {x: 0, y: 61.199768}
-    m_SelectedIDs:
-    - m_Data: 50108
-    m_LastClickedID:
-      m_Data: 50108
->>>>>>> Stashed changes
+      m_Data: 50138
     m_ExpandedIDs:
     - m_Data: 0
     - m_Data: 49968
-    - m_Data: 50102
-<<<<<<< Updated upstream
-    - m_Data: 50112
-    - m_Data: 50150
-    - m_Data: 50182
-    - m_Data: 50184
-    - m_Data: 50186
-=======
-    - m_Data: 50150
-    - m_Data: 50180
-    - m_Data: 50182
-    - m_Data: 50184
->>>>>>> Stashed changes
+    - m_Data: 50058
+    - m_Data: 50106
+    - m_Data: 50140
+    - m_Data: 50142
+    - m_Data: 50144
     - m_Data: 1000000000
     - m_Data: 2147483647
     m_RenameOverlay:
@@ -1668,14 +1610,9 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-<<<<<<< Updated upstream
     m_SelectedInstanceIDs:
-    - m_Data: -1722
-    m_LastClickedInstanceID: -1722
-=======
-    m_SelectedInstanceIDs: []
-    m_LastClickedInstanceID: 0
->>>>>>> Stashed changes
+    - m_Data: 42540
+    m_LastClickedInstanceID: 42540
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs:
     - m_Data: 63722
