@@ -54,6 +54,8 @@ public class PlayerController : MonoBehaviour
         {
             animatorPlayer = GetComponent<Animator>();
         }
+        Cursor.lockState = CursorLockMode.Locked; // ล็อกเมาส์ไว้กึ่งกลางจอ
+        Cursor.visible = false;                   // ซ่อนรูปเคอร์เซอร์
     }
 
     void Update()
