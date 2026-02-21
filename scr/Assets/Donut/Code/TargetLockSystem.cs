@@ -4,71 +4,96 @@ using UnityEngine;
 
 public class TargetLockSystem : MonoBehaviour
 {
-    [Header("Reference")]
     public Transform player;
-    public CinemachineCamera cineCam;
 
-    [Header("Target Setting")]
-    public float lockRange = 20f;
+    [Header("Cinemachine")]
+    public CinemachineCamera cineCam; // กล้องที่ใช้
+    public Transform cameraFollowPivot; // pivot ที่กล้องตาม
+
+    [Header("Targeting")]
+    public float lockRange = 15f;
     public LayerMask enemyLayer;
 
-    private Transform currentTarget;
-    private GameObject focusPoint;
+    [Header("Rotation")]
+    public float rotateSpeed = 10f;
 
-    void Start()
-    {
-        focusPoint = new GameObject("CameraFocusPoint");
-    }
+    private Transform currentTarget;
+    public bool IsLocked => currentTarget != null;
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(2)) // กดเมาส์กลาง
+        if (Input.GetMouseButtonDown(2))
         {
-            if (currentTarget == null)
-                LockTarget();
-            else
-                UnlockTarget();
+            if (IsLocked) UnlockTarget();
+            else LockNearestTarget();
         }
 
-        if (currentTarget != null)
-            UpdateFocusPoint();
+        if (IsLocked)
+        {
+            RotatePlayerToTarget();
+            RotateCameraToTarget();
+        }
     }
 
-    void LockTarget()
+    void LockNearestTarget()
     {
         Collider[] enemies = Physics.OverlapSphere(player.position, lockRange, enemyLayer);
 
-        float closestDist = Mathf.Infinity;
-        Transform closestEnemy = null;
+        float closest = Mathf.Infinity;
+        Transform nearest = null;
 
-        foreach (Collider enemy in enemies)
+        foreach (Collider e in enemies)
         {
-            float dist = Vector3.Distance(player.position, enemy.transform.position);
-            if (dist < closestDist)
+            float dist = Vector3.Distance(player.position, e.transform.position);
+            if (dist < closest)
             {
-                closestDist = dist;
-                closestEnemy = enemy.transform;
+                closest = dist;
+                nearest = e.transform;
             }
         }
 
-        if (closestEnemy != null)
+        currentTarget = nearest;
+
+        if (cineCam != null && currentTarget != null)
         {
-            currentTarget = closestEnemy;
-            cineCam.Follow = focusPoint.transform;
-            cineCam.LookAt = focusPoint.transform;
+            cineCam.LookAt = currentTarget; // ⭐ สำคัญมาก
         }
     }
 
     void UnlockTarget()
     {
         currentTarget = null;
-        cineCam.Follow = player;
-        cineCam.LookAt = player;
+
+        if (cineCam != null)
+        {
+            cineCam.LookAt = cameraFollowPivot; // กลับไปมอง player
+        }
     }
 
-    void UpdateFocusPoint()
+    void RotatePlayerToTarget()
     {
-        Vector3 midPoint = (player.position + currentTarget.position) * 0.5f;
-        focusPoint.transform.position = midPoint;
+        Vector3 dir = currentTarget.position - player.position;
+        dir.y = 0f;
+
+        Quaternion targetRot = Quaternion.LookRotation(dir);
+        player.rotation = Quaternion.Slerp(
+            player.rotation,
+            targetRot,
+            rotateSpeed * Time.deltaTime
+        );
+    }
+
+    void RotateCameraToTarget()
+    {
+        if (cameraFollowPivot == null) return;
+
+        Vector3 dir = currentTarget.position - cameraFollowPivot.position;
+        Quaternion lookRot = Quaternion.LookRotation(dir);
+
+        cameraFollowPivot.rotation = Quaternion.Slerp(
+            cameraFollowPivot.rotation,
+            lookRot,
+            rotateSpeed * Time.deltaTime
+        );
     }
 }

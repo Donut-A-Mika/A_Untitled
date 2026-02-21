@@ -273,8 +273,12 @@ public class PlayerController : MonoBehaviour
     }
     void RotatePlayerToCamera()
     {
+        TargetLockSystem lockSystem = GetComponent<TargetLockSystem>();
+        if (lockSystem != null && lockSystem.IsLocked)
+            return;
+
         Vector3 camForward = cameraTransform.forward;
-        camForward.y = 0f; // ❗ ตัดการเงย/ก้ม
+        camForward.y = 0f;
         camForward.Normalize();
 
         if (camForward.magnitude < 0.1f)
