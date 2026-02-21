@@ -182,9 +182,12 @@ MonoBehaviour:
   agent: {fileID: 4941429600468661568}
   player: {fileID: 6429088519451864308, guid: b7e86e63e95ea084fa3f13cada2acbeb, type: 3}
   detectionRange: 100
+  moveForce: 20
+  maxSpeed: 5
+  rotationSpeed: 10
   minImpactForceToKnockback: 1.5
-  chainReactionMultiplier: 0.8
-  exitKnockbackSpeed: 20
+  chainReactionMultiplier: 0.3
+  exitKnockbackSpeed: 5
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
