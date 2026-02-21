@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public Transform cameraTransform;
@@ -227,7 +227,6 @@ public class PlayerController : MonoBehaviour
             Debug.LogWarning("ไม่มีอาวุธติดตั้งอยู่ หรือลืมลาก WeaponManager ใส่ Player");
         }
     }
-
     void TryAttack()
     {
         // เช็คเงื่อนไขพิเศษ เช่น ห้ามยิงขณะ Dash
@@ -240,6 +239,37 @@ public class PlayerController : MonoBehaviour
         {
             currentWeaponInterface.Attack();
         }
+    }
+
+    // ===== MELEE LUNGE =====
+    public void LungeForward(float distance, float duration)
+    {
+        StartCoroutine(LungeRoutine(distance, duration));
+    }
+
+    IEnumerator LungeRoutine(float distance, float duration)
+    {
+        float timer = 0f;
+        Vector3 dir = transform.forward;
+
+        // ปิดการควบคุมเดินชั่วคราว
+        bool prevDashState = isDashing;
+        isDashing = true;
+
+        // ล้างแรงเดิม
+        rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, 0);
+
+        while (timer < duration)
+        {
+            // ตั้งความเร็วตรง ๆ จะชัวร์กว่า AddForce
+            float speed = distance / duration;
+            rb.linearVelocity = new Vector3(dir.x * speed, rb.linearVelocity.y, dir.z * speed);
+
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        isDashing = prevDashState;
     }
     void RotatePlayerToCamera()
     {
