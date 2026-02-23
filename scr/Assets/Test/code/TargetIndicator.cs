@@ -12,13 +12,11 @@ public class TargetIndicator : MonoBehaviour
     void Start()
     {
         mainCam = Camera.main;
-        // ปิดการแสดงผลเริ่มต้น
-        gameObject.SetActive(false);
     }
 
     void LateUpdate()
     {
-        // ทำหน้าที่แค่หันหน้าเข้าหากล้อง ไม่มีการสั่งหมุนกล้องเด็ดขาด
+        // หันหน้าเข้าหากล้องตลอดเวลา
         if (mainCam != null)
         {
             transform.LookAt(transform.position + mainCam.transform.forward);

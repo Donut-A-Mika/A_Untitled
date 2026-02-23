@@ -6088,7 +6088,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 49.99999
+  field of view: 50
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -7613,7 +7613,7 @@ MonoBehaviour:
     LookAtTarget: {fileID: 0}
     CustomLookAtTarget: 0
   Lens:
-    FieldOfView: 49.99999
+    FieldOfView: 50
     OrthographicSize: 5
     NearClipPlane: 0.3
     FarClipPlane: 1000
@@ -8695,7 +8695,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1801747154}
-  - component: {fileID: 1801747155}
   - component: {fileID: 1801747153}
   - component: {fileID: 1801747152}
   - component: {fileID: 1801747151}
@@ -8790,29 +8789,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1801747155
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1801747150}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0aa3c4221fded514dbd65b7b6b0ba437, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TargetingSystem
-  targetLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  detectionRadius: 100
-  mainCamera: {fileID: 1439161364}
-  targetIndicator: {fileID: 1801747154}
-  indicatorImage: {fileID: 0}
-  lockSprite: {fileID: 21300000, guid: 7a9cd2c19f95155469fe3dd0a7cf5245, type: 3}
-  notLockSprite: {fileID: 21300000, guid: cad4d45e2d74c434bb248842e3766b81, type: 3}
-  lockOverlayPanel: {fileID: 0}
-  overlayTint: {fileID: 0}
 --- !u!1001 &1819229326
 PrefabInstance:
   m_ObjectHideFlags: 0
