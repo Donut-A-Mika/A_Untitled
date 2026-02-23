@@ -66,19 +66,14 @@ public class EnemyAI1 : MonoBehaviour
             return;
         }
 
-        // เช็คว่า Animator กำลังเล่นท่าโจมตีอยู่หรือไม่ (สมมติว่า State โจมตีชื่อ "Attack")
-        // ถ้าโจมตีอยู่ ให้หยุดการเคลื่อนที่ทั้งหมด
-        isAttacking = anim.GetCurrentAnimatorStateInfo(0).IsName("Attack") &&
-                      anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f;
+        // 1. เช็คสถานะการโจมตีปัจจุบันจาก Animator
+        AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
+        bool isPlayingAttack = stateInfo.IsName("Attack"); // ตรวจว่ากำลังอยู่ใน State โจมตีไหม
 
-        if (isAttacking)
-        {
-            agent.ResetPath();
-            rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, 0); // หยุดตัวทันที
-            UpdateAnimation();
-            return;
-        }
+        // โจมตีเสร็จหรือยัง? (ถ้าไม่ได้เล่นท่า Attack หรือเล่นจบไปแล้ว 1 รอบ)
+        bool attackFinished = !isPlayingAttack || (stateInfo.normalizedTime >= 1.0f && !anim.IsInTransition(0));
 
+        // 2. อัปเดตตำแหน่ง NavMesh
         agent.nextPosition = transform.position;
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
@@ -86,21 +81,33 @@ public class EnemyAI1 : MonoBehaviour
         {
             if (distanceToPlayer <= attackRange)
             {
-                // เข้าสู่ระยะโจมตี: สั่งให้หยุดเดินและเริ่มโจมตี
+                // หยุดเดินทันทีเมื่อเข้าเขตโจมตี
                 agent.ResetPath();
-                anim.SetBool("isAttack", true);
+                rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, 0);
+
+                // 3. เงื่อนไขการเริ่มโจมตี: ต้องโจมตีครั้งก่อนเสร็จแล้วเท่านั้น
+                if (attackFinished)
+                {
+                    anim.SetBool("isAttack", true);
+                }
             }
             else
             {
-                // ระยะไล่ตาม: สั่งให้เดินและปิดการโจมตี
-                agent.SetDestination(player.position);
-                anim.SetBool("isAttack", false);
+                // ถ้าอยู่นอกระยะโจมตี และ "ท่าโจมตีเดิมจบแล้ว" ถึงจะเดินต่อได้
+                if (attackFinished)
+                {
+                    anim.SetBool("isAttack", false);
+                    agent.SetDestination(player.position);
+                }
             }
         }
         else
         {
-            agent.ResetPath();
-            anim.SetBool("isAttack", false);
+            if (attackFinished)
+            {
+                agent.ResetPath();
+                anim.SetBool("isAttack", false);
+            }
         }
 
         UpdateAnimation();
@@ -110,11 +117,13 @@ public class EnemyAI1 : MonoBehaviour
     {
         if (anim == null) return;
 
-        // เช็คความเร็วจาก Rigidbody 
         Vector3 horizontalVel = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
 
-        // เงื่อนไข: ถ้าความเร็ว > 0 และไม่ได้กำลังโจมตี ให้เล่น isRunning
-        bool shouldRun = horizontalVel.magnitude > 0.1f && !isAttacking;
+        // เช็คอีกครั้งว่าปัจจุบันกำลังเล่นอนิเมชั่น Attack อยู่หรือไม่
+        bool isActuallyAttacking = anim.GetCurrentAnimatorStateInfo(0).IsName("Attack");
+
+        // วิ่งได้ก็ต่อเมื่อ: มีความเร็ว และ ไม่ได้อยู่ในสถานะโจมตี
+        bool shouldRun = horizontalVel.magnitude > 0.1f && !isActuallyAttacking;
 
         anim.SetBool("isRunning", shouldRun);
         anim.SetBool("isDead", isDead);
