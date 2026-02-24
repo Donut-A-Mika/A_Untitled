@@ -3,6 +3,8 @@ using System.Collections;
 
 public class MeleeWeapon : MonoBehaviour, IWeapon
 {
+    public Vector3 weaponScale = new Vector3(1, 1, 1);
+
     public float damage = 25f;
     public float attackRange = 2f;
     public LayerMask enemyLayer;

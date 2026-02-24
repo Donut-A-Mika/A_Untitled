@@ -45,11 +45,24 @@ public class WeaponManager : MonoBehaviour
         newWeapon.transform.localPosition = Vector3.zero;
         newWeapon.transform.localRotation = Quaternion.identity;
 
-        RangedWeapon weaponScript = newWeapon.GetComponent<RangedWeapon>();
-        if (weaponScript != null)
-            newWeapon.transform.localScale = weaponScript.weaponScale;
+        // --- ส่วนการจัดการขนาด (Scale) ---
+        RangedWeapon ranged = newWeapon.GetComponent<RangedWeapon>();
+        MeleeWeapon melee = newWeapon.GetComponent<MeleeWeapon>();
+
+        if (ranged != null)
+        {
+            newWeapon.transform.localScale = ranged.weaponScale;
+        }
+        else if (melee != null)
+        {
+            // ใช้ค่า scale จากตัว MeleeWeapon เอง
+            newWeapon.transform.localScale = melee.weaponScale;
+        }
         else
+        {
             newWeapon.transform.localScale = Vector3.one;
+        }
+        // -------------------------------
 
         equippedWeapons[slotNumber - 1] = newWeapon;
     }
@@ -86,6 +99,8 @@ public class WeaponManager : MonoBehaviour
         weapon.transform.SetParent(handSlot);
         weapon.transform.localPosition = Vector3.zero;
         weapon.transform.localRotation = Quaternion.identity;
+
+        ApplyCorrectScale(weapon);
     }
 
     void MoveWeaponToBack(GameObject weapon)
@@ -93,12 +108,27 @@ public class WeaponManager : MonoBehaviour
         weapon.transform.SetParent(backSlot);
         weapon.transform.localPosition = Vector3.zero;
         weapon.transform.localRotation = Quaternion.identity;
+
+    }
+    void ApplyCorrectScale(GameObject weapon)
+    {
+        RangedWeapon rw = weapon.GetComponent<RangedWeapon>();
+        MeleeWeapon mw = weapon.GetComponent<MeleeWeapon>();
+
+        if (rw != null)
+            weapon.transform.localScale = rw.weaponScale;
+        else if (mw != null)
+            weapon.transform.localScale = mw.weaponScale;
     }
 
     void EnableWeaponUse(GameObject weapon, bool enable)
     {
         RangedWeapon rw = weapon.GetComponent<RangedWeapon>();
         if (rw != null) rw.enabled = enable;
+
+        // ⭐ อย่าลืมปิด/เปิด MeleeWeapon ด้วยนะครับ
+        MeleeWeapon mw = weapon.GetComponent<MeleeWeapon>();
+        if (mw != null) mw.enabled = enable;
     }
 
     Transform GetSlotTransform(int slotNumber)
