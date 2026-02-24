@@ -305,11 +305,11 @@ MonoBehaviour:
   detectionRange: 100
   attackRange: 2
   moveForce: 20
-  maxSpeed: 5
+  maxSpeed: 10
   rotationSpeed: 10
   minImpactForceToKnockback: 1.5
   chainReactionMultiplier: 0.3
-  exitKnockbackSpeed: 5
+  exitKnockbackSpeed: 30
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
