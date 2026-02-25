@@ -64,25 +64,7 @@ public class PlayerController : MonoBehaviour
         GetInput();
         RotatePlayerToCamera();
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (isGrounded)
-            {
-                Jump();
-                hasDoubleJumped = false;
-            }
-            else
-            {
-                if (isGliding)
-                {
-                    CancelGlide();     // ✅ กดยกเลิกบิน
-                }
-                else if (!hasDoubleJumped)
-                {
-                    StartGlide();     // เริ่มบิน
-                }
-            }
-        }
+        
 
         if (Input.GetButton("Fire1"))
         {
@@ -109,7 +91,10 @@ public class PlayerController : MonoBehaviour
     {
         return !isDashing && Time.time >= lastDashTime + dashCooldown;
     }
-
+    public bool IsDashing()
+    {
+        return isDashing;
+    }
     void GetInput()
     {
         float x = Input.GetAxis("Horizontal");
@@ -137,29 +122,42 @@ public class PlayerController : MonoBehaviour
     }
     void HandleGlide()
     {
+        bool holdingFly = Input.GetKey(KeyCode.Space);
+
+        // เริ่มบินทันทีเมื่อกดค้าง
+        if (holdingFly)
+        {
+            if (!isGliding)
+            {
+                isGliding = true;
+                glideTimer = maxGlideTime;
+            }
+        }
+
         if (!isGliding) return;
 
         glideTimer -= Time.deltaTime;
-        if (glideTimer <= 0)
-        {
-            isGliding = false;
-            return;
-        }
 
         Vector3 velocity = rb.linearVelocity;
 
-        if (Input.GetKey(KeyCode.Space))
+        if (holdingFly && glideTimer > 0f)
         {
-            // ✅ กดค้าง = ลอยขึ้น
+            // 🟢 บินขึ้น
             velocity.y = flightVerticalSpeed;
         }
         else
         {
-            // ✅ ปล่อย = ค่อย ๆ ร่อนลง
+            // 🟡 หมดเวลา หรือปล่อยปุ่ม → ร่อนลง
             velocity.y += Physics.gravity.y * glideGravityMultiplier * Time.deltaTime;
         }
 
         rb.linearVelocity = velocity;
+
+        // ถ้าแตะพื้น → หยุดบิน
+        if (isGrounded && !holdingFly)
+        {
+            isGliding = false;
+        }
     }
     void StartGlide()
     {
@@ -197,10 +195,9 @@ public class PlayerController : MonoBehaviour
     {
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
-        if (isGrounded)
+        if (isGrounded && !Input.GetKey(KeyCode.Space))
         {
             isGliding = false;
-            hasDoubleJumped = false;
         }
     }
     void TryUseWeapon()
