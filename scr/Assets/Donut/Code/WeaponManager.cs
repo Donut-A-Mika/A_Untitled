@@ -39,6 +39,7 @@ public class WeaponManager : MonoBehaviour
         if (equippedWeapons[slotNumber - 1] != null)
         {
             Destroy(equippedWeapons[slotNumber - 1]);
+            print("ใช้งานได้");
         }
 
         GameObject newWeapon = Instantiate(weaponPrefab, targetSlot);
@@ -49,20 +50,8 @@ public class WeaponManager : MonoBehaviour
         RangedWeapon ranged = newWeapon.GetComponent<RangedWeapon>();
         MeleeWeapon melee = newWeapon.GetComponent<MeleeWeapon>();
 
-        if (ranged != null)
-        {
-            newWeapon.transform.localScale = ranged.weaponScale;
-        }
-        else if (melee != null)
-        {
-            // ใช้ค่า scale จากตัว MeleeWeapon เอง
-            newWeapon.transform.localScale = melee.weaponScale;
-        }
-        else
-        {
-            newWeapon.transform.localScale = Vector3.one;
-        }
-        // -------------------------------
+       
+        
 
         equippedWeapons[slotNumber - 1] = newWeapon;
     }

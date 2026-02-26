@@ -217,11 +217,25 @@ public class PlayerController : MonoBehaviour
     {
         if (weaponSwitcher != null && weaponSwitcher.currentWeapon != null)
         {
+            // 1. ดึง Component ที่เป็น IWeapon มาเพื่อสั่งโจมตี
             IWeapon weapon = weaponSwitcher.currentWeapon.GetComponent<IWeapon>();
+
             if (weapon != null)
             {
+                // สั่งโจมตี (เรียกใช้ได้ทั้ง Melee และ Ranged)
                 weapon.Attack();
-                animatorPlayer.SetTrigger("attack");
+
+                // 2. เช็คประเภทของ Script ที่แนบอยู่กับ Object อาวุธ
+                // ถ้าอาวุธนั้นมีสคริปต์ชื่อ MeleeWeapon ให้เล่นอนิเมชั่น "attack"
+                if (weaponSwitcher.currentWeapon.GetComponent<MeleeWeapon>() != null)
+                {
+                    if (animatorPlayer != null)
+                    {
+                        animatorPlayer.SetTrigger("attack");
+                    }
+                }
+                // ถ้าเป็น RangedWeapon หรืออย่างอื่น (ตามเงื่อนไขของคุณ) จะไม่ทำอะไรต่อ 
+                // ทำให้ไม่มีการเรียก SetTrigger("attack") ครับ
             }
         }
     }

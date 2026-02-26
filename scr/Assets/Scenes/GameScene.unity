@@ -4939,10 +4939,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraZoomADS
   cineCam: {fileID: 1594126890}
-  player: {fileID: 0}
+  player: {fileID: 3187618031642162430}
   normalFOV: 50
   adsFOV: 30
-  dashFOV: 65
+  dashFOV: 70
   zoomSpeed: 10
 --- !u!114 &1433175539
 MonoBehaviour:
@@ -5214,7 +5214,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 50
+  field of view: 50.00001
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -5261,8 +5261,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AimingSystem
   targetCamera: {fileID: 1439161364}
   objectsToRotate:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 3187618031642162431}
   rayRange: 500
   hitLayers:
     serializedVersion: 2
@@ -6674,7 +6673,7 @@ MonoBehaviour:
     LookAtTarget: {fileID: 0}
     CustomLookAtTarget: 0
   Lens:
-    FieldOfView: 50
+    FieldOfView: 50.00001
     OrthographicSize: 5
     NearClipPlane: 0.3
     FarClipPlane: 1000
@@ -9810,11 +9809,11 @@ PrefabInstance:
     - target: {fileID: 6114734865765841232, guid: b7e86e63e95ea084fa3f13cada2acbeb, type: 3}
       propertyPath: weaponSlot1
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 3187618031642162431}
     - target: {fileID: 6114734865765841232, guid: b7e86e63e95ea084fa3f13cada2acbeb, type: 3}
       propertyPath: weaponSlot2
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 3187618031642162431}
     - target: {fileID: 6138826508936265230, guid: b7e86e63e95ea084fa3f13cada2acbeb, type: 3}
       propertyPath: m_LocalPosition.y
       value: 571.1313
@@ -9889,15 +9888,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8535549939344980661, guid: b7e86e63e95ea084fa3f13cada2acbeb, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8535549939344980661, guid: b7e86e63e95ea084fa3f13cada2acbeb, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8535549939344980661, guid: b7e86e63e95ea084fa3f13cada2acbeb, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8535549939344980661, guid: b7e86e63e95ea084fa3f13cada2acbeb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -9922,6 +9921,22 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1433175539}
   m_SourcePrefab: {fileID: 100100000, guid: b7e86e63e95ea084fa3f13cada2acbeb, type: 3}
+--- !u!114 &3187618031642162430 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3127635363727907021, guid: b7e86e63e95ea084fa3f13cada2acbeb, type: 3}
+  m_PrefabInstance: {fileID: 3187618031642162429}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 387430782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c92a868169ceb004c897bd040eac3136, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerController
+--- !u!4 &3187618031642162431 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5552573799856795280, guid: b7e86e63e95ea084fa3f13cada2acbeb, type: 3}
+  m_PrefabInstance: {fileID: 3187618031642162429}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
