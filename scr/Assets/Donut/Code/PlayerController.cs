@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+
 public class PlayerController : MonoBehaviour
 {
     public Transform cameraTransform;
@@ -13,15 +14,11 @@ public class PlayerController : MonoBehaviour
     public float glideGravityMultiplier = 0.3f;
     public float maxGlideTime = 2f;
 
-    private bool hasDoubleJumped;
     private bool isGliding;
     private float glideTimer;
 
     [Header("Camera Flight Control")]
     public float flightVerticalSpeed = 4f;
-
-    [Header("Rotation")]
-    public float rotationSpeed = 10f;
 
     [Header("Dash")]
     public float dashForce = 12f;
@@ -36,26 +33,31 @@ public class PlayerController : MonoBehaviour
     public float groundDistance = 0.3f;
     public LayerMask groundMask;
 
+    [Header("Animation & Weapons")]
     public Animator animatorPlayer;
+    public WeaponManager weaponSwitcher;
 
     private Rigidbody rb;
     private Vector3 moveInput;
     private bool isGrounded;
 
-    [Header("Weapon System")]
-    public GameObject currentWeaponObject; // อาวุธที่ติดตั้งอยู่ปัจจุบัน
-    private IWeapon currentWeaponInterface;
-    public WeaponManager weaponSwitcher;
+    // --- ตัวแปรสำหรับเช็คตำแหน่ง (Position-based Velocity) ---
+    private Vector3 lastPosition;
+    private Vector3 actualVelocity;
+    private float velocityXSmooth;
+    private float velocityYSmooth;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        if (animatorPlayer != null)
-        {
-            animatorPlayer = GetComponent<Animator>();
-        }
-        Cursor.lockState = CursorLockMode.Locked; // ล็อกเมาส์ไว้กึ่งกลางจอ
-        Cursor.visible = false;                   // ซ่อนรูปเคอร์เซอร์
+
+        if (animatorPlayer == null)
+            animatorPlayer = GetComponentInChildren<Animator>();
+
+        lastPosition = transform.position;
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     void Update()
@@ -64,37 +66,84 @@ public class PlayerController : MonoBehaviour
         GetInput();
         RotatePlayerToCamera();
 
-        
+        CalculatePositionVelocity();
+        UpdateAnimations();
 
-        if (Input.GetButton("Fire1"))
-        {
-            TryUseWeapon();
-        }
-
+        if (Input.GetButtonDown("Fire1")) TryUseWeapon();
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded) Jump();
         HandleGlide();
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && CanDash())
-        {
             StartCoroutine(Dash());
-        }
     }
 
     void FixedUpdate()
     {
-        if (!isDashing)
-        {
-            Move();
-        }
+        if (!isDashing) Move();
     }
 
-    bool CanDash()
+    void CalculatePositionVelocity()
     {
-        return !isDashing && Time.time >= lastDashTime + dashCooldown;
+        Vector3 distanceMoved = transform.position - lastPosition;
+        distanceMoved.y = 0;
+
+        if (Time.deltaTime > 0)
+            actualVelocity = distanceMoved / Time.deltaTime;
+
+        lastPosition = transform.position;
     }
-    public bool IsDashing()
+
+    void UpdateAnimations()
     {
-        return isDashing;
+        if (animatorPlayer == null) return;
+
+        Vector3 localVel = transform.InverseTransformDirection(actualVelocity);
+
+        bool isMoving = actualVelocity.magnitude > 0.1f && isGrounded;
+        animatorPlayer.SetBool("Isrun", isMoving);
+        animatorPlayer.SetBool("Isjump", !isGrounded);
+
+        float targetX = localVel.x / moveSpeed;
+        float targetY = localVel.z / moveSpeed;
+
+        velocityXSmooth = Mathf.Lerp(velocityXSmooth, targetX, Time.deltaTime * 10f);
+        velocityYSmooth = Mathf.Lerp(velocityYSmooth, targetY, Time.deltaTime * 10f);
+
+        animatorPlayer.SetFloat("velocityX", velocityXSmooth);
+        animatorPlayer.SetFloat("velocityy", velocityYSmooth);
     }
+
+    // ===== [ MELEE LUNGE - ส่วนที่เพิ่มมาเพื่อรองรับ MeleeWeapon ] =====
+    public void LungeForward(float distance, float duration)
+    {
+        StartCoroutine(LungeRoutine(distance, duration));
+    }
+
+    IEnumerator LungeRoutine(float distance, float duration)
+    {
+        float timer = 0f;
+        Vector3 dir = transform.forward;
+
+        // ล็อกสถานะ Dashing ชั่วคราวเพื่อให้ FixedUpdate ไม่กวนแรงพุ่ง
+        bool prevDashState = isDashing;
+        isDashing = true;
+
+        // ล้างแรงเดิมออกก่อนพุ่ง
+        rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, 0);
+
+        while (timer < duration)
+        {
+            float speed = distance / duration;
+            rb.linearVelocity = new Vector3(dir.x * speed, rb.linearVelocity.y, dir.z * speed);
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        isDashing = prevDashState;
+    }
+
+    // =============================================================
+
     void GetInput()
     {
         float x = Input.GetAxis("Horizontal");
@@ -102,7 +151,6 @@ public class PlayerController : MonoBehaviour
 
         Vector3 camForward = Camera.main.transform.forward;
         Vector3 camRight = Camera.main.transform.right;
-
         camForward.y = 0;
         camRight.y = 0;
 
@@ -120,86 +168,51 @@ public class PlayerController : MonoBehaviour
         rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
     }
+
     void HandleGlide()
     {
         bool holdingFly = Input.GetKey(KeyCode.Space);
-
-        // เริ่มบินทันทีเมื่อกดค้าง
-        if (holdingFly)
+        if (holdingFly && !isGrounded)
         {
-            if (!isGliding)
-            {
-                isGliding = true;
-                glideTimer = maxGlideTime;
-            }
+            if (!isGliding) { isGliding = true; glideTimer = maxGlideTime; }
         }
 
         if (!isGliding) return;
 
         glideTimer -= Time.deltaTime;
-
         Vector3 velocity = rb.linearVelocity;
 
         if (holdingFly && glideTimer > 0f)
-        {
-            // 🟢 บินขึ้น
             velocity.y = flightVerticalSpeed;
-        }
         else
-        {
-            // 🟡 หมดเวลา หรือปล่อยปุ่ม → ร่อนลง
             velocity.y += Physics.gravity.y * glideGravityMultiplier * Time.deltaTime;
-        }
 
         rb.linearVelocity = velocity;
 
-        // ถ้าแตะพื้น → หยุดบิน
-        if (isGrounded && !holdingFly)
-        {
-            isGliding = false;
-        }
+        if (isGrounded && !holdingFly) isGliding = false;
     }
-    void StartGlide()
-    {
-        hasDoubleJumped = true;
-        isGliding = true;
-        glideTimer = maxGlideTime;
-    }
-    void CancelGlide()
-    {
-        isGliding = false;
-        glideTimer = 0f;
-    }
+
     IEnumerator Dash()
     {
         isDashing = true;
         lastDashTime = Time.time;
 
-        Vector3 dashDir = moveInput;
-
-        if (dashDir == Vector3.zero)
-        {
-            dashDir = Camera.main.transform.forward;
-            dashDir.y = 0;
-            dashDir.Normalize();
-        }
-
+        Vector3 dashDir = moveInput != Vector3.zero ? moveInput : transform.forward;
         rb.linearVelocity = Vector3.zero;
         rb.AddForce(dashDir * dashForce, ForceMode.Impulse);
 
         yield return new WaitForSeconds(dashDuration);
-
         isDashing = false;
     }
+
+    public bool IsDashing() => isDashing;
+    bool CanDash() => !isDashing && Time.time >= lastDashTime + dashCooldown;
+
     void CheckGround()
     {
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-
-        if (isGrounded && !Input.GetKey(KeyCode.Space))
-        {
-            isGliding = false;
-        }
     }
+
     void TryUseWeapon()
     {
         if (weaponSwitcher != null && weaponSwitcher.currentWeapon != null)
@@ -207,85 +220,22 @@ public class PlayerController : MonoBehaviour
             IWeapon weapon = weaponSwitcher.currentWeapon.GetComponent<IWeapon>();
             if (weapon != null)
             {
-                Debug.Log("สั่งโจมตีไปที่: " + weaponSwitcher.currentWeapon.name);
                 weapon.Attack();
-                if (animatorPlayer != null)
-                {
-                    animatorPlayer.SetTrigger("attack");
-                }
-            }
-            else
-            {
-                Debug.LogError("อาวุธที่ถืออยู่ไม่มี Script ที่เป็น IWeapon!");
+                animatorPlayer.SetTrigger("attack");
             }
         }
-        else
-        {
-            Debug.LogWarning("ไม่มีอาวุธติดตั้งอยู่ หรือลืมลาก WeaponManager ใส่ Player");
-        }
-    }
-    void TryAttack()
-    {
-        // เช็คเงื่อนไขพิเศษ เช่น ห้ามยิงขณะ Dash
-        if (isDashing) return;
-
-        // หา Component อาวุธในวัตถุที่ถืออยู่
-        currentWeaponInterface = currentWeaponObject.GetComponent<IWeapon>();
-
-        if (currentWeaponInterface != null)
-        {
-            currentWeaponInterface.Attack();
-        }
     }
 
-    // ===== MELEE LUNGE =====
-    public void LungeForward(float distance, float duration)
-    {
-        StartCoroutine(LungeRoutine(distance, duration));
-    }
-
-    IEnumerator LungeRoutine(float distance, float duration)
-    {
-        float timer = 0f;
-        Vector3 dir = transform.forward;
-
-        // ปิดการควบคุมเดินชั่วคราว
-        bool prevDashState = isDashing;
-        isDashing = true;
-
-        // ล้างแรงเดิม
-        rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, 0);
-
-        while (timer < duration)
-        {
-            // ตั้งความเร็วตรง ๆ จะชัวร์กว่า AddForce
-            float speed = distance / duration;
-            rb.linearVelocity = new Vector3(dir.x * speed, rb.linearVelocity.y, dir.z * speed);
-
-            timer += Time.deltaTime;
-            yield return null;
-        }
-
-        isDashing = prevDashState;
-    }
     void RotatePlayerToCamera()
     {
         TargetLockSystem lockSystem = GetComponent<TargetLockSystem>();
-        if (lockSystem != null && lockSystem.IsLocked)
-            return;
+        if (lockSystem != null && lockSystem.IsLocked) return;
 
         Vector3 camForward = cameraTransform.forward;
         camForward.y = 0f;
-        camForward.Normalize();
-
-        if (camForward.magnitude < 0.1f)
-            return;
+        if (camForward.sqrMagnitude < 0.01f) return;
 
         Quaternion targetRotation = Quaternion.LookRotation(camForward);
-        transform.rotation = Quaternion.Slerp(
-            transform.rotation,
-            targetRotation,
-            rotateSpeed * Time.deltaTime
-        );
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
     }
 }
