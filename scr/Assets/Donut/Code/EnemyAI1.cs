@@ -109,6 +109,10 @@ public class EnemyAI1 : MonoBehaviour
                 anim.SetBool("isAttack", false);
             }
         }
+        if (!isKnockedBack)
+        {
+            if (anim != null) anim.SetBool("isHit", false);
+        }
 
         UpdateAnimation();
     }
