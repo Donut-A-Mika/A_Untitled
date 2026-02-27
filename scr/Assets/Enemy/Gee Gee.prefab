@@ -2033,7 +2033,7 @@ MonoBehaviour:
   rotationSpeed: 10
   minImpactForceToKnockback: 1.5
   chainReactionMultiplier: 0.3
-  exitKnockbackSpeed: 30
+  exitKnockbackSpeed: 50
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
