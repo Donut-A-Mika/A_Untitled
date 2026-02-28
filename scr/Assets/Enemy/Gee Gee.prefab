@@ -2028,8 +2028,8 @@ MonoBehaviour:
   player: {fileID: 6429088519451864308, guid: b7e86e63e95ea084fa3f13cada2acbeb, type: 3}
   detectionRange: 100
   attackRange: 2
-  moveForce: 20
-  maxSpeed: 10
+  moveForce: 15
+  maxSpeed: 5
   rotationSpeed: 10
   minImpactForceToKnockback: 1.5
   chainReactionMultiplier: 0.3
