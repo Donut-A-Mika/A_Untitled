@@ -16,10 +16,10 @@ MonoBehaviour:
   - title: Flash
     position:
       serializedVersion: 2
-      x: 555
-      y: -1433
-      width: 771
-      height: 1654
+      x: 554
+      y: -1434
+      width: 774
+      height: 1666
     contents:
     - model: {fileID: 8926484042661615182}
       id: 0
@@ -101,10 +101,10 @@ MonoBehaviour:
   categories: []
   uiBounds:
     serializedVersion: 2
-    x: 555
-    y: -1467
-    width: 3137
-    height: 2318
+    x: 554
+    y: -1469
+    width: 3138
+    height: 2305
 --- !u!114 &114350483966674976
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -115,7 +115,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7d4c867f6b72b714dbb5fd1780afe208, type: 3}
-  m_Name: Hit
+  m_Name: Hit02
   m_EditorClassIdentifier: 
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
@@ -2008,7 +2008,7 @@ MonoBehaviour:
         m_SerializableType: UnityEditor.VFX.TArcSphere, Unity.VisualEffectGraph.Editor,
           Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       m_SerializableObject: '{"sphere":{"transform":{"position":{"x":0.0,"y":0.0,"z":0.0},"angles":{"x":0.0,"y":0.0,"z":0.0},"scale":{"x":1.0,"y":1.0,"z":1.0}},"radius":0.10000000149011612},"arc":6.2831854820251469}'
-    m_Space: 1
+    m_Space: 0
   m_Property:
     name: arcSphere
     m_serializedType:
@@ -2647,7 +2647,7 @@ MonoBehaviour:
         m_SerializableType: UnityEditor.VFX.Sphere, Unity.VisualEffectGraph.Editor,
           Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       m_SerializableObject: '{"center":{"x":0.0,"y":0.0,"z":0.0},"radius":1.0}'
-    m_Space: 1
+    m_Space: 0
   m_Property:
     name: Sphere
     m_serializedType:
@@ -4457,7 +4457,7 @@ MonoBehaviour:
   particlePerStripCount: 32
   needsComputeBounds: 0
   boundsMode: 0
-  m_Space: 1
+  m_Space: 0
 --- !u!114 &8926484042661615132
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5989,7 +5989,7 @@ MonoBehaviour:
   m_Parent: {fileID: 114350483966674976}
   m_Children:
   - {fileID: 8926484042661615183}
-  m_UIPosition: {x: 877, y: -1374}
+  m_UIPosition: {x: 878, y: -1374}
   m_UICollapsed: 0
   m_UISuperCollapsed: 0
   m_InputSlots: []
@@ -6173,7 +6173,7 @@ MonoBehaviour:
   m_Parent: {fileID: 114350483966674976}
   m_Children:
   - {fileID: 8926484042661615189}
-  m_UIPosition: {x: 877, y: -1086}
+  m_UIPosition: {x: 878, y: -1086}
   m_UICollapsed: 0
   m_UISuperCollapsed: 0
   m_InputSlots:
@@ -6792,7 +6792,7 @@ MonoBehaviour:
   particlePerStripCount: 32
   needsComputeBounds: 0
   boundsMode: 0
-  m_Space: 1
+  m_Space: 0
 --- !u!114 &8926484042661615207
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6808,7 +6808,7 @@ MonoBehaviour:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 114350483966674976}
   m_Children: []
-  m_UIPosition: {x: 877, y: -710}
+  m_UIPosition: {x: 878, y: -710}
   m_UICollapsed: 0
   m_UISuperCollapsed: 0
   m_InputSlots: []

@@ -72,9 +72,9 @@ MonoBehaviour:
     position:
       serializedVersion: 2
       x: 2921
-      y: -1450
-      width: 771
-      height: 1856
+      y: -1451
+      width: 772
+      height: 2234
     contents:
     - model: {fileID: 8926484042661614994}
       id: 0
@@ -121,10 +121,10 @@ MonoBehaviour:
   categories: []
   uiBounds:
     serializedVersion: 2
-    x: -846
-    y: -1467
-    width: 5323
-    height: 2795
+    x: -847
+    y: -1469
+    width: 4540
+    height: 2788
 --- !u!114 &114350483966674976
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -357,7 +357,7 @@ MonoBehaviour:
   particlePerStripCount: 32
   needsComputeBounds: 0
   boundsMode: 0
-  m_Space: 1
+  m_Space: 0
 --- !u!114 &8926484042661614662
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1838,7 +1838,7 @@ MonoBehaviour:
     supecollapsed: 0
   - m_Id: 2
     linkedSlots: []
-    position: {x: 2946, y: -45}
+    position: {x: 2946.4, y: -44.8}
     expandedSlots: []
     expanded: 1
     supecollapsed: 0
@@ -2703,7 +2703,7 @@ MonoBehaviour:
   particlePerStripCount: 32
   needsComputeBounds: 0
   boundsMode: 0
-  m_Space: 1
+  m_Space: 0
 --- !u!114 &8926484042661614932
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4278,7 +4278,7 @@ MonoBehaviour:
   m_Parent: {fileID: 114350483966674976}
   m_Children:
   - {fileID: 8926484042661614996}
-  m_UIPosition: {x: 3243, y: -1391}
+  m_UIPosition: {x: 3243, y: -1390}
   m_UICollapsed: 0
   m_UISuperCollapsed: 0
   m_InputSlots: []
@@ -4463,7 +4463,7 @@ MonoBehaviour:
   m_Children:
   - {fileID: 8926484042661615043}
   - {fileID: 8926484042661615015}
-  m_UIPosition: {x: 3243, y: -1103}
+  m_UIPosition: {x: 3243, y: -1102}
   m_UICollapsed: 0
   m_UISuperCollapsed: 0
   m_InputSlots:
@@ -4951,7 +4951,7 @@ MonoBehaviour:
   particlePerStripCount: 32
   needsComputeBounds: 0
   boundsMode: 0
-  m_Space: 1
+  m_Space: 0
 --- !u!114 &8926484042661615015
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5099,7 +5099,7 @@ MonoBehaviour:
   m_Parent: {fileID: 114350483966674976}
   m_Children:
   - {fileID: 8926484042661615062}
-  m_UIPosition: {x: 3243, y: -516}
+  m_UIPosition: {x: 3243, y: -522}
   m_UICollapsed: 0
   m_UISuperCollapsed: 0
   m_InputSlots: []
@@ -5822,7 +5822,7 @@ MonoBehaviour:
         m_SerializableType: UnityEditor.VFX.TArcSphere, Unity.VisualEffectGraph.Editor,
           Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       m_SerializableObject: '{"sphere":{"transform":{"position":{"x":0.0,"y":0.0,"z":0.0},"angles":{"x":0.0,"y":0.0,"z":0.0},"scale":{"x":1.0,"y":1.0,"z":1.0}},"radius":0.10000000149011612},"arc":6.2831854820251469}'
-    m_Space: 1
+    m_Space: 0
   m_Property:
     name: arcSphere
     m_serializedType:
@@ -6461,7 +6461,7 @@ MonoBehaviour:
         m_SerializableType: UnityEditor.VFX.Sphere, Unity.VisualEffectGraph.Editor,
           Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       m_SerializableObject: '{"center":{"x":0.0,"y":0.0,"z":0.0},"radius":1.0}'
-    m_Space: 1
+    m_Space: 0
   m_Property:
     name: Sphere
     m_serializedType:
@@ -7115,7 +7115,7 @@ MonoBehaviour:
     linkedSlots:
     - outputSlot: {fileID: 8926484042661615095}
       inputSlot: {fileID: 8926484042661615035}
-    position: {x: 2958.4827, y: -174.28114}
+    position: {x: 2958.4, y: -174.40001}
     expandedSlots: []
     expanded: 1
     supecollapsed: 0
@@ -7978,7 +7978,7 @@ MonoBehaviour:
   particlePerStripCount: 32
   needsComputeBounds: 0
   boundsMode: 0
-  m_Space: 1
+  m_Space: 0
 --- !u!114 &8926484042661615181
 MonoBehaviour:
   m_ObjectHideFlags: 0
