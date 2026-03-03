@@ -34,6 +34,15 @@ public class EnemyAI1 : MonoBehaviour
     public bool isDead = false;
     private bool isAttacking = false; // ตัวแปรเช็คว่ากำลังอยู่ในอนิเมชั่นโจมตีหรือไม่
 
+    [Header("Retreat Settings")]
+    public float retreatTriggerRange = 1.5f;   // ระยะที่ทำให้ถอย
+    public float retreatForce = 8f;            // แรงถอย
+    public float retreatDuration = 0.3f;       // เวลาถอย
+    public float retreatCooldown = 2f;         // คูลดาวน์ถอย
+
+    private float lastRetreatTime = -10f;
+    private bool isRetreating = false;
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -57,8 +66,7 @@ public class EnemyAI1 : MonoBehaviour
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj != null) player = playerObj.transform;
     }
-
-    void Update()
+   void Update()
     {
         if (isDead || isKnockedBack || player == null || agent == null || !agent.enabled)
         {
@@ -66,26 +74,36 @@ public class EnemyAI1 : MonoBehaviour
             return;
         }
 
-        // 1. เช็คสถานะการโจมตีปัจจุบันจาก Animator
-        AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
-        bool isPlayingAttack = stateInfo.IsName("Attack"); // ตรวจว่ากำลังอยู่ใน State โจมตีไหม
-
-        // โจมตีเสร็จหรือยัง? (ถ้าไม่ได้เล่นท่า Attack หรือเล่นจบไปแล้ว 1 รอบ)
-        bool attackFinished = !isPlayingAttack || (stateInfo.normalizedTime >= 1.0f && !anim.IsInTransition(0));
-
-        // 2. อัปเดตตำแหน่ง NavMesh
-        agent.nextPosition = transform.position;
+        // ✅ คำนวณระยะก่อนใช้
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+
+        // ===== RETREAT SYSTEM =====
+        if (distanceToPlayer <= retreatTriggerRange
+            && Time.time >= lastRetreatTime + retreatCooldown
+            && !isRetreating
+            && !isAttacking
+            && !isKnockedBack)
+        {
+            StartCoroutine(Retreat());
+            return;
+        }
+
+        // 1. เช็คสถานะการโจมตี
+        AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
+        bool isPlayingAttack = stateInfo.IsName("Attack");
+
+        bool attackFinished = !isPlayingAttack ||
+            (stateInfo.normalizedTime >= 1.0f && !anim.IsInTransition(0));
+
+        agent.nextPosition = transform.position;
 
         if (distanceToPlayer <= detectionRange)
         {
             if (distanceToPlayer <= attackRange)
             {
-                // หยุดเดินทันทีเมื่อเข้าเขตโจมตี
                 agent.ResetPath();
                 rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, 0);
 
-                // 3. เงื่อนไขการเริ่มโจมตี: ต้องโจมตีครั้งก่อนเสร็จแล้วเท่านั้น
                 if (attackFinished)
                 {
                     anim.SetBool("isAttack", true);
@@ -93,7 +111,6 @@ public class EnemyAI1 : MonoBehaviour
             }
             else
             {
-                // ถ้าอยู่นอกระยะโจมตี และ "ท่าโจมตีเดิมจบแล้ว" ถึงจะเดินต่อได้
                 if (attackFinished)
                 {
                     anim.SetBool("isAttack", false);
@@ -109,9 +126,10 @@ public class EnemyAI1 : MonoBehaviour
                 anim.SetBool("isAttack", false);
             }
         }
+
         if (!isKnockedBack)
         {
-            if (anim != null) anim.SetBool("isHit", false);
+            anim.SetBool("isHit", false);
         }
 
         UpdateAnimation();
@@ -135,8 +153,9 @@ public class EnemyAI1 : MonoBehaviour
 
     void FixedUpdate()
     {
-        // ถ้าตาย, โดนเด้ง, หรือ "กำลังโจมตีอยู่" ห้ามใส่แรงเดิน
-        if (isDead || isKnockedBack || isAttacking || player == null || agent == null || !agent.enabled || !agent.hasPath) return;
+        if (isDead || isKnockedBack || isAttacking || isRetreating
+    || player == null || agent == null || !agent.enabled || !agent.hasPath)
+            return;
 
         Vector3 targetDirection = (agent.steeringTarget - transform.position).normalized;
         targetDirection.y = 0;
@@ -209,7 +228,37 @@ public class EnemyAI1 : MonoBehaviour
             isKnockedBack = false;
         }
     }
+    IEnumerator Retreat()
+    {
+        isRetreating = true;
+        lastRetreatTime = Time.time;
 
+        if (agent.isActiveAndEnabled)
+            agent.ResetPath();
+
+        // หยุดความเร็วเดิม
+        rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, 0);
+
+        Vector3 retreatDir = (transform.position - player.position).normalized;
+        retreatDir.y = 0;
+
+        float timer = 0f;
+
+        while (timer < retreatDuration)
+        {
+            rb.linearVelocity = new Vector3(
+                retreatDir.x * retreatForce,
+                rb.linearVelocity.y,
+                retreatDir.z * retreatForce
+            );
+
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, 0);
+        isRetreating = false;
+    }
     private bool CheckIfGrounded()
     {
         if (boxCol == null) return true;

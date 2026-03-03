@@ -2026,7 +2026,7 @@ MonoBehaviour:
   agent: {fileID: 4941429600468661568}
   anim: {fileID: 7447493851859137699}
   player: {fileID: 6429088519451864308, guid: b7e86e63e95ea084fa3f13cada2acbeb, type: 3}
-  detectionRange: 100
+  detectionRange: 25
   attackRange: 2
   moveForce: 15
   maxSpeed: 5
@@ -2040,6 +2040,10 @@ MonoBehaviour:
   knockbackCooldown: 0.1
   isKnockedBack: 0
   isDead: 0
+  retreatTriggerRange: 5
+  retreatForce: 8
+  retreatDuration: 0.3
+  retreatCooldown: 20
 --- !u!114 &2529944956308285534
 MonoBehaviour:
   m_ObjectHideFlags: 0

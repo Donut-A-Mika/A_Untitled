@@ -242,8 +242,9 @@ public class PlayerController : MonoBehaviour
 
     void RotatePlayerToCamera()
     {
-        TargetLockSystem lockSystem = GetComponent<TargetLockSystem>();
-        if (lockSystem != null && lockSystem.IsLocked) return;
+        HardLockSystem lockSystem = GetComponent<HardLockSystem>();
+        if (lockSystem != null && lockSystem.HasTarget)
+            return;
 
         Vector3 camForward = cameraTransform.forward;
         camForward.y = 0f;
