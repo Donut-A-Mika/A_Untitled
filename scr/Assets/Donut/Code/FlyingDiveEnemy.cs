@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+
 using UnityEngine;
 using UnityEngine.AdaptivePerformance;
 public class FlyingDiveEnemy : MonoBehaviour
@@ -39,7 +40,7 @@ public class FlyingDiveEnemy : MonoBehaviour
     void Update()
     {
         cooldownTimer -= Time.deltaTime;
-
+        
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
         // ✅ ตรวจจับผู้เล่น

@@ -129,4 +129,15 @@ public class WeaponManager : MonoBehaviour
             default: return null;
         }
     }
+    // เพิ่มฟังก์ชันเหล่านี้ใน WeaponManager
+    public GameObject GetWeaponFromSlot(int slot)
+    {
+        if (slot < 1 || slot > equippedWeapons.Length) return null;
+        return equippedWeapons[slot - 1];
+    }
+
+    public int GetCurrentSlotIndex()
+    {
+        return currentSlotIndex;
+    }
 }

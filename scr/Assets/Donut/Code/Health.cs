@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
-
+using UnityEngine.SceneManagement;
 public class Health : MonoBehaviour
 {
     public float maxHealth = 100f;
-    private float currentHealth;
+    public float currentHealth;
 
     public Action onDeath;
 
@@ -58,5 +58,12 @@ public class Health : MonoBehaviour
         onDeath?.Invoke();
         Debug.Log(gameObject.name + " Dead");
         Destroy(gameObject);
+        SceneManager.LoadScene("GameScene"); 
+
+    }
+
+    public float GetCurrentHealth()
+    {
+        return currentHealth;
     }
 }

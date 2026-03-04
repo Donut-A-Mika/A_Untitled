@@ -31,7 +31,13 @@ public class RangedWeapon : MonoBehaviour, IWeapon
 
     private float nextFireTime = 0f;
     private bool isFiring = false;
+    public Texture weaponIcon; // เอารูปภาพ Preview ของปืนมาใส่ใน Inspector ของ Prefab ปืน
 
+
+
+    
+
+    
     public void Attack()
     {
         if (Time.time < nextFireTime || isFiring) return;

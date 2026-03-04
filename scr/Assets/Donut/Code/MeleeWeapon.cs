@@ -18,6 +18,7 @@ public class MeleeWeapon : MonoBehaviour, IWeapon
 
     private float lastAttackTime;
     private PlayerController player;
+    public Texture weaponIcon; // เอารูปภาพ Preview ของปืนมาใส่ใน Inspector ของ Prefab ปืน
 
     void Start()
     {
