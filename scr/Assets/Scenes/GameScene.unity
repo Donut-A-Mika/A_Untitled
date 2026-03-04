@@ -11572,6 +11572,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2064310733}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &2074052749 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 101810263713007433, guid: b7e86e63e95ea084fa3f13cada2acbeb, type: 3}
+  m_PrefabInstance: {fileID: 3187618031642162429}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2075077409
 GameObject:
   m_ObjectHideFlags: 0
@@ -12707,7 +12712,7 @@ PrefabInstance:
       addedObject: {fileID: 1433175538}
     - targetCorrespondingSourceObject: {fileID: 2845605553315518285, guid: b7e86e63e95ea084fa3f13cada2acbeb, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 3187618031642162440}
+      addedObject: {fileID: 3187618031642162433}
   m_SourcePrefab: {fileID: 100100000, guid: b7e86e63e95ea084fa3f13cada2acbeb, type: 3}
 --- !u!114 &3187618031642162430 stripped
 MonoBehaviour:
@@ -12748,7 +12753,7 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3187618031642162440
+--- !u!114 &3187618031642162433
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -12757,17 +12762,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 387430782}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48d6c28db64e1b94897bbe9a58a84256, type: 3}
+  m_Script: {fileID: 11500000, guid: 5054feba4b6eb1944a0c8a98fd71e2d4, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HardLockSystem
+  m_EditorClassIdentifier: Assembly-CSharp::TargetLockSystem
   player: {fileID: 1433175529}
-  cameraPivot: {fileID: 1439161365}
   cineCam: {fileID: 1594126890}
-  lockRange: 25
+  cameraFollowPivot: {fileID: 2074052749}
+  lockRange: 15
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
-  rotateSpeed: 8
+  rotateSpeed: 10
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
