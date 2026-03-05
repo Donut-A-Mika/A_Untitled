@@ -173,6 +173,8 @@ MonoBehaviour:
   bulletForce: 20
   logo: {fileID: 2800000, guid: a6251e1a37b44c741b75de1e00ddb35d, type: 3}
   weaponScale: {x: 1, y: 1, z: 1}
+  magazineSize: 3
+  reloadTime: 5
   currentMode: 0
   fireRate: 2
   burstCount: 3

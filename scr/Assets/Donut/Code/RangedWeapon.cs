@@ -3,27 +3,29 @@ using System.Collections;
 
 public class RangedWeapon : MonoBehaviour, IWeapon
 {
-    // --- ตั้งค่าพื้นฐาน (ห้ามลบ) ---
     [Header("Basic Settings")]
     public GameObject bulletPrefab;
     public Transform firePoint;
     public float bulletForce = 20f;
     public Texture2D logo;
-    // เพิ่มตัวแปรสำหรับตั้งค่าขนาดปืน
     public Vector3 weaponScale = Vector3.one;
 
-    // --- ระบบโหมดการยิง (Fire Mode) ---
+    // ⭐ ระบบกระสุน
+    [Header("Ammo System")]
+    public int magazineSize = 30;
+    public float reloadTime = 2f;
+
+    private int currentAmmo;
+    private bool isReloading = false;
+
     public enum FireMode { Single, Auto, Burst }
+
     [Header("Fire Mode Settings")]
     public FireMode currentMode = FireMode.Single;
 
-    [Tooltip("อัตราการยิง: จำนวนนัดต่อ 1 วินาที")]
     public float fireRate = 5f;
-
-    [Tooltip("จำนวนครั้งที่จะยิงออกไปในโหมด Burst")]
     public int burstCount = 3;
 
-    // --- ระบบลูกซอง (Shotgun Spread) ---
     [Header("Shotgun Settings")]
     public bool useShotgunSpread = false;
     public int pelletsCount = 8;
@@ -31,15 +33,34 @@ public class RangedWeapon : MonoBehaviour, IWeapon
 
     private float nextFireTime = 0f;
     private bool isFiring = false;
-    public Texture weaponIcon; // เอารูปภาพ Preview ของปืนมาใส่ใน Inspector ของ Prefab ปืน
 
+    public Texture weaponIcon;
 
+    void Start()
+    {
+        currentAmmo = magazineSize;
+    }
 
-    
+    void Update()
+    {
+        // ⭐ กด R เพื่อรีโหลด
+        if (Input.GetKeyDown(KeyCode.R) && !isReloading && currentAmmo < magazineSize)
+        {
+            StartCoroutine(Reload());
+        }
+    }
 
-    
     public void Attack()
     {
+        if (isReloading) return;
+
+        // ⭐ ถ้ากระสุนหมด
+        if (currentAmmo <= 0)
+        {
+            StartCoroutine(Reload());
+            return;
+        }
+
         if (Time.time < nextFireTime || isFiring) return;
 
         float fireInterval = 1f / Mathf.Max(fireRate, 0.01f);
@@ -49,9 +70,11 @@ public class RangedWeapon : MonoBehaviour, IWeapon
             case FireMode.Single:
                 SingleFire(fireInterval);
                 break;
+
             case FireMode.Auto:
                 AutoFire(fireInterval);
                 break;
+
             case FireMode.Burst:
                 StartCoroutine(BurstFireRoutine(fireInterval));
                 break;
@@ -73,10 +96,17 @@ public class RangedWeapon : MonoBehaviour, IWeapon
     private IEnumerator BurstFireRoutine(float interval)
     {
         isFiring = true;
+
         float burstDelay = 0.08f;
 
         for (int i = 0; i < burstCount; i++)
         {
+            if (currentAmmo <= 0)
+            {
+                StartCoroutine(Reload());
+                break;
+            }
+
             ExecuteShot();
             yield return new WaitForSeconds(burstDelay);
         }
@@ -87,6 +117,10 @@ public class RangedWeapon : MonoBehaviour, IWeapon
 
     private void ExecuteShot()
     {
+        if (currentAmmo <= 0) return;
+
+        currentAmmo--;
+
         if (useShotgunSpread)
         {
             for (int i = 0; i < pelletsCount; i++)
@@ -98,6 +132,8 @@ public class RangedWeapon : MonoBehaviour, IWeapon
         {
             CreateAndFireBullet(false);
         }
+
+        Debug.Log("Ammo: " + currentAmmo + "/" + magazineSize);
     }
 
     private void CreateAndFireBullet(bool applySpread)
@@ -120,5 +156,20 @@ public class RangedWeapon : MonoBehaviour, IWeapon
         {
             rb.AddForce(shootDirection * bulletForce, ForceMode.Impulse);
         }
+    }
+
+    IEnumerator Reload()
+    {
+        if (isReloading) yield break;
+
+        isReloading = true;
+        Debug.Log("Reloading...");
+
+        yield return new WaitForSeconds(reloadTime);
+
+        currentAmmo = magazineSize;
+        isReloading = false;
+
+        Debug.Log("Reload Complete");
     }
 }
