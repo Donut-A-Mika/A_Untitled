@@ -17,6 +17,9 @@ public class TargetLockSystem : MonoBehaviour
     [Header("Rotation")]
     public float rotateSpeed = 10f;
 
+    [Header("Weapon")]
+    public Transform weaponHolder;
+
     private Transform currentTarget;
     public bool IsLocked => currentTarget != null;
 
@@ -28,10 +31,18 @@ public class TargetLockSystem : MonoBehaviour
             else LockNearestTarget();
         }
 
+        // ⭐ ถ้า target ถูกทำลาย ให้ปลด lock
+        if (currentTarget == null)
+        {
+            UnlockTarget();
+            return;
+        }
+
         if (IsLocked)
         {
             RotatePlayerToTarget();
             RotateCameraToTarget();
+            RotateWeaponToTarget(); // ⭐ เพิ่มตรงนี้
         }
     }
 
@@ -44,7 +55,10 @@ public class TargetLockSystem : MonoBehaviour
 
         foreach (Collider e in enemies)
         {
+            if (e == null) continue;
+
             float dist = Vector3.Distance(player.position, e.transform.position);
+
             if (dist < closest)
             {
                 closest = dist;
@@ -52,12 +66,12 @@ public class TargetLockSystem : MonoBehaviour
             }
         }
 
+        if (nearest == null) return;
+
         currentTarget = nearest;
 
-        if (cineCam != null && currentTarget != null)
-        {
-            cineCam.LookAt = currentTarget; // ⭐ สำคัญมาก
-        }
+        if (cineCam != null)
+            cineCam.LookAt = currentTarget;
     }
 
     void UnlockTarget()
@@ -72,10 +86,15 @@ public class TargetLockSystem : MonoBehaviour
 
     void RotatePlayerToTarget()
     {
+        if (currentTarget == null) return;
+
         Vector3 dir = currentTarget.position - player.position;
         dir.y = 0f;
 
+        if (dir == Vector3.zero) return;
+
         Quaternion targetRot = Quaternion.LookRotation(dir);
+
         player.rotation = Quaternion.Slerp(
             player.rotation,
             targetRot,
@@ -85,9 +104,12 @@ public class TargetLockSystem : MonoBehaviour
 
     void RotateCameraToTarget()
     {
-        if (cameraFollowPivot == null) return;
+        if (currentTarget == null || cameraFollowPivot == null) return;
 
         Vector3 dir = currentTarget.position - cameraFollowPivot.position;
+
+        if (dir == Vector3.zero) return;
+
         Quaternion lookRot = Quaternion.LookRotation(dir);
 
         cameraFollowPivot.rotation = Quaternion.Slerp(
@@ -96,4 +118,22 @@ public class TargetLockSystem : MonoBehaviour
             rotateSpeed * Time.deltaTime
         );
     }
+
+    void RotateWeaponToTarget()
+    {
+        if (currentTarget == null || weaponHolder == null) return;
+
+        Vector3 dir = currentTarget.position - weaponHolder.position;
+
+        if (dir == Vector3.zero) return;
+
+        Quaternion targetRot = Quaternion.LookRotation(dir);
+
+        weaponHolder.rotation = Quaternion.Slerp(
+            weaponHolder.rotation,
+            targetRot,
+            rotateSpeed * Time.deltaTime
+        );
+    }
+
 }

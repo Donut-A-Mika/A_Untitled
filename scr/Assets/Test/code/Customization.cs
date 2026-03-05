@@ -32,10 +32,6 @@ public class Customization : MonoBehaviour
             // Debug เช็คว่า Playstate เก็บค่าอะไรไว้
             Debug.Log("gunslot1: " + (Playstate.gunslot1 != null ? Playstate.gunslot1.name : "Empty"));
         }
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            lordSreen();
-        }
     }
 
     void previview(int slot)
@@ -100,7 +96,11 @@ public class Customization : MonoBehaviour
         if (customePart[slotGun2] != null) Playstate.SaveToPlaystate(customePart[slotGun2], 2);
         if (customePart[slotGun3] != null) Playstate.SaveToPlaystate(customePart[slotGun3], 3);
         if (customePart[slotGun4] != null) Playstate.SaveToPlaystate(customePart[slotGun4], 4);
+
         Debug.Log("Saved all weapon slots.");
+
+        // โหลด Scene ต่อไป
+        SceneManager.LoadScene("GameScene");
     }
 
     void lordSreen() { SceneManager.LoadScene("GameScene"); }

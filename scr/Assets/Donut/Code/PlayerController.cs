@@ -47,12 +47,18 @@ public class PlayerController : MonoBehaviour
     private float velocityXSmooth;
     private float velocityYSmooth;
 
+    public TargetLockSystem lockSystem;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
 
         if (animatorPlayer == null)
             animatorPlayer = GetComponentInChildren<Animator>();
+
+        // ⭐ FIX สำคัญ
+        if (cameraTransform == null)
+            cameraTransform = Camera.main.transform;
 
         lastPosition = transform.position;
 
@@ -64,7 +70,6 @@ public class PlayerController : MonoBehaviour
     {
         CheckGround();
         GetInput();
-        RotatePlayerToCamera();
 
         CalculatePositionVelocity();
         UpdateAnimations();
@@ -146,21 +151,42 @@ public class PlayerController : MonoBehaviour
 
     void GetInput()
     {
+        if (cameraTransform == null) return;
+
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
-        Vector3 camForward = Camera.main.transform.forward;
-        Vector3 camRight = Camera.main.transform.right;
+        Vector3 camForward = cameraTransform.forward;
+        Vector3 camRight = cameraTransform.right;
+
         camForward.y = 0;
         camRight.y = 0;
 
         moveInput = (camForward * z + camRight * x).normalized;
     }
-
     void Move()
     {
+        if (cameraTransform == null) return;
+
         Vector3 move = moveInput * moveSpeed;
         rb.linearVelocity = new Vector3(move.x, rb.linearVelocity.y, move.z);
+
+        if (lockSystem == null || !lockSystem.IsLocked)
+        {
+            Vector3 camForward = cameraTransform.forward;
+            camForward.y = 0f;
+
+            if (camForward != Vector3.zero)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(camForward);
+
+                transform.rotation = Quaternion.Slerp(
+                    transform.rotation,
+                    targetRotation,
+                    rotateSpeed * Time.deltaTime
+                );
+            }
+        }
     }
 
     void Jump()
@@ -217,16 +243,12 @@ public class PlayerController : MonoBehaviour
     {
         if (weaponSwitcher != null && weaponSwitcher.currentWeapon != null)
         {
-            // 1. ดึง Component ที่เป็น IWeapon มาเพื่อสั่งโจมตี
             IWeapon weapon = weaponSwitcher.currentWeapon.GetComponent<IWeapon>();
 
             if (weapon != null)
             {
-                // สั่งโจมตี (เรียกใช้ได้ทั้ง Melee และ Ranged)
                 weapon.Attack();
 
-                // 2. เช็คประเภทของ Script ที่แนบอยู่กับ Object อาวุธ
-                // ถ้าอาวุธนั้นมีสคริปต์ชื่อ MeleeWeapon ให้เล่นอนิเมชั่น "attack"
                 if (weaponSwitcher.currentWeapon.GetComponent<MeleeWeapon>() != null)
                 {
                     if (animatorPlayer != null)
@@ -234,23 +256,7 @@ public class PlayerController : MonoBehaviour
                         animatorPlayer.SetTrigger("attack");
                     }
                 }
-                // ถ้าเป็น RangedWeapon หรืออย่างอื่น (ตามเงื่อนไขของคุณ) จะไม่ทำอะไรต่อ 
-                // ทำให้ไม่มีการเรียก SetTrigger("attack") ครับ
             }
         }
-    }
-
-    void RotatePlayerToCamera()
-    {
-        HardLockSystem lockSystem = GetComponent<HardLockSystem>();
-        if (lockSystem != null && lockSystem.HasTarget)
-            return;
-
-        Vector3 camForward = cameraTransform.forward;
-        camForward.y = 0f;
-        if (camForward.sqrMagnitude < 0.01f) return;
-
-        Quaternion targetRotation = Quaternion.LookRotation(camForward);
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
     }
 }

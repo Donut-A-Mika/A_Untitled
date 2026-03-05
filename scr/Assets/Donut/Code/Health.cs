@@ -7,6 +7,8 @@ public class Health : MonoBehaviour
     public float maxHealth = 100f;
     public float currentHealth;
 
+    public bool isPlayer = false;
+
     public Action onDeath;
 
     [Header("Hit Flash Setting")]
@@ -22,9 +24,9 @@ public class Health : MonoBehaviour
     {
         currentHealth = maxHealth;
         rend = GetComponentInChildren<Renderer>();
+
         if (rend != null)
         {
-            // ใช้ material.color เพื่อเก็บสีเริ่มต้น
             originalColor = rend.material.color;
         }
     }
@@ -57,9 +59,15 @@ public class Health : MonoBehaviour
     {
         onDeath?.Invoke();
         Debug.Log(gameObject.name + " Dead");
-        Destroy(gameObject);
-        SceneManager.LoadScene("GameScene"); 
 
+        if (isPlayer)
+        {
+            SceneManager.LoadScene("Gameover sreen");
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     public float GetCurrentHealth()

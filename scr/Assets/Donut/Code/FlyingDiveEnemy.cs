@@ -32,13 +32,21 @@ public class FlyingDiveEnemy : MonoBehaviour
     void Start()
     {
         if (player == null)
-            player = GameObject.FindGameObjectWithTag("Player").transform;
+        {
+            GameObject p = GameObject.FindGameObjectWithTag("Player");
+
+            if (p != null)
+                player = p.transform;
+        }
 
         startPoint = transform.position;
     }
 
     void Update()
     {
+        if (player == null) return;
+
+        cooldownTimer -= Time.deltaTime;
         cooldownTimer -= Time.deltaTime;
         
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
@@ -63,6 +71,7 @@ public class FlyingDiveEnemy : MonoBehaviour
             IdleHover();
             return;
         }
+
 
         if (!isDiving && !isReturning && cooldownTimer <= 0f)
         {
