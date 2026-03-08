@@ -18,6 +18,7 @@ public class Animioncontorer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*
         if (playerRigidbody != null)
         {
             // �Ҥ������� (Magnitude ��͢�Ҵ�ͧ Vector ��������)
@@ -33,6 +34,6 @@ public class Animioncontorer : MonoBehaviour
                 animatorPlayer.SetBool("Isrun", false);
             }
             
-        }
+        }*/
     }
 }
