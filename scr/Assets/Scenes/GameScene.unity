@@ -5955,7 +5955,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1439161360}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.02890206, y: 0.08321361, z: -0.0024144382, w: 0.9961096}
+  m_LocalRotation: {x: 0.02890203, y: 0.08321361, z: -0.0024144356, w: 0.9961096}
   m_LocalPosition: {x: 0, y: 3.483033, z: -4.635919}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6850,9 +6850,9 @@ MonoBehaviour:
   TargetOffset: {x: 0.78, y: 1.6, z: 0}
   Damping: {x: 0.5, y: 0.5}
   Lookahead:
-    Enabled: 0
-    Time: 0
-    Smoothing: 0
+    Enabled: 1
+    Time: 0.352
+    Smoothing: 12.1
     IgnoreY: 0
 --- !u!114 &1594126889
 MonoBehaviour:
@@ -6968,7 +6968,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1594126885}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.028902061, y: 0.08321362, z: -0.0024144384, w: 0.9961096}
+  m_LocalRotation: {x: 0.02890203, y: 0.08321362, z: -0.002414434, w: 0.9961096}
   m_LocalPosition: {x: 0, y: 3.483033, z: -4.635919}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -9271,6 +9271,10 @@ PrefabInstance:
       propertyPath: cameraTransform
       value: 
       objectReference: {fileID: 1439161365}
+    - target: {fileID: 3127635363727907021, guid: b7e86e63e95ea084fa3f13cada2acbeb, type: 3}
+      propertyPath: flightVerticalSpeed
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 3127635363727907021, guid: b7e86e63e95ea084fa3f13cada2acbeb, type: 3}
       propertyPath: glideGravityMultiplier
       value: 0.5
