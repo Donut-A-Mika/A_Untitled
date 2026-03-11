@@ -7,15 +7,27 @@ public class Uimanage : MonoBehaviour
     public GameObject Player;
     public WeaponManager weaponManager; // ลาก WeaponManager มาใส่ที่นี่
     public TextMeshProUGUI HP;
+    public Slider HPSlider;
+    public Image fill;
+    public Gradient gradient;
+    public int MaxHp;
+    [Header("Dash")]
+
+    public Slider dashSlider;       // ลาก Slider UI มาใส่
+    public Image fillImage;         // (Optional) ลากส่วน Fill ของ Slider มาใส่เพื่อเปลี่ยนสี
+
 
     [Header("UI Slots")]
     public RawImage activeWeaponSlot; // ช่องแสดงอาวุธที่ถืออยู่
     public RawImage backupWeaponSlot; // ช่องแสดงอาวุธที่เก็บไว้
 
     private Health hpComponent;
+    private PlayerController playerCl;
 
     void Start()
     {
+        SetMaxHP();
+        playerCl = Player.GetComponent<PlayerController>();
         if (Player != null)
             hpComponent = Player.GetComponent<Health>();
     }
@@ -24,14 +36,16 @@ public class Uimanage : MonoBehaviour
     {
         UpdateHealthUI();
         UpdateWeaponUI();
+        sliderHP();
+        dashSlider.value = playerCl.GetDashCooldownRemaining();
     }
 
     void UpdateHealthUI()
     {
         if (hpComponent != null)
         {
-            float currentHP = hpComponent.GetCurrentHealth();
-            HP.text = "HP: " + currentHP.ToString("F0");
+           /* float currentHP = hpComponent.GetCurrentHealth();
+            HP.text = "HP: " + currentHP.ToString("F0");*/
         }
     }
 
@@ -59,6 +73,23 @@ public class Uimanage : MonoBehaviour
             SetWeaponIcon(backupWeaponSlot, gun1);
         }
     }
+    public void sliderHP ()
+    {
+        if (hpComponent != null)
+        {
+            HPSlider.value = hpComponent.GetCurrentHealth();
+            fill.color = gradient.Evaluate(HPSlider.normalizedValue);
+        }
+    }
+    public void SetMaxHP ()
+    {
+        if (hpComponent != null)
+        {
+            HPSlider.maxValue = MaxHp;
+            HPSlider.value = hpComponent.GetCurrentHealth();
+            fill.color = gradient.Evaluate(1f);
+        }
+    }    
 
     // ฟังก์ชันช่วยดึงรูป Icon จากสคริปต์อาวุธ
     void SetWeaponIcon(RawImage targetImage, GameObject weaponObj)

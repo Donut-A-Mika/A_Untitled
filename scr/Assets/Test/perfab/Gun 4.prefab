@@ -171,7 +171,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 3486900916380485162, guid: ce9f77f69c644be4bb95f9568737abdc, type: 3}
   firePoint: {fileID: 3934778837261150165}
   bulletForce: 20
-  logo: {fileID: 2800000, guid: a6251e1a37b44c741b75de1e00ddb35d, type: 3}
+  logo: {fileID: 2800000, guid: f48f6e07e3d3d6d47ac4387eb0553780, type: 3}
   weaponScale: {x: 1, y: 1, z: 1}
   magazineSize: 3
   reloadTime: 5
@@ -181,7 +181,7 @@ MonoBehaviour:
   useShotgunSpread: 0
   pelletsCount: 8
   spreadAmount: 0.1
-  weaponIcon: {fileID: 2800000, guid: a6251e1a37b44c741b75de1e00ddb35d, type: 3}
+  weaponIcon: {fileID: 2800000, guid: f48f6e07e3d3d6d47ac4387eb0553780, type: 3}
 --- !u!1 &7873177090641184228
 GameObject:
   m_ObjectHideFlags: 0

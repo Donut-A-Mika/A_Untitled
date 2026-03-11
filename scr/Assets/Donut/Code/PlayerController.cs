@@ -233,7 +233,27 @@ public class PlayerController : MonoBehaviour
 
     public bool IsDashing() => isDashing;
     bool CanDash() => !isDashing && Time.time >= lastDashTime + dashCooldown;
+    // --- ส่วนที่เพิ่มสำหรับ UI Slider ---
 
+    // ส่งค่า 0 ถึง 1 (0 = กำลังคูลดาวน์, 1 = พร้อมใช้) สำหรับใส่ช่อง Slider.value
+    public float GetDashCooldownNormalized()
+    {
+        if (isDashing) return 0f;
+
+        float timeElapsed = Time.time - lastDashTime;
+        float progress = timeElapsed / dashCooldown;
+        return Mathf.Clamp01(progress);
+    }
+
+    // ส่งค่าเวลาที่เหลือเป็นวินาที (เช่น 0.5, 0.4...) เอาไว้โชว์เป็นตัวเลข Text
+    public float GetDashCooldownRemaining()
+    {
+        float remaining = (lastDashTime + dashCooldown) - Time.time;
+        return Mathf.Max(0, remaining);
+    }
+
+    // เช็คว่า Dash พร้อมใช้งานหรือไม่ (เอาไว้เปลี่ยนสี UI)
+    public bool IsDashReady() => CanDash();
     void CheckGround()
     {
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
