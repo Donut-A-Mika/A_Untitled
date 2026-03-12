@@ -21,6 +21,10 @@ public class Uimanage : MonoBehaviour
     public RawImage activeWeaponSlot; // ช่องแสดงอาวุธที่ถืออยู่
     public RawImage backupWeaponSlot; // ช่องแสดงอาวุธที่เก็บไว้
 
+    [Header("Ammo UI")]
+    public TextMeshProUGUI ammoText;
+    public float blinkSpeed = 10f; // ความเร็วในการกระพริบ
+
     private Health hpComponent;
     private PlayerController playerCl;
 
@@ -36,6 +40,7 @@ public class Uimanage : MonoBehaviour
     {
         UpdateHealthUI();
         UpdateWeaponUI();
+        UpdateAmmoUI(); 
         sliderHP();
         dashSlider.value = playerCl.GetDashCooldownRemaining();
     }
@@ -72,6 +77,48 @@ public class Uimanage : MonoBehaviour
             SetWeaponIcon(activeWeaponSlot, gun2);
             SetWeaponIcon(backupWeaponSlot, gun1);
         }
+    }
+    void UpdateAmmoUI()
+    {
+        if (weaponManager == null || ammoText == null) return;
+
+        GameObject activeWeapon = weaponManager.currentWeapon;
+
+        if (activeWeapon != null)
+        {
+            RangedWeapon rw = activeWeapon.GetComponent<RangedWeapon>();
+
+            if (rw != null)
+            {
+                // 1. แสดงตัวเลขกระสุน
+                ammoText.text = rw.GetCurrentAmmo() + " / " + rw.GetMaxAmmo();
+
+                // 2. ระบบกระพริบตอน Reload
+                if (rw.IsReloading())
+                {
+                    // ใช้การเปิด-ปิด TextMeshPro ตามจังหวะเวลา
+                    // Mathf.Repeat จะคืนค่า 0 ถึง 1 วนไปเรื่อยๆ 
+                    // ถ้าค่าน้อยกว่า 0.5 ให้ปิด ถ้ามากกว่าให้เปิด (ทำให้เกิดการกระพริบ)
+                    ammoText.enabled = (Mathf.Repeat(Time.time * blinkSpeed, 1f) > 0.5f);
+                }
+                else
+                {
+                    // ถ้าไม่ได้รีโหลด ต้องมั่นใจว่า Text เปิดอยู่ตลอด
+                    ammoText.enabled = true;
+                }
+                if (rw.IsReloading())
+                {
+                    // สร้างค่า Sin Wave จาก 0 ถึง 1
+                    float alpha = (Mathf.Sin(Time.time * blinkSpeed) + 1f) / 2f;
+                    ammoText.alpha = alpha; // ปรับความโปร่งใสของ Text
+                }
+                else
+                {
+                    ammoText.alpha = 1f; // กลับมาสว่างเต็มร้อย
+                }
+            }
+        }
+
     }
     public void sliderHP ()
     {

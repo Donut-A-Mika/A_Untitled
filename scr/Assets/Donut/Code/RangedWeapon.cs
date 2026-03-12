@@ -114,7 +114,11 @@ public class RangedWeapon : MonoBehaviour, IWeapon
         nextFireTime = Time.time + interval;
         isFiring = false;
     }
-
+    // เพิ่มฟังก์ชันนี้ใน RangedWeapon.cs
+    public bool IsReloading()
+    {
+        return isReloading;
+    }
     private void ExecuteShot()
     {
         if (currentAmmo <= 0) return;
@@ -157,7 +161,16 @@ public class RangedWeapon : MonoBehaviour, IWeapon
             rb.AddForce(shootDirection * bulletForce, ForceMode.Impulse);
         }
     }
+    // เพิ่มฟังก์ชันเหล่านี้ใน RangedWeapon.cs
+    public int GetCurrentAmmo()
+    {
+        return currentAmmo;
+    }
 
+    public int GetMaxAmmo()
+    {
+        return magazineSize;
+    }
     IEnumerator Reload()
     {
         if (isReloading) yield break;
