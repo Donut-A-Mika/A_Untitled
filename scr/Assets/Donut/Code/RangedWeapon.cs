@@ -36,6 +36,12 @@ public class RangedWeapon : MonoBehaviour, IWeapon
 
     public Texture weaponIcon;
 
+    [Header("Sound Settings")]
+    public AudioSource audioSource;
+    public AudioClip shootSound;
+    public AudioClip reloadSound;
+    public AudioClip emptySound;
+
     void Start()
     {
         currentAmmo = magazineSize;
@@ -54,9 +60,11 @@ public class RangedWeapon : MonoBehaviour, IWeapon
     {
         if (isReloading) return;
 
-        // ⭐ ถ้ากระสุนหมด
         if (currentAmmo <= 0)
         {
+            if (audioSource && emptySound)
+                audioSource.PlayOneShot(emptySound);
+
             StartCoroutine(Reload());
             return;
         }
@@ -121,6 +129,13 @@ public class RangedWeapon : MonoBehaviour, IWeapon
 
         currentAmmo--;
 
+        // ⭐ เล่นเสียงยิง
+        if (audioSource && shootSound)
+        {
+            audioSource.pitch = Random.Range(0.95f, 1.05f);
+            audioSource.PlayOneShot(shootSound);
+        }
+
         if (useShotgunSpread)
         {
             for (int i = 0; i < pelletsCount; i++)
@@ -164,6 +179,10 @@ public class RangedWeapon : MonoBehaviour, IWeapon
 
         isReloading = true;
         Debug.Log("Reloading...");
+
+        // ⭐ เล่นเสียงรีโหลด
+        if (audioSource && reloadSound)
+            audioSource.PlayOneShot(reloadSound);
 
         yield return new WaitForSeconds(reloadTime);
 
