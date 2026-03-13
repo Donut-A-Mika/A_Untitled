@@ -188,7 +188,7 @@ MonoBehaviour:
   spreadAmount: 0.1
   weaponIcon: {fileID: 2800000, guid: f48f6e07e3d3d6d47ac4387eb0553780, type: 3}
   audioSource: {fileID: 6567268592201451366}
-  shootSound: {fileID: 8300000, guid: 1632ed8783d961148ae1c308b12c5d4f, type: 3}
+  shootSound: {fileID: 8300000, guid: d4a07784c6f269b409156005f9ae2997, type: 3}
   reloadSound: {fileID: 8300000, guid: 413c7c6229ccedf498ac422bf3e0f431, type: 3}
   emptySound: {fileID: 0}
 --- !u!82 &6567268592201451366

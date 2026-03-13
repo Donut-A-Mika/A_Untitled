@@ -130,10 +130,11 @@ MonoBehaviour:
   explosionRadius: 5
   explosionForce: 20
   lifeTime: 5
-  explosionEffect: {fileID: 0}
+  explosionEffect: {fileID: 100012, guid: 3364c97de68d3a147af572d1c71c6455, type: 3}
   targetLayers:
     serializedVersion: 2
     m_Bits: 95
+  explosionSound: {fileID: 8300000, guid: 4cf68a3b47182b9429ac30b304df7d73, type: 3}
 --- !u!54 &3025812452253237859
 Rigidbody:
   m_ObjectHideFlags: 0

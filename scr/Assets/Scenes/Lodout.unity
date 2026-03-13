@@ -2963,7 +2963,7 @@ Transform:
   m_GameObject: {fileID: 1065183872}
   serializedVersion: 2
   m_LocalRotation: {x: 0.5, y: 0.5, z: -0.5, w: 0.5}
-  m_LocalPosition: {x: 1.14, y: 1.92, z: -6.59}
+  m_LocalPosition: {x: 1.14, y: -3.81, z: -6.59}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -3070,7 +3070,7 @@ Transform:
   m_GameObject: {fileID: 1129365907}
   serializedVersion: 2
   m_LocalRotation: {x: 0.49569273, y: 0.50417435, z: -0.50256944, w: 0.49751464}
-  m_LocalPosition: {x: -1.27, y: 1.9186391, z: -6.529532}
+  m_LocalPosition: {x: -1.27, y: -3.8113608, z: -6.529532}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -5661,12 +5661,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Customization
   customePart:
-  - {fileID: 6138300021332112147, guid: 5680664ba7080e542841c09556c0294f, type: 3}
   - {fileID: 6138300021332112147, guid: 44f0f02cf5f14b340bdcb0aed4ae919c, type: 3}
   - {fileID: 6138300021332112147, guid: 4b98f1f5cc7a1af4aaef5f10ca3e26a3, type: 3}
   - {fileID: 6138300021332112147, guid: bc22a3ce77e163348ba419a6d1bdfbe9, type: 3}
   partScales:
-  - {x: 1, y: 1, z: 1}
   - {x: 1, y: 1, z: 1}
   - {x: 1, y: 1, z: 1}
   - {x: 1, y: 1, z: 1}
@@ -6147,7 +6145,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: bf507c98dec2af44687fbce1ba157cfe, type: 3}
+  m_Texture: {fileID: 2800000, guid: a44bfce592754ac4d884230a4ae8f398, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -6294,7 +6292,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: bf507c98dec2af44687fbce1ba157cfe, type: 3}
+  m_Texture: {fileID: 2800000, guid: a44bfce592754ac4d884230a4ae8f398, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0

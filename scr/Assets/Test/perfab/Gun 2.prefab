@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 1930077622196841426}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.002, y: -0.03, z: 0.1238}
+  m_LocalPosition: {x: -0.002, y: 0.027032001, z: 0.1238}
   m_LocalScale: {x: 0.42724, y: 0.42724, z: 0.42724}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -47,7 +47,7 @@ GameObject:
   m_Layer: 0
   m_Name: Gun 2
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -142,6 +142,10 @@ MonoBehaviour:
   bulletForce: 20
   logo: {fileID: 2800000, guid: 1230d64948784bb41af5022c4cb41697, type: 3}
   weaponScale: {x: 1, y: 1, z: 1}
+  muzzleFlashPrefab: {fileID: 100006, guid: c888f0c922d622147bbdbe2ca794142b, type: 3}
+  shellPrefab: {fileID: 0}
+  shellEjectionPoint: {fileID: 0}
+  destroyEffectDelay: 1
   magazineSize: 45
   reloadTime: 2
   currentMode: 1
@@ -152,7 +156,7 @@ MonoBehaviour:
   spreadAmount: 0.1
   weaponIcon: {fileID: 2800000, guid: 1230d64948784bb41af5022c4cb41697, type: 3}
   audioSource: {fileID: 6252675364401989446}
-  shootSound: {fileID: 8300000, guid: 063504827589f0f489cf3fd35aea3814, type: 3}
+  shootSound: {fileID: 8300000, guid: 3d0fb4de389373841a1a414252dbf202, type: 3}
   reloadSound: {fileID: 8300000, guid: 365029881fb090f478cba1c61e14cfae, type: 3}
   emptySound: {fileID: 0}
 --- !u!82 &6252675364401989446
@@ -278,7 +282,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7f52f19d7c4e0f747985ab472d60288a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.018032
+      value: 0.039
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7f52f19d7c4e0f747985ab472d60288a, type: 3}
       propertyPath: m_LocalPosition.z

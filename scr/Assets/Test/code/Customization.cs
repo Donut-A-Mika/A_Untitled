@@ -24,7 +24,11 @@ public class Customization : MonoBehaviour
     private int slotGun2 = 0;
     private int slotGun3 = 0;
     private int slotGun4 = 0;
-
+    private int currentSlotIndex = 0;
+    private void Start()
+    {
+        previview(0);
+    }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.I))
@@ -38,7 +42,7 @@ public class Customization : MonoBehaviour
     {
         GameObject parentObj = null;
         RawImage currentUI = null;
-        int currentSlotIndex = 0;
+        
 
         switch (slot)
         {

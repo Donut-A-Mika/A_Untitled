@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 5098135037331638948}
   - component: {fileID: 3025812452253237859}
   - component: {fileID: 1311436288866088339}
-  - component: {fileID: -337995153643392667}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Bullet
@@ -157,16 +156,5 @@ MonoBehaviour:
   damage: 10
   knockbackForce: 10
   lifeTime: 20
---- !u!114 &-337995153643392667
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3486900916380485162}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5203052240b5a84e93096446a260827, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  impactEffect: {fileID: 100002, guid: 20b31fcfaed0cb842a56fbbe2419428f, type: 3}
+  hitEffectPrefab: {fileID: 100002, guid: 99c73c92ac40473459640b165473206f, type: 3}
+  hitSound: {fileID: 8300000, guid: fcd2c6659e1a68e42b28d9eaf25a4870, type: 3}
