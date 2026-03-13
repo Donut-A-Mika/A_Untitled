@@ -10,6 +10,11 @@ public class RangedWeapon : MonoBehaviour, IWeapon
     public Texture2D logo;
     public Vector3 weaponScale = Vector3.one;
 
+    [Header("VFX Settings")]
+    public GameObject muzzleFlashPrefab;    // เอฟเฟกต์ไฟปลายกระบอก
+    public GameObject shellPrefab;          // Prefab ปลอกกระสุน
+    public Transform shellEjectionPoint;    // จุดที่ปลอกกระสุนกระเด็นออก
+    public float destroyEffectDelay = 1f;   // ระยะเวลาลบเอ็ฟเฟกต์ออกจาก Scene
     // ⭐ ระบบกระสุน
     [Header("Ammo System")]
     public int magazineSize = 30;
@@ -88,7 +93,30 @@ public class RangedWeapon : MonoBehaviour, IWeapon
                 break;
         }
     }
+    private void PlayVFX()
+    {
+        // 1. สร้างไฟปลายกระบอก
+        if (muzzleFlashPrefab != null && firePoint != null)
+        {
+            GameObject flash = Instantiate(muzzleFlashPrefab, firePoint.position, firePoint.rotation);
+            flash.transform.SetParent(firePoint); // ให้ขยับตามปืน
+            Destroy(flash, destroyEffectDelay);
+        }
 
+        // 2. ดีดปลอกกระสุน
+        if (shellPrefab != null && shellEjectionPoint != null)
+        {
+            GameObject shell = Instantiate(shellPrefab, shellEjectionPoint.position, shellEjectionPoint.rotation);
+            Rigidbody shellRb = shell.GetComponent<Rigidbody>();
+            if (shellRb != null)
+            {
+                // ดีดปลอกออกไปทางขวาของจุดดีด
+                shellRb.AddForce(shellEjectionPoint.right * 5f, ForceMode.Impulse);
+                shellRb.AddTorque(Random.insideUnitSphere * 10f, ForceMode.Impulse);
+            }
+            Destroy(shell, 2f); // ปลอกกระสุนอยู่ 2 วิแล้วหายไป
+        }
+    }
     private void SingleFire(float interval)
     {
         ExecuteShot();
@@ -132,7 +160,7 @@ public class RangedWeapon : MonoBehaviour, IWeapon
         if (currentAmmo <= 0) return;
 
         currentAmmo--;
-
+        PlayVFX();
         // ⭐ เล่นเสียงยิง
         if (audioSource && shootSound)
         {

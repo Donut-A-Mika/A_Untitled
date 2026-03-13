@@ -11,7 +11,8 @@ public class ExplosiveBullet : MonoBehaviour
 
     [Header("Detection")]
     public LayerMask targetLayers; // อย่าลืมเลือก Layer ศัตรูใน Inspector
-
+    [Header("Sound Settings")]
+    public AudioClip explosionSound;
     private bool hasExploded = false; // ป้องกันการระเบิดซ้ำ
 
     void Start()
@@ -34,7 +35,11 @@ public class ExplosiveBullet : MonoBehaviour
     {
         if (hasExploded) return;
         hasExploded = true;
-
+        if (explosionSound != null)
+        {
+            // คำสั่งนี้ "สร้าง -> เล่น -> ลบตัวเอง" ให้จบในบรรทัดเดียว
+            AudioSource.PlayClipAtPoint(explosionSound, transform.position, 1f);
+        }
         // 1. สร้าง Effect (ถ้ามี)
         if (explosionEffect != null)
         {

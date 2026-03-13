@@ -174,6 +174,10 @@ MonoBehaviour:
   bulletForce: 20
   logo: {fileID: 2800000, guid: f48f6e07e3d3d6d47ac4387eb0553780, type: 3}
   weaponScale: {x: 1, y: 1, z: 1}
+  muzzleFlashPrefab: {fileID: 100006, guid: b0a227fc2e558f241b1c747820ccc361, type: 3}
+  shellPrefab: {fileID: 0}
+  shellEjectionPoint: {fileID: 0}
+  destroyEffectDelay: 1
   magazineSize: 3
   reloadTime: 5
   currentMode: 0
