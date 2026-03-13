@@ -49,6 +49,11 @@ public class PlayerController : MonoBehaviour
 
     public TargetLockSystem lockSystem;
 
+    [Header("Sound Effects")]
+    public AudioSource audioSource;
+    public AudioClip dashSound;
+    public AudioClip jumpSound;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -193,6 +198,7 @@ public class PlayerController : MonoBehaviour
     {
         rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        audioSource.PlayOneShot(jumpSound);
     }
 
     void HandleGlide()
@@ -222,13 +228,14 @@ public class PlayerController : MonoBehaviour
     {
         isDashing = true;
         lastDashTime = Time.time;
-
+        audioSource.PlayOneShot(dashSound);
         Vector3 dashDir = moveInput != Vector3.zero ? moveInput : transform.forward;
         rb.linearVelocity = Vector3.zero;
         rb.AddForce(dashDir * dashForce, ForceMode.Impulse);
 
         yield return new WaitForSeconds(dashDuration);
         isDashing = false;
+
     }
 
     public bool IsDashing() => isDashing;

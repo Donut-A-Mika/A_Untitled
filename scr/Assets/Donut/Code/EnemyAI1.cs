@@ -43,6 +43,7 @@ public class EnemyAI1 : MonoBehaviour
     private float lastRetreatTime = -10f;
     private bool isRetreating = false;
 
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -99,12 +100,12 @@ public class EnemyAI1 : MonoBehaviour
 
         if (distanceToPlayer <= detectionRange)
         {
-            if (distanceToPlayer <= attackRange)
+            if (distanceToPlayer <= attackRange && !EnemyAttack.isSomeoneAttacking)
             {
                 agent.ResetPath();
                 rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, 0);
 
-                if (attackFinished)
+                if (!EnemyAttack.isSomeoneAttacking)
                 {
                     anim.SetBool("isAttack", true);
                 }
