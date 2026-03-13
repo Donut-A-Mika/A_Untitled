@@ -6,6 +6,7 @@ public class EnemyAttack : MonoBehaviour
     public float damage = 10f;
     public float attackRange = 1.5f;
     public float attackCooldown = 1.0f;
+    public Animator anim;
 
     private float nextAttackTime;
     private Transform player;
@@ -55,12 +56,16 @@ public class EnemyAttack : MonoBehaviour
                 currentAttacker = null;
             }
         }
+        else
+        {
+            anim.SetBool("isAttack", false);
+        }
     }
 
     void Attack()
     {
         if (isSomeoneAttacking) return;
-
+        anim.SetBool("isAttack", true);
         StartCoroutine(AttackRoutine());
     }
 

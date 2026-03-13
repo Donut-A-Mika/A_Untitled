@@ -2057,6 +2057,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Health
   maxHealth: 100
+  currentHealth: 0
+  isPlayer: 0
   enableHitFlash: 1
   hitColor: {r: 1, g: 0, b: 0, a: 1}
   flashTime: 0.1
@@ -2075,6 +2077,7 @@ MonoBehaviour:
   damage: 10
   attackRange: 1.5
   attackCooldown: 1
+  anim: {fileID: 7447493851859137699}
 --- !u!65 &941564617407249571
 BoxCollider:
   m_ObjectHideFlags: 0

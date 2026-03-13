@@ -107,14 +107,14 @@ public class EnemyAI1 : MonoBehaviour
 
                 if (!EnemyAttack.isSomeoneAttacking)
                 {
-                    anim.SetBool("isAttack", true);
+                   // anim.SetBool("isAttack", true);
                 }
             }
             else
             {
                 if (attackFinished)
                 {
-                    anim.SetBool("isAttack", false);
+                    //anim.SetBool("isAttack", false);
                     agent.SetDestination(player.position);
                 }
             }
