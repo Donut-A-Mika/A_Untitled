@@ -81,6 +81,25 @@ public class RangedWeapon : MonoBehaviour, IWeapon
 
     private void ExecuteShot()
     {
+<<<<<<< Updated upstream
+=======
+        if (currentAmmo <= 0) return;
+
+        currentAmmo--;
+
+        if (CameraShake.Instance != null)
+        {
+            CameraShake.Instance.Shake(2f, 0.1f);
+        }
+        PlayVFX();
+        // ⭐ เล่นเสียงยิง
+        if (audioSource && shootSound)
+        {
+            audioSource.pitch = Random.Range(0.95f, 1.05f);
+            audioSource.PlayOneShot(shootSound);
+        }
+
+>>>>>>> Stashed changes
         if (useShotgunSpread)
         {
             for (int i = 0; i < pelletsCount; i++)
