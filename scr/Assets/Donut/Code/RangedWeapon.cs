@@ -160,6 +160,11 @@ public class RangedWeapon : MonoBehaviour, IWeapon
         if (currentAmmo <= 0) return;
 
         currentAmmo--;
+
+        if (CameraShake.Instance != null)
+        {
+            CameraShake.Instance.Shake(2f, 0.1f);
+        }
         PlayVFX();
         // ⭐ เล่นเสียงยิง
         if (audioSource && shootSound)
