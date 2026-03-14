@@ -12858,7 +12858,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1366402751}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: 0.123427965, w: 0.9923536}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -12866,10 +12866,10 @@ RectTransform:
   - {fileID: 412263962}
   - {fileID: 2014449106}
   m_Father: {fileID: 1514657678}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 14.18}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 379.91, y: 165}
+  m_AnchoredPosition: {x: 404, y: 178}
   m_SizeDelta: {x: 723, y: 154}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1366402753
@@ -16645,7 +16645,7 @@ MonoBehaviour:
   fillImage: {fileID: 1731379899}
   activeWeaponSlot: {fileID: 199740878}
   backupWeaponSlot: {fileID: 1653948414}
-  ammoText: {fileID: 0}
+  ammoText: {fileID: 1145359970}
   blinkSpeed: 10
 --- !u!1001 &1804292758
 PrefabInstance:
@@ -18522,7 +18522,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1990313009}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: 0.08393499, w: -0.9964712}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -18530,10 +18530,10 @@ RectTransform:
   - {fileID: 199740876}
   - {fileID: 1653948416}
   m_Father: {fileID: 1514657678}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -9.63}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 699, y: -468.78}
+  m_AnchoredPosition: {x: 668, y: -435}
   m_SizeDelta: {x: -1196.7979, y: -937.56854}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1990313011
@@ -19797,7 +19797,7 @@ PrefabInstance:
       objectReference: {fileID: 3187618031642162449}
     - target: {fileID: 3127635363727907021, guid: b7e86e63e95ea084fa3f13cada2acbeb, type: 3}
       propertyPath: maxGlideTime
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3127635363727907021, guid: b7e86e63e95ea084fa3f13cada2acbeb, type: 3}
       propertyPath: animatorPlayer

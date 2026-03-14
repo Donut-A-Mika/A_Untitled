@@ -1435,15 +1435,15 @@ MonoBehaviour:
   m_OverrideSceneCullingMask: 6917529027641081856
   m_SceneIsLit: 0
   m_SceneLighting: 1
-  m_2DMode: 0
+  m_2DMode: 1
   m_isRotationLocked: 0
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_DebugDrawModesUseInteractiveLightBakingData: 0
   m_Position:
-    m_Target: {x: 2.522854, y: 12.270916, z: -12.22167}
+    m_Target: {x: 95.971344, y: 527.76666, z: 1.1420577}
     speed: 2
-    m_Value: {x: 0, y: 0.010186262, z: 0.0006554015}
+    m_Value: {x: 2.522854, y: 12.270916, z: -12.22167}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -1489,15 +1489,15 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.28348228, y: -0.02782149, z: 0.008857167, w: 0.95866925}
+    m_Target: {x: 0, y: 0, z: 0, w: 1}
     speed: 2
-    m_Value: {x: -0.0019018636, y: 0.6606053, z: 0.00054859533, w: 0.7512223}
+    m_Value: {x: -0.28348228, y: 0.02782149, z: -0.008857168, w: -0.95866925}
   m_Size:
-    m_Target: 1.2639124
+    m_Target: 770.998
     speed: 2
-    m_Value: 0.042038552
+    m_Value: 1.2639124
   m_Ortho:
-    m_Target: 0
+    m_Target: 1
     speed: 2
     m_Value: 0
   m_CameraSettings:
@@ -1513,7 +1513,7 @@ MonoBehaviour:
     m_FarClip: 10000
     m_DynamicClip: 1
     m_OcclusionCulling: 0
-  m_LastSceneViewRotation: {x: -0.08717229, y: 0.89959055, z: -0.21045254, w: -0.3726226}
+  m_LastSceneViewRotation: {x: 0.28348228, y: -0.02782149, z: 0.008857167, w: 0.95866925}
   m_LastSceneViewOrtho: 0
   m_Viewpoint:
     m_SceneView: {fileID: 17}
@@ -1680,16 +1680,19 @@ MonoBehaviour:
       m_Data: 55390
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 57872
-    - m_Data: 57874
-    - m_Data: 57876
-    - m_Data: 57878
-    - m_Data: 57880
-    - m_Data: 57882
-    - m_Data: 57884
-    - m_Data: 57886
-    - m_Data: 57888
-    - m_Data: 57890
+    - m_Data: 55680
+    - m_Data: 55682
+    - m_Data: 55684
+    - m_Data: 55686
+    - m_Data: 55688
+    - m_Data: 55690
+    - m_Data: 55692
+    - m_Data: 55694
+    - m_Data: 55696
+    - m_Data: 55698
+    - m_Data: 55700
+    - m_Data: 55702
+    - m_Data: 55704
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1722,16 +1725,19 @@ MonoBehaviour:
       m_Data: 0
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 57872
-    - m_Data: 57874
-    - m_Data: 57876
-    - m_Data: 57878
-    - m_Data: 57880
-    - m_Data: 57882
-    - m_Data: 57884
-    - m_Data: 57886
-    - m_Data: 57888
-    - m_Data: 57890
+    - m_Data: 55680
+    - m_Data: 55682
+    - m_Data: 55684
+    - m_Data: 55686
+    - m_Data: 55688
+    - m_Data: 55690
+    - m_Data: 55692
+    - m_Data: 55694
+    - m_Data: 55696
+    - m_Data: 55698
+    - m_Data: 55700
+    - m_Data: 55702
+    - m_Data: 55704
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
