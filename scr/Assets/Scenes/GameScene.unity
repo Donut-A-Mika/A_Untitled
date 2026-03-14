@@ -13940,9 +13940,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CameraZoomADS
   cineCam: {fileID: 1594126890}
   player: {fileID: 3187618031642162430}
-  normalFOV: 50
+  normalFOV: 55
   adsFOV: 30
-  dashFOV: 65
+  dashFOV: 35
   zoomSpeed: 15
 --- !u!4 &1436158086 stripped
 Transform:
@@ -14113,8 +14113,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1439161360}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.037721023, y: 0.040703915, z: -0.001537765, w: 0.9984578}
-  m_LocalPosition: {x: 0.08, y: 2.543033, z: -4.815919}
+  m_LocalRotation: {x: 0.390961, y: 0.013632888, z: -0.0057915854, w: 0.9202881}
+  m_LocalPosition: {x: 0.3, y: 5.6576395, z: -4.563103}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -15414,14 +15414,14 @@ MonoBehaviour:
       Enabled: 1
       Input:
         InputAction: {fileID: -5630151704836100654, guid: 1d6e640e716dc4ff6989b73d02023f2b, type: 3}
-        Gain: 1
+        Gain: 0.5
         LegacyInput: 
         LegacyGain: 1
         CancelDeltaTime: 0
       InputValue: 0
       Driver:
-        AccelTime: 0.8
-        DecelTime: 1
+        AccelTime: 0.1
+        DecelTime: 0.1
     - Name: Look Orbit Y
       Owner: {fileID: 1594126889}
       Enabled: 1
@@ -15433,8 +15433,8 @@ MonoBehaviour:
         CancelDeltaTime: 0
       InputValue: 0
       Driver:
-        AccelTime: 0.8
-        DecelTime: 1
+        AccelTime: 0.1
+        DecelTime: 0.1
     - Name: Orbit Scale
       Owner: {fileID: 1594126889}
       Enabled: 1
@@ -15508,15 +15508,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b5d7c088409d9a40b7b09aa707777f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineOrbitalFollow
-  TargetOffset: {x: 0.08, y: -0.94, z: -0.18}
+  TargetOffset: {x: 0.3, y: 1.8, z: 1}
   TrackerSettings:
     BindingMode: 4
-    PositionDamping: {x: 1, y: 0.96, z: 1}
+    PositionDamping: {x: 1, y: 1, z: 1}
     AngularDampingMode: 0
     RotationDamping: {x: 1, y: 1, z: 1}
     QuaternionDamping: 1
   OrbitStyle: 0
-  Radius: 5
+  Radius: 6
   Orbits:
     Top:
       Radius: 2
@@ -15610,8 +15610,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1594126885}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.037721027, y: 0.040703915, z: -0.0015377655, w: 0.9984578}
-  m_LocalPosition: {x: 0.08, y: 2.543033, z: -4.815919}
+  m_LocalRotation: {x: 0.39096096, y: 0.013632887, z: -0.005791584, w: 0.9202881}
+  m_LocalPosition: {x: 0.3, y: 5.6576395, z: -4.563103}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -20532,6 +20532,14 @@ PrefabInstance:
       propertyPath: audioSource
       value: 
       objectReference: {fileID: 3187618031642162449}
+    - target: {fileID: 3127635363727907021, guid: b7e86e63e95ea084fa3f13cada2acbeb, type: 3}
+      propertyPath: dashCooldown
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3127635363727907021, guid: b7e86e63e95ea084fa3f13cada2acbeb, type: 3}
+      propertyPath: dashDuration
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 3127635363727907021, guid: b7e86e63e95ea084fa3f13cada2acbeb, type: 3}
       propertyPath: maxGlideTime
       value: 2
