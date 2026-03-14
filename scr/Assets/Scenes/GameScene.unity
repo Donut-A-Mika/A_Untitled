@@ -14087,7 +14087,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 50
+  field of view: 40
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -14113,8 +14113,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1439161360}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.02890203, y: 0.08321361, z: -0.0024144356, w: 0.9961096}
-  m_LocalPosition: {x: 0, y: 3.483033, z: -4.635919}
+  m_LocalRotation: {x: 0.037721023, y: 0.040703915, z: -0.001537765, w: 0.9984578}
+  m_LocalPosition: {x: 0.08, y: 2.543033, z: -4.815919}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -15480,16 +15480,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineRotationComposer
   Composition:
-    ScreenPosition: {x: 0, y: 0}
+    ScreenPosition: {x: 0.02333334, y: -0.21629637}
     DeadZone:
-      Enabled: 0
-      Size: {x: 0.2, y: 0.2}
+      Enabled: 1
+      Size: {x: 0.5, y: 0.41}
     HardLimits:
       Enabled: 0
       Size: {x: 0.8, y: 0.8}
       Offset: {x: 0, y: 0}
   CenterOnActivate: 1
-  TargetOffset: {x: 0.78, y: 1.6, z: 0}
+  TargetOffset: {x: 0.51, y: 1.24, z: -0.88}
   Damping: {x: 0.5, y: 0.5}
   Lookahead:
     Enabled: 0
@@ -15508,10 +15508,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b5d7c088409d9a40b7b09aa707777f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineOrbitalFollow
-  TargetOffset: {x: 0, y: 0, z: 0}
+  TargetOffset: {x: 0.08, y: -0.94, z: -0.18}
   TrackerSettings:
     BindingMode: 4
-    PositionDamping: {x: 1, y: 1, z: 1}
+    PositionDamping: {x: 1, y: 0.96, z: 1}
     AngularDampingMode: 0
     RotationDamping: {x: 1, y: 1, z: 1}
     QuaternionDamping: 1
@@ -15583,7 +15583,7 @@ MonoBehaviour:
     LookAtTarget: {fileID: 0}
     CustomLookAtTarget: 0
   Lens:
-    FieldOfView: 50
+    FieldOfView: 40
     OrthographicSize: 5
     NearClipPlane: 0.3
     FarClipPlane: 1000
@@ -15610,8 +15610,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1594126885}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.02890203, y: 0.08321362, z: -0.002414434, w: 0.9961096}
-  m_LocalPosition: {x: 0, y: 3.483033, z: -4.635919}
+  m_LocalRotation: {x: 0.037721027, y: 0.040703915, z: -0.0015377655, w: 0.9984578}
+  m_LocalPosition: {x: 0.08, y: 2.543033, z: -4.815919}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -20525,6 +20525,10 @@ PrefabInstance:
       value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 3127635363727907021, guid: b7e86e63e95ea084fa3f13cada2acbeb, type: 3}
+      propertyPath: lockSystem
+      value: 
+      objectReference: {fileID: 3187618031642162448}
+    - target: {fileID: 3127635363727907021, guid: b7e86e63e95ea084fa3f13cada2acbeb, type: 3}
       propertyPath: audioSource
       value: 
       objectReference: {fileID: 3187618031642162449}
@@ -20535,7 +20539,7 @@ PrefabInstance:
     - target: {fileID: 3127635363727907021, guid: b7e86e63e95ea084fa3f13cada2acbeb, type: 3}
       propertyPath: animatorPlayer
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 3187618031642162433}
     - target: {fileID: 3127635363727907021, guid: b7e86e63e95ea084fa3f13cada2acbeb, type: 3}
       propertyPath: cameraTransform
       value: 
@@ -20543,6 +20547,10 @@ PrefabInstance:
     - target: {fileID: 3127635363727907021, guid: b7e86e63e95ea084fa3f13cada2acbeb, type: 3}
       propertyPath: flightVerticalSpeed
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3127635363727907021, guid: b7e86e63e95ea084fa3f13cada2acbeb, type: 3}
+      propertyPath: effectsList.Array.size
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3127635363727907021, guid: b7e86e63e95ea084fa3f13cada2acbeb, type: 3}
       propertyPath: glideGravityMultiplier
@@ -20643,6 +20651,14 @@ PrefabInstance:
     - target: {fileID: 5830452766627352285, guid: b7e86e63e95ea084fa3f13cada2acbeb, type: 3}
       propertyPath: m_Layer
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5858391727424035237, guid: b7e86e63e95ea084fa3f13cada2acbeb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.137
+      objectReference: {fileID: 0}
+    - target: {fileID: 5858391727424035237, guid: b7e86e63e95ea084fa3f13cada2acbeb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.079
       objectReference: {fileID: 0}
     - target: {fileID: 6114734865765841232, guid: b7e86e63e95ea084fa3f13cada2acbeb, type: 3}
       propertyPath: backSlot
@@ -20956,6 +20972,11 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!95 &3187618031642162433 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 4231728915976944936, guid: b7e86e63e95ea084fa3f13cada2acbeb, type: 3}
+  m_PrefabInstance: {fileID: 3187618031642162429}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &3187618031642162441 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6114734865765841232, guid: b7e86e63e95ea084fa3f13cada2acbeb, type: 3}

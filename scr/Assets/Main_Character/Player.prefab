@@ -207,8 +207,13 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 8
-  animatorPlayer: {fileID: 0}
+  animatorPlayer: {fileID: 4231728915976944936}
   weaponSwitcher: {fileID: 6114734865765841232}
+  lockSystem: {fileID: 0}
+  audioSource: {fileID: 0}
+  dashSound: {fileID: 0}
+  jumpSound: {fileID: 0}
+  effectsList: []
 --- !u!114 &9079107520333996185
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -222,6 +227,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Health
   maxHealth: 2000
+  currentHealth: 0
+  isPlayer: 0
   enableHitFlash: 1
   hitColor: {r: 1, g: 0, b: 0, a: 1}
   flashTime: 0.1

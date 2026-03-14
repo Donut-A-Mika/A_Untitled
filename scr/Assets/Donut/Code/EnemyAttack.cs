@@ -56,16 +56,13 @@ public class EnemyAttack : MonoBehaviour
                 currentAttacker = null;
             }
         }
-        else
-        {
-            anim.SetBool("isAttack", false);
-        }
+       
     }
 
     void Attack()
     {
         if (isSomeoneAttacking) return;
-        anim.SetBool("isAttack", true);
+        anim.SetTrigger("isAttack");
         StartCoroutine(AttackRoutine());
     }
 

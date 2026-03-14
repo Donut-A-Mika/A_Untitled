@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
-
+using System.Collections.Generic;
 public class PlayerController : MonoBehaviour
 {
     public Transform cameraTransform;
@@ -54,6 +54,17 @@ public class PlayerController : MonoBehaviour
     public AudioClip dashSound;
     public AudioClip jumpSound;
 
+    [System.Serializable]
+    public struct EffectSlot
+    {
+        public string effectName;      
+        public GameObject vfxPrefab;   
+        public Transform spawnPoint;    
+        public bool attachToPlayer;    
+    }
+    [Header("Visual Effects")]
+    public List<EffectSlot> effectsList;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -102,7 +113,28 @@ public class PlayerController : MonoBehaviour
 
         lastPosition = transform.position;
     }
+    public void PlayEffect(int index)
+    {
+       
+        if (index < 0 || index >= effectsList.Count) return;
 
+        EffectSlot slot = effectsList[index];
+
+       
+        if (slot.vfxPrefab == null) return;
+
+       
+        Vector3 pos = slot.spawnPoint != null ? slot.spawnPoint.position : transform.position;
+        Quaternion rot = slot.spawnPoint != null ? slot.spawnPoint.rotation : transform.rotation;
+
+        GameObject vfx = Instantiate(slot.vfxPrefab, pos, rot);
+
+       
+        if (slot.attachToPlayer && slot.spawnPoint != null)
+        {
+            vfx.transform.SetParent(slot.spawnPoint);
+        }
+    }
     void UpdateAnimations()
     {
         if (animatorPlayer == null) return;
