@@ -2,85 +2,53 @@
 
 public class ExplosiveBullet : MonoBehaviour
 {
-    [Header("Explosion Settings")]
+    [Header("Settings")]
     public float damage = 50f;
     public float explosionRadius = 5f;
     public float explosionForce = 20f;
     public float lifeTime = 5f;
     public GameObject explosionEffect;
-
-    [Header("Detection")]
-    public LayerMask targetLayers; // อย่าลืมเลือก Layer ศัตรูใน Inspector
-    [Header("Sound Settings")]
+    public LayerMask targetLayers;
     public AudioClip explosionSound;
-    private bool hasExploded = false; // ป้องกันการระเบิดซ้ำ
+    private bool hasExploded = false;
 
-    void Start()
-    {
-        // สั่งให้ระเบิดทำงานเมื่อหมดอายุขัย (ถ้าไม่ชนอะไรเลย)
-        Invoke(nameof(Explode), lifeTime);
-    }
+    void Start() => Invoke(nameof(Explode), lifeTime);
 
     void OnTriggerEnter(Collider other)
     {
-        if (hasExploded) return;
-
-        // ไม่ระเบิดใส่ Player หรือกระสุนด้วยกัน
-        if (other.CompareTag("Player") || other.CompareTag("Bullet")) return;
-
-        Explode();
+        if (!hasExploded && !other.CompareTag("Player") && !other.CompareTag("Bullet")) Explode();
     }
 
     void Explode()
     {
         if (hasExploded) return;
         hasExploded = true;
-        if (explosionSound != null)
-        {
-            // คำสั่งนี้ "สร้าง -> เล่น -> ลบตัวเอง" ให้จบในบรรทัดเดียว
-            AudioSource.PlayClipAtPoint(explosionSound, transform.position, 1f);
-        }
-        // 1. สร้าง Effect (ถ้ามี)
-        if (explosionEffect != null)
-        {
-            Instantiate(explosionEffect, transform.position, Quaternion.identity);
-        }
 
-        // 2. ตรวจสอบ Object ในรัศมี
-        Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius, targetLayers);
+        if (explosionSound != null) AudioSource.PlayClipAtPoint(explosionSound, transform.position, 1f);
+        if (explosionEffect != null) Instantiate(explosionEffect, transform.position, Quaternion.identity);
 
-        foreach (Collider hit in colliders)
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, explosionRadius, targetLayers);
+        foreach (Collider hit in hitColliders)
         {
-            // ทำความเสียหาย
-            Health health = hit.GetComponent<Health>();
-            if (health != null) health.TakeDamage(damage);
+            // ทำความเสียหาย (ต้องการสคริปต์ Health ที่ตัวศัตรู)
+            // Health h = hit.GetComponent<Health>();
+            // if (h != null) h.TakeDamage(damage);
 
-            // ผลักด้วยฟิสิกส์ (เรียกใช้สคริปต์ EnemyAI1 ที่เราทำไว้)
-            EnemyAI1 enemyAI = hit.GetComponent<EnemyAI1>();
-            if (enemyAI != null)
+            EnemyAI1 ai = hit.GetComponent<EnemyAI1>();
+            if (ai != null && !ai.isDead)
             {
-                // คำนวณทิศทางจากจุดระเบิด -> ตัวศัตรู
-                Vector3 direction = (hit.transform.position - transform.position).normalized;
-                direction.y = 0.5f; // ให้กระเด็นเสยขึ้นเล็กน้อย
-
-                enemyAI.StartManualKnockback(direction.normalized, explosionForce);
+                
+                Vector3 knockDir = (hit.transform.position - transform.position).normalized;
+                knockDir.y = 0.5f;
+                ai.StartManualKnockback(knockDir, explosionForce);
             }
         }
-
-        // 3. ทำลาย Object กระสุน
         Destroy(gameObject);
     }
 
-    // --- ⭐ DEBUG GIZMOS ---
-    // ส่วนนี้จะวาดวงกลมในหน้า Scene เพื่อให้คุณกะระยะระเบิดได้ง่ายๆ
-    private void OnDrawGizmos()
+    void OnDrawGizmos()
     {
-        // วาดวงกลมโปร่งแสงสีแดงรอบจุดระเบิด
         Gizmos.color = new Color(1, 0, 0, 0.3f);
         Gizmos.DrawSphere(transform.position, explosionRadius);
-
-        // วาดเส้นขอบวงกลมสีแดงเข้ม
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, explosionRadius);
     }
 }

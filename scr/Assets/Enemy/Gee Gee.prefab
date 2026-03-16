@@ -1964,7 +1964,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -1999,10 +1999,10 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3
-  m_Acceleration: 8
+  m_Speed: 2
+  m_Acceleration: 5
   avoidancePriority: 50
-  m_AngularSpeed: 150
+  m_AngularSpeed: 100
   m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -2023,27 +2023,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fd6c6594939a9648aecbe8535037d61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAI
+  myGroup: 1
+  prepareDistance: 5
+  retreatDistance: 15
+  currentState: 0
   agent: {fileID: 4941429600468661568}
   anim: {fileID: 7447493851859137699}
   player: {fileID: 6429088519451864308, guid: b7e86e63e95ea084fa3f13cada2acbeb, type: 3}
-  detectionRange: 50
-  attackRange: 1
-  moveForce: 30
+  moveForce: 15
   maxSpeed: 40
-  rotationSpeed: 50
-  minImpactForceToKnockback: 1.5
-  chainReactionMultiplier: 0.3
-  exitKnockbackSpeed: 15
+  attackRange: 1
+  detectionRange: 50
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
-  knockbackCooldown: 0.1
-  isKnockedBack: 0
   isDead: 0
-  retreatTriggerRange: 5
-  retreatForce: 8
-  retreatDuration: 0.3
-  retreatCooldown: 20
 --- !u!114 &2529944956308285534
 MonoBehaviour:
   m_ObjectHideFlags: 0
