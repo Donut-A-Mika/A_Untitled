@@ -1999,10 +1999,10 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 3
   m_Acceleration: 8
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 150
   m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -2026,11 +2026,11 @@ MonoBehaviour:
   agent: {fileID: 4941429600468661568}
   anim: {fileID: 7447493851859137699}
   player: {fileID: 6429088519451864308, guid: b7e86e63e95ea084fa3f13cada2acbeb, type: 3}
-  detectionRange: 25
-  attackRange: 2
-  moveForce: 15
-  maxSpeed: 5
-  rotationSpeed: 10
+  detectionRange: 50
+  attackRange: 1
+  moveForce: 30
+  maxSpeed: 40
+  rotationSpeed: 50
   minImpactForceToKnockback: 1.5
   chainReactionMultiplier: 0.3
   exitKnockbackSpeed: 15
