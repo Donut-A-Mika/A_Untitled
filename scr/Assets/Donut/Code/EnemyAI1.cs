@@ -13,10 +13,10 @@ public class EnemyAI1 : MonoBehaviour
     public float stopRetreatRange = 1f;
 
     [Header("Timer Settings")]
-    public float attackCooldown = 3f;      // เวลาพักก่อนจะเริ่มไล่ใหม่
-    public float attackStandTime = 1.0f;   // ⭐ เวลายืนนิ่งเพื่อโจมตี/ค้างท่า ก่อนจะเริ่มถอย
+    public float attackCooldown = 3f;
+    public float attackStandTime = 1.0f;   // เวลายืนนิ่งหลังโจมตี
     private float lastAttackTime = -10f;
-    private bool isPerformingAction = false; // ล็อคคิวไม่ให้คำนวณซ้อน
+    private bool isPerformingAction = false;
 
     [Header("Movement Settings")]
     public float moveForce = 25f;
@@ -27,21 +27,27 @@ public class EnemyAI1 : MonoBehaviour
     public EnemyState currentState = EnemyState.Idle;
 
     [Header("Components")]
-    public NavMeshAgent agent;
+    private NavMeshAgent agent;
     private Rigidbody rb;
     public Animator anim;
-    public Transform player;
-    public LayerMask groundLayer;
+    private Transform player;
 
-    private bool isRegistered = false;
     public bool isDead = false;
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
+
         if (rb != null) rb.constraints = RigidbodyConstraints.FreezeRotation;
-        if (agent != null) { agent.updatePosition = false; agent.updateRotation = false; }
+
+        // ให้ NavMeshAgent คำนวณทางอย่างเดียว ไม่ต้องคุมตัวละครเอง
+        if (agent != null)
+        {
+            agent.updatePosition = false;
+            agent.updateRotation = false;
+        }
+
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
     }
 
@@ -50,58 +56,61 @@ public class EnemyAI1 : MonoBehaviour
         if (isDead || player == null) return;
 
         float dist = Vector3.Distance(transform.position, player.position);
+
+        // ซิงค์ตำแหน่ง Agent เข้ากับ Rigidbody ตลอดเวลา
         if (agent.isActiveAndEnabled) agent.nextPosition = transform.position;
 
-        if (!isRegistered && dist <= detectionRange) isRegistered = true;
-        if (!isRegistered) return;
-
-        // ระบบป้องกันตัวประชิด (สวนกลับ)
-        if (dist <= attackRange && currentState != EnemyState.Attack && currentState != EnemyState.Knockback && !isPerformingAction)
-        {
-            StartCoroutine(AttackSequence());
-            return;
-        }
-
-        // ถ้ากำลังทำ Action สำคัญ (ตีหรือรอถอย) ให้หยุด Logic อื่น
+        // ถ้ากำลังติด Knockback หรือทำ Action โจมตีอยู่ ไม่ต้องคำนวณ State อื่น
         if (isPerformingAction || currentState == EnemyState.Knockback) return;
 
-        switch (currentState)
+        // --- Logic การเปลี่ยนสถานะ ---
+        if (dist <= attackRange && Time.time >= lastAttackTime + attackCooldown)
         {
-            case EnemyState.Idle:
-                if (Time.time >= lastAttackTime + attackCooldown) currentState = EnemyState.Chase;
-                break;
+            StartCoroutine(AttackSequence());
+        }
+        else if (dist <= detectionRange)
+        {
+            // ถ้าไม่อยู่ในระยะโจมตี และไม่ได้กำลังถอย ให้ไล่ตาม
+            if (currentState != EnemyState.Retreat)
+            {
+                currentState = EnemyState.Chase;
+                agent.SetDestination(player.position);
+            }
+        }
+        else
+        {
+            currentState = EnemyState.Idle;
+        }
 
-            case EnemyState.Chase:
-                if (dist <= attackRange) StartCoroutine(AttackSequence());
-                else agent.SetDestination(player.position);
-                break;
-
-            case EnemyState.Retreat:
-                HandleRetreat(dist);
-                break;
+        // กรณีพิเศษ: ถ้ากำลังถอย ให้จัดการผ่านฟังก์ชันเฉพาะ
+        if (currentState == EnemyState.Retreat)
+        {
+            HandleRetreat(dist);
         }
 
         UpdateAnimation();
     }
 
-    // ⭐ Coroutine จัดลำดับ: โจมตี -> ยืนนิ่ง -> ถอย
     IEnumerator AttackSequence()
     {
         isPerformingAction = true;
         currentState = EnemyState.Attack;
 
-        // 1. หยุดนิ่งและสั่งโจมตี
-        agent.isStopped = true;
-        rb.linearVelocity = Vector3.zero;
+        // 1. หยุดนิ่ง
+        if (agent.isActiveAndEnabled) agent.isStopped = true;
+        rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, 0);
+
+        // 2. สั่งอนิเมชั่น
         if (anim != null) anim.SetTrigger("doAttack");
 
-        // 2. ยืนนิ่งค้างไว้ตามเวลาที่กำหนด (เช่น รอให้อนิเมชั่นเล่นถึงจังหวะฟัน)
+        // 3. ยืนนิ่งตามเวลาที่กำหนด
         yield return new WaitForSeconds(attackStandTime);
 
-        // 3. เริ่มเข้าสู่สถานะถอย
+        // 4. เข้าสู่สถานะถอยหลังโจมตีเสร็จ
         lastAttackTime = Time.time;
+        if (agent.isActiveAndEnabled) agent.isStopped = false;
+
         currentState = EnemyState.Retreat;
-        agent.isStopped = false;
         isPerformingAction = false;
     }
 
@@ -113,58 +122,67 @@ public class EnemyAI1 : MonoBehaviour
         Vector3 retreatPos = player.position + (dirFromPlayer * retreatDistance);
         agent.SetDestination(retreatPos);
 
-        // ถ้าถอยถึงระยะที่กำหนด ให้เข้าสู่โหมดรอ (Idle)
+        // ถ้าถอยมาไกลพอแล้ว ให้กลับไป Idle เพื่อรอ Chase ใหม่ตาม Cooldown
         if (dist >= retreatDistance - stopRetreatRange)
         {
             currentState = EnemyState.Idle;
-            rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, 0);
         }
     }
 
     void FixedUpdate()
     {
-        // จะขยับด้วย Force เฉพาะตอนไล่ (Chase) หรือตอนถอย (Retreat) เท่านั้น
+        if (isDead || isPerformingAction || currentState == EnemyState.Knockback) return;
+
+        // เคลื่อนที่ด้วย Force เฉพาะตอน Chase หรือ Retreat
         bool canMove = (currentState == EnemyState.Chase || currentState == EnemyState.Retreat);
-        if (isDead || isPerformingAction || !canMove || !agent.hasPath) return;
+        if (!canMove || !agent.hasPath) return;
 
         Vector3 targetDir = (agent.steeringTarget - transform.position).normalized;
         targetDir.y = 0;
 
+        // ใส่แรงผลัก
         rb.AddForce(targetDir * moveForce, ForceMode.Force);
 
+        // ควบคุมความเร็วสูงสุด (Speed Limit)
         Vector3 hVel = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
         if (hVel.magnitude > maxSpeed)
+        {
             rb.linearVelocity = hVel.normalized * maxSpeed + Vector3.up * rb.linearVelocity.y;
+        }
 
+        // หมุนหน้าไปทางที่จะเดิน
         if (targetDir != Vector3.zero)
         {
-            rb.MoveRotation(Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(targetDir), Time.fixedDeltaTime * rotationSpeed));
+            Quaternion targetRot = Quaternion.LookRotation(targetDir);
+            rb.MoveRotation(Quaternion.Slerp(transform.rotation, targetRot, Time.fixedDeltaTime * rotationSpeed));
         }
     }
 
     public void StartManualKnockback(Vector3 dir, float force)
     {
-        if (!isDead)
-        {
-            StopAllCoroutines();
-            isPerformingAction = false;
-            StartCoroutine(KnockbackRoutine(dir, force));
-        }
+        if (isDead) return;
+
+        StopAllCoroutines(); // หยุดการโจมตีหรือการถอยชั่วคราว
+        isPerformingAction = false;
+        StartCoroutine(KnockbackRoutine(dir, force));
     }
 
     IEnumerator KnockbackRoutine(Vector3 dir, float force)
     {
         currentState = EnemyState.Knockback;
         if (anim != null) anim.SetTrigger("isHit");
+
         agent.enabled = false;
         rb.linearVelocity = Vector3.zero;
         rb.AddForce(dir * force, ForceMode.Impulse);
 
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.5f); // ระยะเวลาที่เสียหลัก
+
+        // รอจนกว่าความเร็วจะนิ่งพอ
         while (rb.linearVelocity.magnitude > 0.5f) yield return null;
 
         agent.enabled = true;
-        currentState = EnemyState.Retreat; // หลังโดนยิงให้ถอยก่อน
+        currentState = EnemyState.Retreat; // หลังโดนตี ให้พยายามถอยตั้งหลักก่อน
     }
 
     public void Die()
@@ -172,14 +190,18 @@ public class EnemyAI1 : MonoBehaviour
         if (isDead) return;
         isDead = true;
         StopAllCoroutines();
+
         if (agent != null) agent.enabled = false;
         if (anim != null) anim.SetBool("isDead", true);
-        rb.isKinematic = true;
+
+        rb.isKinematic = true; // หยุดฟิสิกส์ทั้งหมด
     }
 
     private void UpdateAnimation()
     {
         if (anim == null) return;
+
+        // วัดความเร็วราบ (X, Z) เพื่อส่งค่าให้ Animator
         float speed = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z).magnitude;
         anim.SetBool("isRunning", speed > 0.2f && currentState != EnemyState.Attack);
     }

@@ -12,14 +12,22 @@ public class BulletEnemy : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        // ถ้าชนอะไรที่มีระบบเลือด
+        // 1. ถ้าชนสิ่งที่เป็น "ศัตรู" เหมือนกัน ให้ข้ามไป (ไม่ทำลายกระสุน)
+        // สมมติว่าศัตรูใช้ Layer "Enemy" หรือคุณจะเช็ค Tag ก็ได้
+        if (other.CompareTag("Enemy")) return;
+
+        // 2. ถ้าชนอะไรที่มีระบบเลือด (Health)
         Health health = other.GetComponent<Health>();
         if (health != null)
         {
             health.TakeDamage(damage);
         }
 
-        // โดนอะไรก็ตามที่ไม่ใช่ Player หรือ Bullet ให้ทำลายกระสุนทิ้ง
-        Destroy(gameObject);
+        // 3. ทำลายกระสุนทิ้งเมื่อชนกำแพง พื้น หรือผู้เล่น
+        // ยกเว้นกระสุนด้วยกันเอง (ป้องกันกระสุนชนกันกลางอากาศ)
+        if (!other.CompareTag("Bullet"))
+        {
+            Destroy(gameObject);
+        }
     }
 }
