@@ -12,20 +12,20 @@ public class BulletEnemy : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        // 1. ถ้าชนสิ่งที่เป็น "ศัตรู" เหมือนกัน ให้ข้ามไป (ไม่ทำลายกระสุน)
-        // สมมติว่าศัตรูใช้ Layer "Enemy" หรือคุณจะเช็ค Tag ก็ได้
-        if (other.CompareTag("Enemy")) return;
+        // 1. ถ้าชนสิ่งที่เป็น "ศัตรู" (ใช้ Layer แทน Tag)
+        // ตรวจสอบว่าสิ่งที่ชนอยู่ใน Layer "Enemy" หรือไม่
+        if (other.gameObject.layer == LayerMask.NameToLayer("Enemy")) return;
 
-        // 2. ถ้าชนอะไรที่มีระบบเลือด (Health)
+        // 2. ถ้าชนอะไรที่มีระบบเลือด
         Health health = other.GetComponent<Health>();
         if (health != null)
         {
             health.TakeDamage(damage);
         }
 
-        // 3. ทำลายกระสุนทิ้งเมื่อชนกำแพง พื้น หรือผู้เล่น
-        // ยกเว้นกระสุนด้วยกันเอง (ป้องกันกระสุนชนกันกลางอากาศ)
-        if (!other.CompareTag("Bullet"))
+        // 3. ทำลายกระสุนเมื่อชนสิ่งที่ไม่ใช่กระสุนด้วยกันเอง
+        // เปลี่ยนจาก other.CompareTag("Bullet") เป็นเช็ค Layer "Bullet"
+        if (other.gameObject.layer != LayerMask.NameToLayer("Bullet"))
         {
             Destroy(gameObject);
         }
