@@ -59,31 +59,34 @@ public class EnemyAI_Ranged : MonoBehaviour
 
         float dist = Vector3.Distance(transform.position, player.position);
 
-        // Sync ตำแหน่ง NavMesh กับ Rigidbody
         if (agent.isActiveAndEnabled) agent.nextPosition = transform.position;
 
+        // ถ้ากำลังโจมตีหรือโดน Knockback อยู่ ไม่ต้องคำนวณ State ใหม่
         if (isPerformingAction || currentState == EnemyState.Knockback) return;
 
-        // ระบบตัดสินใจรักษาระยะ (Kiting)
+        // --- ระบบตัดสินใจ (Decision Making) ---
+
+        // 1. ถ้าอยู่ในระยะยิง และ Cooldown พร้อม => ยิงทันที!
+        if (dist <= stopDistance && Time.time >= lastAttackTime + attackCooldown)
+        {
+            StartCoroutine(AttackSequence());
+            return; // ออกจาก Update เพื่อไปรัน Coroutine โจมตี
+        }
+
+        // 2. ถ้าใกล้เกินไป => ถอยหนี (Kiting)
         if (dist < retreatDistance)
         {
             currentState = EnemyState.Retreat;
         }
-        else if (dist <= detectionRange)
+        // 3. ถ้าอยู่นอกระยะยิงแต่ยังเห็นตัว => ไล่ตาม
+        else if (dist <= detectionRange && dist > stopDistance)
         {
-            // ถ้าอยู่ในระยะยิงและ Cooldown เสร็จแล้ว
-            if (dist <= stopDistance && Time.time >= lastAttackTime + attackCooldown)
-            {
-                StartCoroutine(AttackSequence());
-            }
-            else if (dist > stopDistance)
-            {
-                currentState = EnemyState.Chase;
-            }
-            else
-            {
-                currentState = EnemyState.Idle;
-            }
+            currentState = EnemyState.Chase;
+        }
+        // 4. นอกนั้น => ยืนนิ่ง
+        else
+        {
+            currentState = EnemyState.Idle;
         }
 
         if (currentState != EnemyState.Attack) LookAtPlayer();
@@ -105,23 +108,50 @@ public class EnemyAI_Ranged : MonoBehaviour
     {
         isPerformingAction = true;
         currentState = EnemyState.Attack;
-        if (agent != null) agent.isStopped = true;
-        if (rb != null) rb.linearVelocity = Vector3.zero;
 
-        if (anim != null) anim.SetTrigger("isAttack");
+        // หยุดเคลื่อนที่ทันที
+        if (agent != null && agent.isActiveAndEnabled) agent.isStopped = true;
+        rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, 0);
 
-        yield return new WaitForSeconds(0.5f); // จังหวะที่กระสุนควรออกจากปืน
-
-        if (attackScript != null && !isDead)
+        if (anim != null)
         {
-            attackScript.ShootProjectile(); // เรียกฟังก์ชันในข้อ 1
+            anim.SetTrigger("isAttack");
+
+            // รอ 1 เฟรมเพื่อให้ Animator เปลี่ยนสถานะ
+            yield return null;
+
+            // ดึงข้อมูลสถานะแอนิเมชัน (ตรวจสอบว่าชื่อ State ใน Animator ตรงกับคำว่า "Attack" หรือไม่)
+            AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
+            bool hasShot = false;
+
+            // วนลูปจนกว่าแอนิเมชันจะเล่นจบ (NormalizedTime >= 1.0)
+            while (stateInfo.normalizedTime < 1.0f)
+            {
+                stateInfo = anim.GetCurrentAnimatorStateInfo(0);
+
+                // จังหวะปล่อยกระสุน (สมมติว่าปล่อยที่ 30% ของแอนิเมชัน)
+                if (!hasShot && stateInfo.normalizedTime >= 0.3f)
+                {
+                    if (attackScript != null && !isDead)
+                    {
+                        attackScript.ShootProjectile();
+                    }
+                    hasShot = true;
+                }
+
+                yield return null;
+            }
+        }
+        else
+        {
+            // กรณีไม่มี Animator ให้ยิงแล้วรอ Cooldown สั้นๆ
+            if (attackScript != null) attackScript.ShootProjectile();
+            yield return new WaitForSeconds(0.5f);
         }
 
         lastAttackTime = Time.time;
-        yield return new WaitForSeconds(0.3f);
-
-        isPerformingAction = false;
-        if (agent != null) agent.isStopped = false;
+        isPerformingAction = false; // ปลดล็อกให้ Update กลับมาทำงานต่อได้
+        if (agent != null && agent.isActiveAndEnabled) agent.isStopped = false;
     }
 
     private void UpdateAnimation()

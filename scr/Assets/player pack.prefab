@@ -13356,8 +13356,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7616698885241624401}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.000000029802319, y: -9.3132246e-10, z: 0.0000000013969838, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0.37418866, y: 0.054189004, z: -0.024148012, w: 0.925453}
+  m_LocalPosition: {x: -0.48888656, y: -2.5278988, z: 2.1320968}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -13421,7 +13421,7 @@ MonoBehaviour:
   TargetOffset: {x: 0.3, y: 1.8, z: 1}
   TrackerSettings:
     BindingMode: 4
-    PositionDamping: {x: 1, y: 1, z: 1}
+    PositionDamping: {x: 0.8, y: 0.8, z: 0.8}
     AngularDampingMode: 0
     RotationDamping: {x: 1, y: 1, z: 1}
     QuaternionDamping: 1
@@ -13440,7 +13440,7 @@ MonoBehaviour:
     SplineCurvature: 0.5
   RecenteringTarget: 2
   HorizontalAxis:
-    Value: 0
+    Value: 4.8417687
     Center: 0
     Range: {x: -180, y: 180}
     Wrap: 1
@@ -13450,7 +13450,7 @@ MonoBehaviour:
       Time: 2
     Restrictions: 0
   VerticalAxis:
-    Value: 22
+    Value: -10
     Center: 17.5
     Range: {x: -10, y: 45}
     Wrap: 0
@@ -13485,7 +13485,7 @@ MonoBehaviour:
     ScreenPosition: {x: 0.02333334, y: -0.21629637}
     DeadZone:
       Enabled: 1
-      Size: {x: 0.5, y: 0.41}
+      Size: {x: 0.56, y: 0.41}
     HardLimits:
       Enabled: 0
       Size: {x: 0.8, y: 0.8}
@@ -13568,7 +13568,7 @@ MonoBehaviour:
         LegacyInput: 
         LegacyGain: 1
         CancelDeltaTime: 0
-      InputValue: 0
+      InputValue: -0
       Driver:
         AccelTime: 0.1
         DecelTime: 0.1
@@ -13581,7 +13581,7 @@ MonoBehaviour:
         LegacyInput: 
         LegacyGain: 1
         CancelDeltaTime: 0
-      InputValue: 0
+      InputValue: -0
       Driver:
         AccelTime: 0
         DecelTime: 0
@@ -13603,7 +13603,7 @@ MonoBehaviour:
   PivotOffset: {x: 0, y: 0, z: 0}
   AmplitudeGain: 0
   FrequencyGain: 2
-  m_NoiseOffsets: {x: 0, y: 0, z: 0}
+  m_NoiseOffsets: {x: -6.1167603, y: 545.2881, z: -760.49426}
 --- !u!114 &3847049516988796330
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14200,8 +14200,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7843943640332831913}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0.05176293, y: 0.044926655, z: -0.041984588, w: 0.99676454}
+  m_LocalPosition: {x: -0.47866398, y: -0.41796482, z: 0.21290573}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -17240,10 +17240,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CameraZoomADS
   cineCam: {fileID: 4090930265197569392}
   player: {fileID: 8586010201625152912}
-  normalFOV: 55
-  adsFOV: 30
+  normalFOV: 45
+  adsFOV: 25
   dashFOV: 35
-  zoomSpeed: 15
+  zoomSpeed: 10
 --- !u!114 &6704083668906582503
 MonoBehaviour:
   m_ObjectHideFlags: 0

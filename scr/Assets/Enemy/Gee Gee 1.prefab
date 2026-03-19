@@ -1886,11 +1886,10 @@ GameObject:
   - component: {fileID: 9221475195792788596}
   - component: {fileID: 711198253577041864}
   - component: {fileID: 6668996883643983628}
+  - component: {fileID: 5267416855277246297}
   - component: {fileID: 4941429600468661568}
-  - component: {fileID: 5114846644746091320}
   - component: {fileID: 2529944956308285534}
   - component: {fileID: 941564617407249571}
-  - component: {fileID: 5267416855277246297}
   - component: {fileID: 5984860788294413889}
   m_Layer: 6
   m_Name: Gee Gee 1
@@ -1982,7 +1981,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2231890330591067076}
   serializedVersion: 5
-  m_Mass: 1
+  m_Mass: 3
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -2022,6 +2021,29 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5267416855277246297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2231890330591067076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15c2aa7e1549ef24a8b99fddc2dbfaaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyAI_Ranged
+  detectionRange: 30
+  stopDistance: 15
+  retreatDistance: 15
+  attackCooldown: 2
+  moveForce: 15
+  maxSpeed: 30
+  rotationSpeed: 30
+  currentState: 0
+  anim: {fileID: 7447493851859137699}
+  player: {fileID: 6429088519451864308, guid: b7e86e63e95ea084fa3f13cada2acbeb, type: 3}
+  isDead: 0
 --- !u!195 &4941429600468661568
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2032,11 +2054,11 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 2
+  m_Speed: 5
   m_Acceleration: 5
   avoidancePriority: 50
   m_AngularSpeed: 100
-  m_StoppingDistance: 2
+  m_StoppingDistance: 3
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -2044,35 +2066,6 @@ NavMeshAgent:
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &5114846644746091320
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2231890330591067076}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fd6c6594939a9648aecbe8535037d61, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyAI
-  detectionRange: 50
-  attackRange: 20
-  retreatDistance: 15
-  stopRetreatRange: 1
-  attackCooldown: 3
-  attackStandTime: 1
-  moveForce: 15
-  maxSpeed: 40
-  rotationSpeed: 10
-  currentState: 0
-  agent: {fileID: 4941429600468661568}
-  anim: {fileID: 7447493851859137699}
-  player: {fileID: 6429088519451864308, guid: b7e86e63e95ea084fa3f13cada2acbeb, type: 3}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 8
-  isDead: 0
 --- !u!114 &2529944956308285534
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2112,29 +2105,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.8, y: 0.8, z: 0.8}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5267416855277246297
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2231890330591067076}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15c2aa7e1549ef24a8b99fddc2dbfaaf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyAI_Ranged
-  detectionRange: 20
-  stopDistance: 12
-  retreatDistance: 7
-  attackCooldown: 2
-  moveForce: 5
-  maxSpeed: 10
-  rotationSpeed: 30
-  currentState: 0
-  anim: {fileID: 7447493851859137699}
-  player: {fileID: 6429088519451864308, guid: b7e86e63e95ea084fa3f13cada2acbeb, type: 3}
-  isDead: 0
 --- !u!114 &5984860788294413889
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2149,7 +2119,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyRangedAttack
   projectilePrefab: {fileID: 3486900916380485162, guid: a6e56ad6b3fa2344f96bccaf2b5eefac, type: 3}
   firePoint: {fileID: 6627229181364020845}
-  projectileSpeed: 15
+  projectileSpeed: 40
   damage: 10
 --- !u!1 &2257245803925266645
 GameObject:
