@@ -62,7 +62,7 @@ public class EnemyAttack : MonoBehaviour
     void Attack()
     {
         if (isSomeoneAttacking) return;
-        anim.SetTrigger("isAttack");
+        anim.SetTrigger("doAttack");
         StartCoroutine(AttackRoutine());
     }
 

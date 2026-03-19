@@ -115,7 +115,7 @@ public class EnemyAI_Ranged : MonoBehaviour
 
         if (anim != null)
         {
-            anim.SetTrigger("isAttack");
+            anim.SetTrigger("doAttack");
 
             // รอ 1 เฟรมเพื่อให้ Animator เปลี่ยนสถานะ
             yield return null;

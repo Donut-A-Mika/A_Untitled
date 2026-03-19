@@ -53,6 +53,8 @@ public class PlayerController : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip dashSound;
     public AudioClip jumpSound;
+    [SerializeField] private float animeX;
+    [SerializeField]private float animeY;
 
     [System.Serializable]
     public struct EffectSlot
@@ -141,16 +143,28 @@ public class PlayerController : MonoBehaviour
 
         Vector3 localVel = transform.InverseTransformDirection(actualVelocity);
 
-        bool isMoving = actualVelocity.magnitude > 0.1f && isGrounded;
-        animatorPlayer.SetBool("Isrun", isMoving);
+        float targetX = 0f;
+        float targetY = 0f;
+
+        // เช็คว่ามีการเคลื่อนที่เกิน Threshold หรือไม่
+        if (actualVelocity.magnitude > 0.1f)
+        {
+            // --- การจำกัดค่า (Snap to Direction) ---
+            // ถ้าค่าแกน X มากกว่า 0.1 ให้เป็น 1, ถ้าน้อยกว่า -0.1 ให้เป็น -1, ถ้าอยู่ตรงกลางให้เป็น 0
+            targetX = localVel.x > 0.1f ? 1f : (localVel.x < -0.1f ? -1f : 0f);
+
+            // ทำเช่นเดียวกันกับแกน Z (ส่งเข้าค่า Y ใน Animator)
+            targetY = localVel.z > 0.1f ? 1f : (localVel.z < -0.1f ? -1f : 0f);
+        }
+
+        // 3. การทำ Smoothing (ยังคงไว้เพื่อให้การเปลี่ยนท่าไม่กระตุกเกินไป)
+        // แต่ถ้าคุณต้องการให้มัน "เปลี่ยนทันที" ให้ปรับค่า smoothTime ให้สูงขึ้น (เช่น 20f หรือ 30f)
+        float smoothTime = 12f;
+        velocityXSmooth = Mathf.Lerp(velocityXSmooth, targetX, Time.deltaTime * smoothTime);
+        velocityYSmooth = Mathf.Lerp(velocityYSmooth, targetY, Time.deltaTime * smoothTime);
+
+        // ส่งค่าไปที่ Animator
         animatorPlayer.SetBool("Isjump", !isGrounded);
-
-        float targetX = localVel.x / moveSpeed;
-        float targetY = localVel.z / moveSpeed;
-
-        velocityXSmooth = Mathf.Lerp(velocityXSmooth, targetX, Time.deltaTime * 10f);
-        velocityYSmooth = Mathf.Lerp(velocityYSmooth, targetY, Time.deltaTime * 10f);
-
         animatorPlayer.SetFloat("velocityX", velocityXSmooth);
         animatorPlayer.SetFloat("velocityy", velocityYSmooth);
     }
