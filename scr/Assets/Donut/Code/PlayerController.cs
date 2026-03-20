@@ -245,6 +245,7 @@ public class PlayerController : MonoBehaviour
         rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         audioSource.PlayOneShot(jumpSound);
+        PlayEffect(0);
     }
 
     void HandleGlide()
