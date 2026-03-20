@@ -21215,6 +21215,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9c94c06050f29b14db8d10e8b6f241eb, type: 3}
+--- !u!4 &1738330858 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4510731391316263320, guid: 6861b0a4bd1eb9a42b2163000198173f, type: 3}
+  m_PrefabInstance: {fileID: 6966566863105289790}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1740461797 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1951552610586735295, guid: 34897c055c2451640911facfd4dc4bf0, type: 3}
@@ -24677,11 +24682,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 601134831784041529, guid: 6861b0a4bd1eb9a42b2163000198173f, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.03642829
+      value: 0.036428306
       objectReference: {fileID: 0}
     - target: {fileID: 601134831784041529, guid: 6861b0a4bd1eb9a42b2163000198173f, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.012556011
+      value: -0.0125560155
       objectReference: {fileID: 0}
     - target: {fileID: 985726944314002171, guid: 6861b0a4bd1eb9a42b2163000198173f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -24738,6 +24743,26 @@ PrefabInstance:
     - target: {fileID: 4090930265197569392, guid: 6861b0a4bd1eb9a42b2163000198173f, type: 3}
       propertyPath: Lens.FieldOfView
       value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 4510731391316263320, guid: 6861b0a4bd1eb9a42b2163000198173f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4510731391316263320, guid: 6861b0a4bd1eb9a42b2163000198173f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4510731391316263320, guid: 6861b0a4bd1eb9a42b2163000198173f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4510731391316263320, guid: 6861b0a4bd1eb9a42b2163000198173f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4510731391316263320, guid: 6861b0a4bd1eb9a42b2163000198173f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4815959529673042202, guid: 6861b0a4bd1eb9a42b2163000198173f, type: 3}
       propertyPath: field of view
@@ -24817,11 +24842,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7917832485561502756, guid: 6861b0a4bd1eb9a42b2163000198173f, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.03642829
+      value: 0.03642832
       objectReference: {fileID: 0}
     - target: {fileID: 7917832485561502756, guid: 6861b0a4bd1eb9a42b2163000198173f, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.01255601
+      value: -0.012556021
       objectReference: {fileID: 0}
     - target: {fileID: 8455307153307920305, guid: 6861b0a4bd1eb9a42b2163000198173f, type: 3}
       propertyPath: Damping.x
@@ -24910,6 +24935,18 @@ PrefabInstance:
     - target: {fileID: 8586010201625152912, guid: 6861b0a4bd1eb9a42b2163000198173f, type: 3}
       propertyPath: glideGravityMultiplier
       value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8586010201625152912, guid: 6861b0a4bd1eb9a42b2163000198173f, type: 3}
+      propertyPath: effectsList.Array.data[0].vfxPrefab
+      value: 
+      objectReference: {fileID: 100000, guid: 55654dc0a2e9e124b914a067ed8bca69, type: 3}
+    - target: {fileID: 8586010201625152912, guid: 6861b0a4bd1eb9a42b2163000198173f, type: 3}
+      propertyPath: effectsList.Array.data[0].spawnPoint
+      value: 
+      objectReference: {fileID: 1738330858}
+    - target: {fileID: 8586010201625152912, guid: 6861b0a4bd1eb9a42b2163000198173f, type: 3}
+      propertyPath: effectsList.Array.data[0].attachToPlayer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8960980864208891128, guid: 6861b0a4bd1eb9a42b2163000198173f, type: 3}
       propertyPath: Radius
