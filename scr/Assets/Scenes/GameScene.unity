@@ -24669,19 +24669,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 601134831784041529, guid: 6861b0a4bd1eb9a42b2163000198173f, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.89362496
+      value: 0.8902179
       objectReference: {fileID: 0}
     - target: {fileID: 601134831784041529, guid: 6861b0a4bd1eb9a42b2163000198173f, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.4468759
+      value: -0.4539026
       objectReference: {fileID: 0}
     - target: {fileID: 601134831784041529, guid: 6861b0a4bd1eb9a42b2163000198173f, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.039288975
+      value: 0.03642829
       objectReference: {fileID: 0}
     - target: {fileID: 601134831784041529, guid: 6861b0a4bd1eb9a42b2163000198173f, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.013886455
+      value: -0.012556011
       objectReference: {fileID: 0}
     - target: {fileID: 985726944314002171, guid: 6861b0a4bd1eb9a42b2163000198173f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -24809,19 +24809,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7917832485561502756, guid: 6861b0a4bd1eb9a42b2163000198173f, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.89362496
+      value: 0.8902179
       objectReference: {fileID: 0}
     - target: {fileID: 7917832485561502756, guid: 6861b0a4bd1eb9a42b2163000198173f, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.44687587
+      value: -0.4539026
       objectReference: {fileID: 0}
     - target: {fileID: 7917832485561502756, guid: 6861b0a4bd1eb9a42b2163000198173f, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.039288983
+      value: 0.03642829
       objectReference: {fileID: 0}
     - target: {fileID: 7917832485561502756, guid: 6861b0a4bd1eb9a42b2163000198173f, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.013886458
+      value: -0.01255601
       objectReference: {fileID: 0}
     - target: {fileID: 8455307153307920305, guid: 6861b0a4bd1eb9a42b2163000198173f, type: 3}
       propertyPath: Damping.x
@@ -24861,11 +24861,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8455307153307920305, guid: 6861b0a4bd1eb9a42b2163000198173f, type: 3}
       propertyPath: Composition.DeadZone.Size.x
-      value: 0.16
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8455307153307920305, guid: 6861b0a4bd1eb9a42b2163000198173f, type: 3}
       propertyPath: Composition.DeadZone.Size.y
-      value: 0.41
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8455307153307920305, guid: 6861b0a4bd1eb9a42b2163000198173f, type: 3}
+      propertyPath: Composition.DeadZone.Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8455307153307920305, guid: 6861b0a4bd1eb9a42b2163000198173f, type: 3}
       propertyPath: Composition.ScreenPosition.x
@@ -24957,15 +24961,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8960980864208891128, guid: 6861b0a4bd1eb9a42b2163000198173f, type: 3}
       propertyPath: TrackerSettings.PositionDamping.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8960980864208891128, guid: 6861b0a4bd1eb9a42b2163000198173f, type: 3}
       propertyPath: TrackerSettings.PositionDamping.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8960980864208891128, guid: 6861b0a4bd1eb9a42b2163000198173f, type: 3}
       propertyPath: TrackerSettings.PositionDamping.z
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
