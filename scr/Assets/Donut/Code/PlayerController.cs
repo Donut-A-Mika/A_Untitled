@@ -2,9 +2,6 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-
-
-
 public class PlayerController : MonoBehaviour
 {
     public Transform cameraTransform;
@@ -58,16 +55,24 @@ public class PlayerController : MonoBehaviour
     public AudioClip dashSound;
     public AudioClip jumpSound;
     [SerializeField] private float animeX;
-    [SerializeField]private float animeY;
+    [SerializeField] private float animeY;
 
     [System.Serializable]
-    public struct EffectSlot
+    public class EffectSlot
     {
-        public string effectName;      
-        public GameObject vfxPrefab;   
-        public Transform spawnPoint;    
-        public bool attachToPlayer;    
+        public string effectName; // ตั้งชื่อให้เรียกง่าย
+        public GameObject vfxPrefab;
+        public Transform spawnPoint;
+        public bool attachToPlayer = true;
+
+        [Header("Settings")]
+        public bool isLooping = false; // ถ้า true จะไม่ลบเอง จนกว่าจะเรียกซ้ำ (Toggle)
+        public bool autoDestroy = true; // ถ้า true จะลบ Object ทิ้งเมื่อหมดเวลา (สำหรับ One-shot)
+        public float duration = 2f;    // เวลาที่แสดงผล
+
+        [HideInInspector] public GameObject spawnedInstance;
     }
+
     [Header("Visual Effects")]
     public List<EffectSlot> effectsList;
 
@@ -78,7 +83,6 @@ public class PlayerController : MonoBehaviour
         if (animatorPlayer == null)
             animatorPlayer = GetComponentInChildren<Animator>();
 
-        // ⭐ FIX สำคัญ
         if (cameraTransform == null)
             cameraTransform = Camera.main.transform;
 
@@ -109,6 +113,62 @@ public class PlayerController : MonoBehaviour
         if (!isDashing) Move();
     }
 
+    // --- ส่วนระบบเอฟเฟคที่ปรับปรุงใหม่ (Toggle & Child Object) ---
+    public void PlayEffect(int index)
+    {
+        if (index < 0 || index >= effectsList.Count) return;
+
+        EffectSlot slot = effectsList[index];
+        if (slot.vfxPrefab == null) return;
+
+        // ถ้าเป็นแบบ Looping (Toggle เปิด-ปิด)
+        if (slot.isLooping)
+        {
+            if (slot.spawnedInstance != null)
+            {
+                // ถ้ามีตัวตนอยู่แล้ว (เปิดอยู่) ให้ทำลายทิ้ง (เป็นการปิด)
+                Destroy(slot.spawnedInstance);
+                slot.spawnedInstance = null;
+            }
+            else
+            {
+                // ถ้ายังไม่มี ให้สร้างขึ้นมา
+                SpawnEffectInstance(slot);
+            }
+        }
+        else // แบบ One-shot (เกิดแล้วหายไปเอง)
+        {
+            GameObject vfx = SpawnEffectInstance(slot);
+            if (slot.autoDestroy)
+            {
+                Destroy(vfx, slot.duration);
+            }
+        }
+    }
+
+    private GameObject SpawnEffectInstance(EffectSlot slot)
+    {
+        // กำหนดตำแหน่งและจุดเกิด
+        Vector3 pos = slot.spawnPoint != null ? slot.spawnPoint.position : transform.position;
+        Quaternion rot = slot.spawnPoint != null ? slot.spawnPoint.rotation : transform.rotation;
+
+        // กำหนด Parent ถ้าต้องการ Attach (เป็น Obj ลูก)
+        Transform parentObj = null;
+        if (slot.attachToPlayer)
+        {
+            parentObj = slot.spawnPoint != null ? slot.spawnPoint : transform;
+        }
+
+        // สร้าง Object
+        GameObject vfx = Instantiate(slot.vfxPrefab, pos, rot, parentObj);
+
+        // เก็บ Instance ไว้เผื่อการทำ Toggle หรืออ้างอิงภายหลัง
+        slot.spawnedInstance = vfx;
+
+        return vfx;
+    }
+
+    // --- ฟังก์ชันเดิมคงไว้ทั้งหมด ---
     void CalculatePositionVelocity()
     {
         Vector3 distanceMoved = transform.position - lastPosition;
@@ -119,61 +179,30 @@ public class PlayerController : MonoBehaviour
 
         lastPosition = transform.position;
     }
-    public void PlayEffect(int index)
-    {
-       
-        if (index < 0 || index >= effectsList.Count) return;
 
-        EffectSlot slot = effectsList[index];
-
-       
-        if (slot.vfxPrefab == null) return;
-
-       
-        Vector3 pos = slot.spawnPoint != null ? slot.spawnPoint.position : transform.position;
-        Quaternion rot = slot.spawnPoint != null ? slot.spawnPoint.rotation : transform.rotation;
-
-        GameObject vfx = Instantiate(slot.vfxPrefab, pos, rot);
-
-       
-        if (slot.attachToPlayer && slot.spawnPoint != null)
-        {
-            vfx.transform.SetParent(slot.spawnPoint);
-        }
-    }
     void UpdateAnimations()
     {
         if (animatorPlayer == null) return;
 
         Vector3 localVel = transform.InverseTransformDirection(actualVelocity);
-
         float targetX = 0f;
         float targetY = 0f;
 
-        // เช็คว่ามีการเคลื่อนที่เกิน Threshold หรือไม่
         if (actualVelocity.magnitude > 0.1f)
         {
-            // --- การจำกัดค่า (Snap to Direction) ---
-            // ถ้าค่าแกน X มากกว่า 0.1 ให้เป็น 1, ถ้าน้อยกว่า -0.1 ให้เป็น -1, ถ้าอยู่ตรงกลางให้เป็น 0
             targetX = localVel.x > 0.1f ? 1f : (localVel.x < -0.1f ? -1f : 0f);
-
-            // ทำเช่นเดียวกันกับแกน Z (ส่งเข้าค่า Y ใน Animator)
             targetY = localVel.z > 0.1f ? 1f : (localVel.z < -0.1f ? -1f : 0f);
         }
 
-        // 3. การทำ Smoothing (ยังคงไว้เพื่อให้การเปลี่ยนท่าไม่กระตุกเกินไป)
-        // แต่ถ้าคุณต้องการให้มัน "เปลี่ยนทันที" ให้ปรับค่า smoothTime ให้สูงขึ้น (เช่น 20f หรือ 30f)
         float smoothTime = 12f;
         velocityXSmooth = Mathf.Lerp(velocityXSmooth, targetX, Time.deltaTime * smoothTime);
         velocityYSmooth = Mathf.Lerp(velocityYSmooth, targetY, Time.deltaTime * smoothTime);
 
-        // ส่งค่าไปที่ Animator
         animatorPlayer.SetBool("Isjump", !isGrounded);
         animatorPlayer.SetFloat("velocityX", velocityXSmooth);
         animatorPlayer.SetFloat("velocityy", velocityYSmooth);
     }
 
-    // ===== [ MELEE LUNGE - ส่วนที่เพิ่มมาเพื่อรองรับ MeleeWeapon ] =====
     public void LungeForward(float distance, float duration)
     {
         StartCoroutine(LungeRoutine(distance, duration));
@@ -183,12 +212,8 @@ public class PlayerController : MonoBehaviour
     {
         float timer = 0f;
         Vector3 dir = transform.forward;
-
-        // ล็อกสถานะ Dashing ชั่วคราวเพื่อให้ FixedUpdate ไม่กวนแรงพุ่ง
         bool prevDashState = isDashing;
         isDashing = true;
-
-        // ล้างแรงเดิมออกก่อนพุ่ง
         rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, 0);
 
         while (timer < duration)
@@ -198,31 +223,24 @@ public class PlayerController : MonoBehaviour
             timer += Time.deltaTime;
             yield return null;
         }
-
         isDashing = prevDashState;
     }
-
-    // =============================================================
 
     void GetInput()
     {
         if (cameraTransform == null) return;
-
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
-
         Vector3 camForward = cameraTransform.forward;
         Vector3 camRight = cameraTransform.right;
-
         camForward.y = 0;
         camRight.y = 0;
-
         moveInput = (camForward * z + camRight * x).normalized;
     }
+
     void Move()
     {
         if (cameraTransform == null) return;
-
         Vector3 move = moveInput * moveSpeed;
         rb.linearVelocity = new Vector3(move.x, rb.linearVelocity.y, move.z);
 
@@ -230,16 +248,10 @@ public class PlayerController : MonoBehaviour
         {
             Vector3 camForward = cameraTransform.forward;
             camForward.y = 0f;
-
             if (camForward != Vector3.zero)
             {
                 Quaternion targetRotation = Quaternion.LookRotation(camForward);
-
-                transform.rotation = Quaternion.Slerp(
-                    transform.rotation,
-                    targetRotation,
-                    rotateSpeed * Time.deltaTime
-                );
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
             }
         }
     }
@@ -248,7 +260,7 @@ public class PlayerController : MonoBehaviour
     {
         rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-        audioSource.PlayOneShot(jumpSound);
+        if (audioSource && jumpSound) audioSource.PlayOneShot(jumpSound);
         PlayEffect(0);
     }
 
@@ -259,19 +271,16 @@ public class PlayerController : MonoBehaviour
         {
             if (!isGliding) { isGliding = true; glideTimer = maxGlideTime; }
         }
-
         if (!isGliding) return;
 
         glideTimer -= Time.deltaTime;
         Vector3 velocity = rb.linearVelocity;
-
         if (holdingFly && glideTimer > 0f)
             velocity.y = flightVerticalSpeed;
         else
             velocity.y += Physics.gravity.y * glideGravityMultiplier * Time.deltaTime;
 
         rb.linearVelocity = velocity;
-
         if (isGrounded && !holdingFly) isGliding = false;
     }
 
@@ -279,39 +288,32 @@ public class PlayerController : MonoBehaviour
     {
         isDashing = true;
         lastDashTime = Time.time;
-        audioSource.PlayOneShot(dashSound);
+        if (audioSource && dashSound) audioSource.PlayOneShot(dashSound);
         Vector3 dashDir = moveInput != Vector3.zero ? moveInput : transform.forward;
         rb.linearVelocity = Vector3.zero;
         rb.AddForce(dashDir * dashForce, ForceMode.Impulse);
-
         yield return new WaitForSeconds(dashDuration);
         isDashing = false;
-
     }
 
     public bool IsDashing() => isDashing;
     bool CanDash() => !isDashing && Time.time >= lastDashTime + dashCooldown;
-    // --- ส่วนที่เพิ่มสำหรับ UI Slider ---
 
-    // ส่งค่า 0 ถึง 1 (0 = กำลังคูลดาวน์, 1 = พร้อมใช้) สำหรับใส่ช่อง Slider.value
     public float GetDashCooldownNormalized()
     {
         if (isDashing) return 0f;
-
         float timeElapsed = Time.time - lastDashTime;
-        float progress = timeElapsed / dashCooldown;
-        return Mathf.Clamp01(progress);
+        return Mathf.Clamp01(timeElapsed / dashCooldown);
     }
 
-    // ส่งค่าเวลาที่เหลือเป็นวินาที (เช่น 0.5, 0.4...) เอาไว้โชว์เป็นตัวเลข Text
     public float GetDashCooldownRemaining()
     {
         float remaining = (lastDashTime + dashCooldown) - Time.time;
         return Mathf.Max(0, remaining);
     }
 
-    // เช็คว่า Dash พร้อมใช้งานหรือไม่ (เอาไว้เปลี่ยนสี UI)
     public bool IsDashReady() => CanDash();
+
     void CheckGround()
     {
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
@@ -322,17 +324,12 @@ public class PlayerController : MonoBehaviour
         if (weaponSwitcher != null && weaponSwitcher.currentWeapon != null)
         {
             IWeapon weapon = weaponSwitcher.currentWeapon.GetComponent<IWeapon>();
-
             if (weapon != null)
             {
                 weapon.Attack();
-
                 if (weaponSwitcher.currentWeapon.GetComponent<MeleeWeapon>() != null)
                 {
-                    if (animatorPlayer != null)
-                    {
-                        animatorPlayer.SetTrigger("attack");
-                    }
+                    if (animatorPlayer != null) animatorPlayer.SetTrigger("attack");
                 }
             }
         }

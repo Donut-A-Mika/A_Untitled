@@ -5083,17 +5083,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2493308771138547384}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: 9.3132235e-10, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.00004005432}
   m_LocalScale: {x: 19.164, y: 10.801, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2831121357094370232}
+  m_Father: {fileID: 5508269935617623970}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 23.9435}
-  m_SizeDelta: {x: 100, y: 115.2531}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -0.000061035156, y: 23.94342}
+  m_SizeDelta: {x: -1820.7979, y: -964.31537}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8247664895734449822
 CanvasRenderer:
@@ -6895,6 +6895,7 @@ RectTransform:
   - {fileID: 8022149519690441068}
   - {fileID: 1417436479308712094}
   - {fileID: 6696835782090260876}
+  - {fileID: 6871890584895088235}
   m_Father: {fileID: 2831121357094370232}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -12235,7 +12236,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5508269935617623970}
-  - {fileID: 6871890584895088235}
   m_Father: {fileID: 985726944314002171}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -14200,8 +14200,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7843943640332831913}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.05176293, y: 0.044926655, z: -0.041984588, w: 0.99676454}
-  m_LocalPosition: {x: -0.47866398, y: -0.41796482, z: 0.21290573}
+  m_LocalRotation: {x: -0.3741887, y: 0.054189008, z: -0.024148015, w: 0.925453}
+  m_LocalPosition: {x: -0.48888266, y: -2.5278955, z: 2.1320899}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -17175,11 +17175,17 @@ MonoBehaviour:
   audioSource: {fileID: 5977825442651752322}
   dashSound: {fileID: 8300000, guid: 3cac85ba9c47ecb4abb5b56c8c2e1d54, type: 3}
   jumpSound: {fileID: 8300000, guid: fd8a0e17e1a7d8c48a7cd7dfa72d8365, type: 3}
+  animeX: 0
+  animeY: 0
   effectsList:
   - effectName: boot
     vfxPrefab: {fileID: 0}
     spawnPoint: {fileID: 0}
     attachToPlayer: 0
+    isLooping: 0
+    autoDestroy: 1
+    duration: 2
+    spawnedInstance: {fileID: 0}
 --- !u!114 &2040825343385001539
 MonoBehaviour:
   m_ObjectHideFlags: 0
