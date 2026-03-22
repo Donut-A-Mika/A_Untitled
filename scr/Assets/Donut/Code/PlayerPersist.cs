@@ -16,8 +16,7 @@ public class PlayerPersist : MonoBehaviour
 
         // เก็บ Instance และไม่ให้หายเมื่อเปลี่ยน Scene
         instance = this;
-        DontDestroyOnLoad(gameObject);
-
+        
         // Subscribe event เมื่อเปลี่ยน Scene
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
