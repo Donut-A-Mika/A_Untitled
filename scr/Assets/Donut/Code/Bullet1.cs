@@ -2,53 +2,65 @@
 
 public class Bullet1 : MonoBehaviour
 {
-    [Header("Bullet Settings")]
-    public float damage = 10f;
-    public float knockbackForce = 15f;
+    [Header("Movement")]
+    public float speed = 100f;
     public float lifeTime = 5f;
 
-    [Header("Visual Effects")]
-    public GameObject hitEffectPrefab; // เอ็ฟเฟกต์ตอนกระสุนชน (เช่น ฝุ่นหรือประกายไฟ)
+    [Header("Combat")]
+    public float damage = 20f;
+    public LayerMask hitLayers;
 
-    [Header("Sound Settings")]
-    public AudioClip hitSound;         // เสียงตอนกระสุนชน
+    [Header("Effects")]
+    public GameObject hitEffectPrefab;
+    public AudioClip hitSound;
+
+    private Vector3 lastPosition;
 
     void Start()
     {
+        // กำหนดจุดเริ่มต้นคือตำแหน่งที่กระสุนเกิด
+        lastPosition = transform.position;
         Destroy(gameObject, lifeTime);
     }
 
-    void OnTriggerEnter(Collider other)
+    void Update()
     {
-        // ข้ามถ้าเป็นพวกเดียวกัน
-        if (other.CompareTag("Player") || other.CompareTag("Bullet")) return;
+        // 1. คำนวณจุดที่จะไปในเฟรมนี้
+        Vector3 nextPosition = transform.position + transform.forward * speed * Time.deltaTime;
 
-        // --- ⭐ ส่วนที่เพิ่มเข้ามา: เอ็ฟเฟกต์และเสียง ---
-
-        // 1. เล่นเสียงกระทบ (สร้าง -> เล่น -> ลบตัวเองอัตโนมัติ)
-        if (hitSound != null)
+        // 2. เช็คการชนทันทีระหว่างจุดเก่า (lastPosition) และจุดใหม่ (nextPosition)
+        if (Physics.Linecast(lastPosition, nextPosition, out RaycastHit hit, hitLayers))
         {
-            AudioSource.PlayClipAtPoint(hitSound, transform.position, 1f);
+            HandleHit(hit);
+            return;
         }
 
-        // 2. สร้างเอ็ฟเฟกต์กระทบ (ถ้ามี)
+        // 3. ถ้าไม่ชนอะไรเลย ให้อัปเดตตำแหน่ง
+        lastPosition = transform.position;
+        transform.position = nextPosition;
+    }
+
+    void HandleHit(RaycastHit hit)
+    {
+        transform.position = hit.point;
+
         if (hitEffectPrefab != null)
         {
-            // สร้างเอ็ฟเฟกต์ ณ จุดที่ชน และทำลายทิ้งใน 1 วินาที
-            GameObject effect = Instantiate(hitEffectPrefab, transform.position, Quaternion.identity);
+            Quaternion rot = Quaternion.LookRotation(hit.normal);
+            GameObject effect = Instantiate(hitEffectPrefab, hit.point, rot);
             Destroy(effect, 1f);
         }
 
-        // --- ส่วนเดิม ---
-
-        // 3. จัดการเรื่องความเสียหาย
-        Health health = other.GetComponent<Health>();
-        if (health != null)
+        if (hitSound != null)
         {
-            health.TakeDamage(damage);
+            AudioSource.PlayClipAtPoint(hitSound, hit.point, 1f);
         }
 
-        // 4. ทำลายตัวเอง
+        if (hit.collider.TryGetComponent<Health>(out Health h))
+        {
+            h.TakeDamage(damage);
+        }
+
         Destroy(gameObject);
     }
 }

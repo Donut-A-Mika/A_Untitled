@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 125218120558307712}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: weaponjaja
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3934778837261150165}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Point
   m_TagString: Untagged
   m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
@@ -76,7 +76,7 @@ GameObject:
   - component: {fileID: 5878441811950029708}
   - component: {fileID: 2454737663978445955}
   - component: {fileID: 6567268592201451366}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Gun 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -299,7 +299,7 @@ GameObject:
   - component: {fileID: 669516597940307427}
   - component: {fileID: 4500340966946147043}
   - component: {fileID: 2329013920032814008}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: rocketlauncher
   m_TagString: Untagged
   m_Icon: {fileID: 0}
