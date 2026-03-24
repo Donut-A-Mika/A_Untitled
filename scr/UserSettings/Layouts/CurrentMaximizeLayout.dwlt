@@ -24,7 +24,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 112}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 28342
+  controlID: 32329
   draggingID: 0
 --- !u!114 &2
 MonoBehaviour:
@@ -153,7 +153,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 112}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 28343
+  controlID: 32330
   draggingID: 0
 --- !u!114 &4
 MonoBehaviour:
@@ -179,7 +179,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 56}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 28283
+  controlID: 32270
   draggingID: 0
 --- !u!114 &5
 MonoBehaviour:
@@ -248,11 +248,21 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs:
-      - m_Data: 82430
+      m_SelectedIDs: []
       m_LastClickedID:
         m_Data: 0
       m_ExpandedIDs:
+      - m_Data: -1388278
+      - m_Data: -1373114
+      - m_Data: -1372946
+      - m_Data: -1372740
+      - m_Data: -1372698
+      - m_Data: -1351568
+      - m_Data: -1349256
+      - m_Data: -1328226
+      - m_Data: -1314016
+      - m_Data: -1224454
+      - m_Data: -1193520
       - m_Data: -38182
       - m_Data: -16706
       - m_Data: -16640
@@ -407,12 +417,12 @@ MonoBehaviour:
       displayed: 1
       id: unity-transform-toolbar
       index: 0
-      contents: '{"m_Layout":2,"m_Collapsed":false,"m_Folded":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":24.0,"y":-309.60003662109377},"m_SnapOffsetDelta":{"x":0.0,"y":0.0},"m_FloatingSnapCorner":2,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
+      contents: '{"m_Layout":2,"m_Collapsed":false,"m_Folded":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":24.0,"y":49.5999755859375},"m_SnapOffsetDelta":{"x":0.0,"y":0.0},"m_FloatingSnapCorner":0,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
       floating: 0
       collapsed: 0
-      snapOffset: {x: 24, y: -309.60004}
+      snapOffset: {x: 24, y: 49.599976}
       snapOffsetDelta: {x: 0, y: 0}
-      snapCorner: 2
+      snapCorner: 0
       layout: 2
       size: {x: 0, y: 0}
       sizeOverridden: 0
@@ -963,9 +973,9 @@ MonoBehaviour:
   m_AudioPlay: 0
   m_DebugDrawModesUseInteractiveLightBakingData: 0
   m_Position:
-    m_Target: {x: -6.1345754, y: 8.610016, z: -15.789816}
+    m_Target: {x: -1.880647, y: 9.867203, z: -14.780273}
     speed: 2
-    m_Value: {x: -6.1345754, y: 8.610016, z: -15.789816}
+    m_Value: {x: -1.880647, y: 9.867203, z: -14.780273}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -1011,13 +1021,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.3462144, y: -0.20775111, z: 0.0789426, w: 0.9114864}
+    m_Target: {x: 0.24256766, y: 0.17150956, z: -0.043583877, w: 0.95389205}
     speed: 2
-    m_Value: {x: -0.34621438, y: 0.2077511, z: -0.0789426, w: -0.9114863}
+    m_Value: {x: 0.242612, y: 0.17035931, z: -0.04329138, w: 0.9540666}
   m_Size:
     m_Target: 3.3754823
     speed: 2
-    m_Value: 3.3754823
+    m_Value: 0.20018122
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -1153,7 +1163,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 56}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 28344
+  controlID: 32331
   draggingID: 0
 --- !u!114 &12
 MonoBehaviour:
@@ -1232,7 +1242,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Donut/Weapon Test
+    - Assets/Scenes
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -1242,18 +1252,18 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Donut/Weapon Test
+  - Assets/Scenes
   m_LastFoldersGridSize: -1
   m_LastProjectPath: E:\Perforjack\A_Untitled\scr
   m_LockTracker:
     m_IsLocked: 0
   m_LastLocalAssetsSearchArea: 1
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 79}
+    scrollPos: {x: 0, y: 162}
     m_SelectedIDs:
-    - m_Data: 145514
+    - m_Data: 60162
     m_LastClickedID:
-      m_Data: 145514
+      m_Data: 60162
     m_ExpandedIDs:
     - m_Data: 0
     - m_Data: 59986
@@ -1325,9 +1335,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs:
-    - m_Data: 82430
-    m_LastClickedInstanceID: 82430
+    m_SelectedInstanceIDs: []
+    m_LastClickedInstanceID: 0
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs:
     - m_Data: 63722

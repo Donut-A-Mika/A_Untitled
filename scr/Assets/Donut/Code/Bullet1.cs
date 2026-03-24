@@ -3,47 +3,44 @@
 public class Bullet1 : MonoBehaviour
 {
     [Header("Movement")]
-    public float speed = 100f;
+    public float speed = 50f;
     public float lifeTime = 5f;
 
-    [Header("Combat")]
-    public float damage = 20f;
-    public LayerMask hitLayers;
+    [Header("Combat Settings")]
+    public float damage = 10f;
+    public LayerMask hitLayers; // ติ๊กเลือก Layer ที่กระสุนจะชน (เช่น Default, Enemy)
 
-    [Header("Effects")]
+    [Header("Visual & Sound")]
     public GameObject hitEffectPrefab;
     public AudioClip hitSound;
 
-    private Vector3 lastPosition;
-
     void Start()
     {
-        // กำหนดจุดเริ่มต้นคือตำแหน่งที่กระสุนเกิด
-        lastPosition = transform.position;
         Destroy(gameObject, lifeTime);
     }
 
     void Update()
     {
-        // 1. คำนวณจุดที่จะไปในเฟรมนี้
-        Vector3 nextPosition = transform.position + transform.forward * speed * Time.deltaTime;
+        // 1. คำนวณระยะทางที่กระสุนจะเคลื่อนที่ในเฟรมนี้
+        float moveDistance = speed * Time.deltaTime;
+        Vector3 direction = transform.forward;
 
-        // 2. เช็คการชนทันทีระหว่างจุดเก่า (lastPosition) และจุดใหม่ (nextPosition)
-        if (Physics.Linecast(lastPosition, nextPosition, out RaycastHit hit, hitLayers))
+        // 2. ยิง Raycast ไปข้างหน้าตามระยะที่จะเคลื่อนที่
+        // วิธีนี้จะไม่มีทางทะลุ เพราะเราเช็คเส้นทางก่อนที่โมเดลจะย้ายไปจริง
+        if (Physics.Raycast(transform.position, direction, out RaycastHit hit, moveDistance, hitLayers))
         {
-            HandleHit(hit);
-            return;
+            OnHit(hit);
         }
-
-        // 3. ถ้าไม่ชนอะไรเลย ให้อัปเดตตำแหน่ง
-        lastPosition = transform.position;
-        transform.position = nextPosition;
+        else
+        {
+            // ถ้าไม่ชนอะไรเลย ให้เคลื่อนที่ไปข้างหน้าตามปกติ
+            transform.Translate(Vector3.forward * moveDistance);
+        }
     }
 
-    void HandleHit(RaycastHit hit)
+    void OnHit(RaycastHit hit)
     {
-        transform.position = hit.point;
-
+        // --- จัดการเอฟเฟกต์ (หันตาม Normal ของจุดที่ชนเป๊ะๆ) ---
         if (hitEffectPrefab != null)
         {
             Quaternion rot = Quaternion.LookRotation(hit.normal);
@@ -51,16 +48,20 @@ public class Bullet1 : MonoBehaviour
             Destroy(effect, 1f);
         }
 
+        // --- เล่นเสียง ---
         if (hitSound != null)
         {
             AudioSource.PlayClipAtPoint(hitSound, hit.point, 1f);
         }
 
-        if (hit.collider.TryGetComponent<Health>(out Health h))
+        // --- ส่งความเสียหาย ---
+        Health health = hit.collider.GetComponent<Health>();
+        if (health != null)
         {
-            h.TakeDamage(damage);
+            health.TakeDamage(damage);
         }
 
+        // หากชนแล้ว ให้ทำลายกระสุนทิ้งทันที
         Destroy(gameObject);
     }
 }
