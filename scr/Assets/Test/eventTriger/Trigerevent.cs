@@ -1,32 +1,51 @@
 using UnityEngine;
-using TMPro; // สำคัญมาก: ต้องมี Namespace นี้เพื่อเรียกใช้งาน TMP
+using TMPro;
 
 public class Trigerevent : MonoBehaviour
 {
-    // ตัวแปรสำหรับลาก TextMesh Pro (GUI หรือ 3D) มาใส่ใน Inspector
+    [Header("Display Target")]
+    [Tooltip("ลาก TextMeshPro ที่ต้องการให้แสดงผลมาใส่ตรงนี้ (หรือปล่อยว่างไว้ถ้าสคริปต์อื่นจะเป็นคนจัดการ)")]
     public TMP_Text textDisplay;
-    public string newMessage = "ตรวจพบการชน!";
 
-    // ทำงานเมื่อมี Object เข้ามาในขอบเขต Trigger
-    private void OnTriggerEnter(Collider other)
-    {
-        // แนะนำให้เช็ค Tag ของสิ่งที่มาชน (เช่น "Player")
-        if (other.CompareTag("Player"))
-        {
-            UpdateText();
-        }
-    }
+    [Header("Self-Trigger Settings")]
+    [Tooltip("ถ้าติ๊กถูก: เมื่อ Player มาชน จะใช้ข้อความข้างล่างนี้แสดงทันที")]
+    public bool actAsTrigger = true;
+    public string myMessage = "ยินดีต้อนรับสู่โซนอันตราย!";
 
-    void UpdateText()
+    [Header("Behavior Settings")]
+    public bool clearOnExit = true;
+
+    /// <summary>
+    /// ฟังก์ชันกลาง: สำหรับรับข้อความจากที่อื่น หรือส่งข้อความจากตัวเอง
+    /// </summary>
+    public void DisplayNewMessage(string message)
     {
         if (textDisplay != null)
         {
-            textDisplay.text = newMessage;
+            textDisplay.text = message;
+            Debug.Log($"[Trigerevent] Displaying: {message}");
+        }
+        else
+        {
+            Debug.LogWarning("ยังไม่ได้ใส่ textDisplay ใน Inspector!");
+        }
+    }
 
-            // แถม: ถ้าอยากเปลี่ยนสีด้วย
-            // textDisplay.color = Color.red;
+    // --- ส่วนของการทำงานเป็น Trigger เอง ---
+    private void OnTriggerEnter(Collider other)
+    {
+        if (actAsTrigger && other.CompareTag("Player"))
+        {
+            // ส่งข้อความที่ตั้งไว้ในตัวแปร myMessage ของตัวเอง
+            DisplayNewMessage(myMessage);
+        }
+    }
 
-            Debug.Log("TextMesh Pro Updated!");
+    private void OnTriggerExit(Collider other)
+    {
+        if (clearOnExit && other.CompareTag("Player"))
+        {
+            DisplayNewMessage(""); // ล้างข้อความเมื่อเดินออก
         }
     }
 }
