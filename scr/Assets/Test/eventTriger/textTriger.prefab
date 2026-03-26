@@ -53,7 +53,7 @@ MonoBehaviour:
   actAsTrigger: 1
   myMessage: "\u0E22\u0E34\u0E19\u0E14\u0E35\u0E15\u0E49\u0E2D\u0E19\u0E23\u0E31\u0E1A\u0E2A\u0E39\u0E48\u0E42\u0E0B\u0E19\u0E2D\u0E31\u0E19\u0E15\u0E23\u0E32\u0E22!"
   clearOnExit: 1
-  OneTimeTrigger: 0
+  OneTimeTrigger: 1
 --- !u!33 &7858744648602121840
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -144,8 +144,8 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 1
+  m_PlayOnAwake: 0
+  m_Volume: 0.53
   m_Pitch: 1
   Loop: 0
   Mute: 0

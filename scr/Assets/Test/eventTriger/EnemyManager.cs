@@ -1,14 +1,28 @@
-using UnityEngine;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime;
+using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
     [Header("List of Enemies")]
     public List<GameObject> enemies = new List<GameObject>();
+    [Header("UI text Disply")]
+    public string CountingText = "";
+    public string finishCountingText = "";
 
     [Header("UI Reference")]
     public Trigerevent uiSystem; // ลากตัวกลางข้อความมาใส่
 
+    [Header("Door")]
+    public GameObject Door;
+    private Animator anim;
+    [SerializeField] private bool door;
+
+
+    private void Start()
+    {
+        anim = Door.GetComponent<Animator>();
+    }
     /// <summary>
     /// ฟังก์ชันสำหรับนับศัตรูที่ยังไม่ถูกทำลาย
     /// </summary>
@@ -32,12 +46,16 @@ public class EnemyManager : MonoBehaviour
         {
             if (count > 0)
             {
-                uiSystem.DisplayNewMessage($"เหลือศัตรูอีก {count} ตัว");
+                uiSystem.DisplayNewMessage($"{CountingText} {count} ");
+                
             }
             else
             {
-                uiSystem.DisplayNewMessage("กำจัดศัตรูหมดแล้ว!");
+                uiSystem.DisplayNewMessage(finishCountingText);
+
+                door = true;
             }
+            anim.SetBool("isOpen", door);
         }
     }
 

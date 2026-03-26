@@ -42,6 +42,15 @@ public class EnemyAI1 : MonoBehaviour
     private Rigidbody rb;
     public Animator anim;
     private Transform player;
+    [Header("Audio Settings")]
+    public AudioSource audioSource; // ลาก AudioSource มาใส่ที่นี่
+    public AudioClip alertSFX;      // เสียงตอนเจอ Player
+    public AudioClip attackSFX;     // เสียงตอนโจมตี
+    public AudioClip hitSFX;        // เสียงตอนโดนตี (Knockback)
+    public AudioClip deathSFX;      // เสียงตอนตาย
+    public AudioClip footstepSFX;   // เสียงเดิน (ถ้ามี)
+
+    private bool hasAlerted = false; // เอาไว้เช็คเพื่อให้ส่งเสียง Alert แค่ครั้งเดียวตอนเจอ
 
     public bool isDead = false;
 
@@ -49,26 +58,18 @@ public class EnemyAI1 : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
+        if (audioSource == null) audioSource = GetComponent<AudioSource>(); // ถ้าลืมใส่ ให้ลองหาในตัว
 
         if (rb != null) rb.constraints = RigidbodyConstraints.FreezeRotation;
-
-        if (agent != null)
-        {
-            agent.updatePosition = false;
-            agent.updateRotation = false;
-        }
-
+        if (agent != null) { agent.updatePosition = false; agent.updateRotation = false; }
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
     }
 
     void Update()
     {
         if (isDead || player == null) return;
-
         float dist = Vector3.Distance(transform.position, player.position);
-
         if (agent.isActiveAndEnabled) agent.nextPosition = transform.position;
-
         if (isPerformingAction || currentState == EnemyState.Knockback) return;
 
         if (dist <= attackRange && Time.time >= lastAttackTime + attackCooldown)
@@ -79,6 +80,12 @@ public class EnemyAI1 : MonoBehaviour
         {
             if (currentState != EnemyState.Retreat)
             {
+                // --- เพิ่มเสียง Alert เมื่อเจอ Player ครั้งแรก ---
+                if (!hasAlerted)
+                {
+                    PlaySound(alertSFX);
+                    hasAlerted = true;
+                }
                 currentState = EnemyState.Chase;
                 agent.SetDestination(player.position);
             }
@@ -86,14 +93,12 @@ public class EnemyAI1 : MonoBehaviour
         else
         {
             currentState = EnemyState.Idle;
+            hasAlerted = false; // รีเซ็ตเพื่อให้ร้องใหม่เมื่อเดินกลับมาเจออีกครั้ง
         }
 
-        if (currentState == EnemyState.Retreat)
-        {
-            HandleRetreat(dist);
-        }
-
+        if (currentState == EnemyState.Retreat) HandleRetreat(dist);
         UpdateAnimation();
+        HandleFootsteps(); // เพิ่มฟังก์ชันเสียงเดิน
     }
 
     IEnumerator AttackSequence()
@@ -101,16 +106,17 @@ public class EnemyAI1 : MonoBehaviour
         isPerformingAction = true;
         currentState = EnemyState.Attack;
 
+        // --- เล่นเสียงโจมตี ---
+        PlaySound(attackSFX);
+
         if (agent.isActiveAndEnabled) agent.isStopped = true;
         rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, 0);
-
         if (anim != null) anim.SetTrigger("doAttack");
 
         yield return new WaitForSeconds(attackStandTime);
 
         lastAttackTime = Time.time;
         if (agent.isActiveAndEnabled) agent.isStopped = false;
-
         currentState = EnemyState.Retreat;
         isPerformingAction = false;
     }
@@ -166,32 +172,17 @@ public class EnemyAI1 : MonoBehaviour
     IEnumerator KnockbackRoutine(Vector3 dir, float force)
     {
         currentState = EnemyState.Knockback;
+        PlaySound(hitSFX); // เล่นเสียงโดนตี
 
-        // 1. เปิด bool isHit เป็น true เพื่อเริ่มเล่นท่าโดนตี
-        if (useHitAnimation && anim != null)
-        {
-            anim.SetBool("isHit", true);
-        }
-
+        if (useHitAnimation && anim != null) anim.SetBool("isHit", true);
         agent.enabled = false;
         rb.linearVelocity = Vector3.zero;
         rb.AddForce(dir * force, ForceMode.Impulse);
 
-        // รอตามเวลา Stun ที่ตั้งไว้
         yield return new WaitForSeconds(knockbackDuration);
+        while (rb.linearVelocity.magnitude > knockbackThreshold) yield return null;
 
-        // รอจนกว่าความเร็วจะนิ่ง (Threshold)
-        while (rb.linearVelocity.magnitude > knockbackThreshold)
-        {
-            yield return null;
-        }
-
-        // 2. ปิด bool isHit เป็น false เมื่อฟื้นตัวเสร็จแล้ว
-        if (useHitAnimation && anim != null)
-        {
-            anim.SetBool("isHit", false);
-        }
-
+        if (useHitAnimation && anim != null) anim.SetBool("isHit", false);
         agent.enabled = true;
         currentState = postKnockbackState;
     }
@@ -202,12 +193,37 @@ public class EnemyAI1 : MonoBehaviour
         isDead = true;
         StopAllCoroutines();
 
+        // --- เล่นเสียงตาย ---
+        PlaySound(deathSFX);
+
         if (agent != null) agent.enabled = false;
         if (anim != null) anim.SetBool("isDead", true);
-
-        rb.isKinematic = true; 
+        rb.isKinematic = true;
     }
-
+    private void PlaySound(AudioClip clip)
+    {
+        if (audioSource != null && clip != null)
+        {
+            audioSource.PlayOneShot(clip);
+        }
+    }
+    private void HandleFootsteps()
+    {
+        float speed = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z).magnitude;
+        if (speed > 1f && !audioSource.isPlaying && footstepSFX != null)
+        {
+            // ถ้าใช้ PlayOneShot กับเสียงเดินมันจะรัวเกินไป 
+            // แนะนำให้ใส่เสียงเดินยาวๆ แล้วสั่ง Play() หรือใช้วิธีเช็คระยะเวลาเอาครับ
+            // ในที่นี้ถ้ายังไม่มีเสียงเล่นอยู่ ให้เล่นเสียงเดิน
+            audioSource.clip = footstepSFX;
+            audioSource.loop = true;
+            audioSource.Play();
+        }
+        else if (speed <= 1f && audioSource.clip == footstepSFX)
+        {
+            audioSource.Stop();
+        }
+    }
     private void UpdateAnimation()
     {
         if (anim == null) return;
