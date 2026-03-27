@@ -2,16 +2,21 @@
 
 public class BulletEnemy : MonoBehaviour
 {
-    public float damage = 15f;
+    [Header("Movement")]
+    public float speed = 50f; // ดึงตัวแปรความเร็วจากโค้ด 1 มาใช้สำหรับการเคลื่อนที่แบบ Raycast
     public float lifeTime = 20f;
 
+    [Header("Combat Settings")]
+    public float damage = 15f;
+    public LayerMask hitLayers; // ดึงมาจากโค้ด 1 (สามารถไปตั้งค่าใน Inspector ให้ชนเฉพาะเลเยอร์ที่ต้องการได้)
+
     [Header("Effects")]
-    public GameObject impactEffect; // ลาก Prefab เอฟเฟกต์ระเบิดมาใส่
-    public AudioClip impactSound;   // ลากไฟล์เสียงกระทบมาใส่
+    public GameObject impactEffect;
+    public AudioClip impactSound;
 
-    private GameObject shooter;      // เก็บข้อมูลว่าใครเป็นคนยิง
+    private GameObject shooter;
 
-    // ฟังก์ชันสำหรับตั้งค่าคนยิง (เรียกใช้จากสคริปต์ที่ยิงกระสุนออกมา)
+    // ฟังก์ชันสำหรับตั้งค่าคนยิง
     public void SetShooter(GameObject owner)
     {
         shooter = owner;
@@ -22,41 +27,65 @@ public class BulletEnemy : MonoBehaviour
         Destroy(gameObject, lifeTime);
     }
 
-    void OnTriggerEnter(Collider other)
+    void Update()
     {
-        // 1. ตรวจสอบว่าชน "ตัวเอง" หรือ "คนยิง" หรือไม่
-        if (other.gameObject == shooter || other.gameObject == gameObject) return;
+        // 1. คำนวณระยะทางที่กระสุนจะเคลื่อนที่ในเฟรมนี้ (จากโค้ด 1)
+        float moveDistance = speed * Time.deltaTime;
+        Vector3 direction = transform.forward;
 
-        // 2. ถ้าชน Layer "Enemy" (พวกเดียวกัน) ให้ทะลุผ่านไปเลย
-        if (other.gameObject.layer == LayerMask.NameToLayer("Enemy")) return;
+        // 2. ยิง Raycast แบบทะลุ (RaycastAll) เผื่อในกรณีที่มันไปโดน "คนยิง" หรือ "พวกเดียวกัน" ก่อน
+        // มันจะได้ทะลุไปเช็คการชนเป้าหมายที่อยู่ด้านหลังต่อได้เลย
+        RaycastHit[] hits = Physics.RaycastAll(transform.position, direction, moveDistance, hitLayers);
 
-        // 3. ถ้าชน Layer "Bullet" (ชนกระสุนด้วยกันเอง) ให้ข้ามไป
-        if (other.gameObject.layer == LayerMask.NameToLayer("Bullet")) return;
+        // เรียงลำดับสิ่งที่ชนจากระยะใกล้สุด ไปไกลสุด
+        System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
 
-        // --- ทำงานเมื่อชนเป้าหมายที่ถูกต้อง ---
+        bool hitValidTarget = false;
 
-        // 4. สร้างเอฟเฟกต์กระทบ (Impact Effect)
+        foreach (RaycastHit hit in hits)
+        {
+            // ตรวจสอบข้อยกเว้นต่างๆ (จากโค้ด 2)
+            if (hit.collider.gameObject == shooter || hit.collider.gameObject == gameObject) continue; // ข้ามตัวเองและคนยิง
+            if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Enemy")) continue;             // ข้ามพวกเดียวกัน
+            if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Bullet")) continue;            // ข้ามกระสุนด้วยกัน
+
+            // ถ้าผ่านมาถึงจุดนี้ได้ แสดงว่าชนเป้าหมายที่ถูกต้อง!
+            OnHit(hit);
+            hitValidTarget = true;
+            break; // สั่งหยุดเช็ค เพราะเราชนเป้าหมายแรกที่ถูกต้องแล้ว
+        }
+
+        // 3. ถ้าไม่ชนอะไรที่เป็นเป้าหมายเลย ให้เคลื่อนที่ไปข้างหน้าตามปกติ
+        if (!hitValidTarget)
+        {
+            transform.Translate(Vector3.forward * moveDistance);
+        }
+    }
+
+    void OnHit(RaycastHit hit)
+    {
+        // --- จัดการเอฟเฟกต์ (หันตาม Normal ของจุดที่ชนเป๊ะๆ จากโค้ด 1) ---
         if (impactEffect != null)
         {
-            // สร้างเอฟเฟกต์ที่จุดชน และให้หันไปทิศทางตรงข้ามที่กระสุนวิ่งมา
-            Instantiate(impactEffect, transform.position, Quaternion.identity);
+            Quaternion rot = Quaternion.LookRotation(hit.normal);
+            GameObject effect = Instantiate(impactEffect, hit.point, rot);
+            Destroy(effect, 1f);
         }
 
-        // 5. เล่นเสียงกระทบ
+        // --- เล่นเสียงที่จุดตกกระทบ (จากโค้ด 1) ---
         if (impactSound != null)
         {
-            // ใช้ PlayClipAtPoint เพื่อให้เสียงเล่นจบแม้กระสุนจะถูกทำลายไปแล้ว
-            AudioSource.PlayClipAtPoint(impactSound, transform.position);
+            AudioSource.PlayClipAtPoint(impactSound, hit.point, 1f);
         }
 
-        // 6. ลดเลือดเป้าหมาย
-        Health health = other.GetComponent<Health>();
+        // --- ส่งความเสียหาย ---
+        Health health = hit.collider.GetComponent<Health>();
         if (health != null)
         {
             health.TakeDamage(damage);
         }
 
-        // 7. ทำลายกระสุนทิ้ง
+        // หากชนเป้าหมายที่ถูกต้องแล้ว ให้ทำลายกระสุนทิ้งทันที
         Destroy(gameObject);
     }
 }
