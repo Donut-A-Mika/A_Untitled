@@ -20,7 +20,7 @@ public class Deadtriger : MonoBehaviour
         {
             // 2. ถ้าไม่ใช่ Player ให้ทำลายวัตถุนั้นทิ้งทันที
             // ป้องกันการทำลายพื้นหรือวัตถุที่ไม่มีสคริปต์สำคัญ (ถ้าต้องการ)
-            if (other.gameObject.GetComponent<Health>() != null || other.CompareTag("Enemy"))
+            if (other.gameObject.GetComponent<Health>() != null || other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
             {
                 Destroy(other.gameObject);
             }
