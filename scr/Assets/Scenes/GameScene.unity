@@ -24925,6 +24925,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6673219169096680152, guid: fe46108e947bfdd48bee7adb3e1d05d7, type: 3}
   m_PrefabInstance: {fileID: 795239912}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &795239914 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5210518786924268703, guid: fe46108e947bfdd48bee7adb3e1d05d7, type: 3}
+  m_PrefabInstance: {fileID: 795239912}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &803230809 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4008617526970244481, guid: 523d037dc5c014440b3724968fd25fb3, type: 3}
@@ -30007,7 +30012,7 @@ MonoBehaviour:
   CountingText: d
   finishCountingText: dooropen
   uiSystem: {fileID: 1895536923}
-  Door: {fileID: 1698611702}
+  Door: {fileID: 795239914}
   door: 0
 --- !u!4 &1899460024 stripped
 Transform:

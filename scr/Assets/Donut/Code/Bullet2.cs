@@ -38,6 +38,7 @@ public class ExplosiveBullet : MonoBehaviour
         // 2. เช็ค Layer ว่าสิ่งที่ชนอยู่ในหมวด ignoreLayers (เลเยอร์ที่ต้องละเว้น) หรือไม่
         // (เราใช้การคำนวณ Bitwise สลับบิตเพื่อเช็คว่า Layer ของสิ่งที่ชน ตรงกับ LayerMask ที่ตั้งไว้ไหม)
         if (((1 << other.gameObject.layer) & ignoreLayers) != 0) return;
+        if (hasExploded || other.CompareTag("Player") || other.CompareTag("Bullet") || other.CompareTag("map")) return;
 
         Vector3 hitPos = transform.position;
         Vector3 hitNormal = Vector3.up;
