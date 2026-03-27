@@ -31180,7 +31180,7 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: 3cac85ba9c47ecb4abb5b56c8c2e1d54, type: 3}
     - target: {fileID: 8586010201625152912, guid: 6861b0a4bd1eb9a42b2163000198173f, type: 3}
       propertyPath: jumpForce
-      value: 25
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 8586010201625152912, guid: 6861b0a4bd1eb9a42b2163000198173f, type: 3}
       propertyPath: jumpSound

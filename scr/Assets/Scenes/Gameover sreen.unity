@@ -518,8 +518,9 @@ GameObject:
   - component: {fileID: 1430657415}
   - component: {fileID: 1430657414}
   - component: {fileID: 1430657413}
+  - component: {fileID: 1430657417}
   m_Layer: 5
-  m_Name: Button (1)
+  m_Name: Loadout
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -598,7 +599,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Menu
+          m_StringArgument: Lodout
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1430657414
@@ -651,6 +652,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1430657411}
   m_CullTransparentMesh: 1
+--- !u!114 &1430657417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1430657411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5cdb621273c8394ea1fca165e3df1c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonPulseGlow
+  targetImage: {fileID: 1430657415}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  glowColor: {r: 1.2, g: 1.2, b: 1.2, a: 1}
+  pulseSpeed: 2
+  scaleMultiplier: 1.05
+  scaleSpeed: 5
 --- !u!1 &1455324195
 GameObject:
   m_ObjectHideFlags: 0
@@ -664,6 +683,7 @@ GameObject:
   - component: {fileID: 1455324198}
   - component: {fileID: 1455324200}
   - component: {fileID: 1455324197}
+  - component: {fileID: 1455324201}
   m_Layer: 5
   m_Name: Menu
   m_TagString: Untagged
@@ -744,7 +764,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Lodout
+          m_StringArgument: Menu
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1455324198
@@ -797,6 +817,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4097533a24628d24e9a47c4023928975, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Lodeingsreen
+--- !u!114 &1455324201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1455324195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5cdb621273c8394ea1fca165e3df1c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonPulseGlow
+  targetImage: {fileID: 1455324198}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  glowColor: {r: 1.2, g: 1.2, b: 1.2, a: 1}
+  pulseSpeed: 2
+  scaleMultiplier: 1.05
+  scaleSpeed: 5
 --- !u!1 &1461526691
 GameObject:
   m_ObjectHideFlags: 0

@@ -695,8 +695,9 @@ GameObject:
   - component: {fileID: 254927124}
   - component: {fileID: 254927123}
   - component: {fileID: 254927122}
+  - component: {fileID: 254927125}
   m_Layer: 5
-  m_Name: Button
+  m_Name: ButtonGun1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -828,6 +829,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 254927120}
   m_CullTransparentMesh: 1
+--- !u!114 &254927125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 254927120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5cdb621273c8394ea1fca165e3df1c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonPulseGlow
+  targetImage: {fileID: 254927123}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  glowColor: {r: 1.2, g: 1.2, b: 1.2, a: 1}
+  pulseSpeed: 2
+  scaleMultiplier: 1.05
+  scaleSpeed: 5
 --- !u!1 &409028111
 GameObject:
   m_ObjectHideFlags: 0
@@ -3227,8 +3246,9 @@ GameObject:
   - component: {fileID: 1225033305}
   - component: {fileID: 1225033304}
   - component: {fileID: 1225033303}
+  - component: {fileID: 1225033306}
   m_Layer: 5
-  m_Name: Button
+  m_Name: ButtonGun2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3360,6 +3380,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1225033301}
   m_CullTransparentMesh: 1
+--- !u!114 &1225033306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1225033301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5cdb621273c8394ea1fca165e3df1c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonPulseGlow
+  targetImage: {fileID: 1225033304}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  glowColor: {r: 1.2, g: 1.2, b: 1.2, a: 1}
+  pulseSpeed: 2
+  scaleMultiplier: 1.05
+  scaleSpeed: 5
 --- !u!1 &1227240537
 GameObject:
   m_ObjectHideFlags: 0
@@ -3728,8 +3766,9 @@ GameObject:
   - component: {fileID: 1268969567}
   - component: {fileID: 1268969566}
   - component: {fileID: 1268969565}
+  - component: {fileID: 1268969568}
   m_Layer: 5
-  m_Name: Button
+  m_Name: ButtonDeploy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3861,6 +3900,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1268969563}
   m_CullTransparentMesh: 1
+--- !u!114 &1268969568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1268969563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5cdb621273c8394ea1fca165e3df1c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonPulseGlow
+  targetImage: {fileID: 1268969566}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  glowColor: {r: 1.2, g: 1.2, b: 1.2, a: 1}
+  pulseSpeed: 2
+  scaleMultiplier: 1.05
+  scaleSpeed: 5
 --- !u!1 &1278608765
 GameObject:
   m_ObjectHideFlags: 0
