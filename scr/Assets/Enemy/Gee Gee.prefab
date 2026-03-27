@@ -2058,7 +2058,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6eb59f6316349c4fafaa57c2d549874, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Health
-  maxHealth: 100
+  maxHealth: 60
   currentHealth: 0
   isPlayer: 0
   enableHitFlash: 1

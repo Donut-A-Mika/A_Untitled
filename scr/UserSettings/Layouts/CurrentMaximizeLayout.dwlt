@@ -24,7 +24,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 112}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 16373
+  controlID: 17930
   draggingID: 0
 --- !u!114 &2
 MonoBehaviour:
@@ -153,7 +153,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 112}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 16374
+  controlID: 17931
   draggingID: 0
 --- !u!114 &4
 MonoBehaviour:
@@ -179,7 +179,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 56}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 16310
+  controlID: 17867
   draggingID: 0
 --- !u!114 &5
 MonoBehaviour:
@@ -248,11 +248,12 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs:
-      - m_Data: 125044
+      m_SelectedIDs: []
       m_LastClickedID:
         m_Data: 0
       m_ExpandedIDs:
+      - m_Data: -561966
+      - m_Data: -489118
       - m_Data: -296124
       - m_Data: -287552
       - m_Data: -205556
@@ -271,8 +272,8 @@ MonoBehaviour:
       - m_Data: 127890
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: 
-        m_OriginalName: 
+        m_Name: textTriger (5)
+        m_OriginalName: textTriger (5)
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
@@ -280,10 +281,10 @@ MonoBehaviour:
           width: 0
           height: 0
         m_UserData:
-          m_Data: 0
+          m_Data: 371416
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
-        m_OriginalEventType: 11
+        m_OriginalEventType: 0
         m_IsRenamingFilename: 0
         m_TrimLeadingAndTrailingWhitespace: 0
         m_ClientGUIView: {fileID: 5}
@@ -417,12 +418,12 @@ MonoBehaviour:
       displayed: 1
       id: unity-transform-toolbar
       index: 0
-      contents: '{"m_Layout":2,"m_Collapsed":false,"m_Folded":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":24.0,"y":24.799999237060548},"m_SnapOffsetDelta":{"x":0.0,"y":0.0},"m_FloatingSnapCorner":0,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
+      contents: '{"m_Layout":2,"m_Collapsed":false,"m_Folded":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":24.0,"y":-276.8000183105469},"m_SnapOffsetDelta":{"x":0.0,"y":0.0},"m_FloatingSnapCorner":2,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
       floating: 0
       collapsed: 0
-      snapOffset: {x: 24, y: 24.8}
+      snapOffset: {x: 24, y: -276.80002}
       snapOffsetDelta: {x: 0, y: 0}
-      snapCorner: 0
+      snapCorner: 2
       layout: 2
       size: {x: 0, y: 0}
       sizeOverridden: 0
@@ -975,7 +976,7 @@ MonoBehaviour:
   m_Position:
     m_Target: {x: 156.22104, y: -804.0545, z: -630.8832}
     speed: 2
-    m_Value: {x: 0, y: 3.6137834, z: 0.13999939}
+    m_Value: {x: -0.18072, y: 1.214, z: 4.19362}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -1023,11 +1024,11 @@ MonoBehaviour:
   m_Rotation:
     m_Target: {x: -0.05557305, y: -0.84541523, z: 0.52415633, w: -0.089347206}
     speed: 2
-    m_Value: {x: 0.023138715, y: 0.8951476, z: -0.046775766, w: 0.4427046}
+    m_Value: {x: -0.1328422, y: -0.49602228, z: 0.07710851, w: -0.8546164}
   m_Size:
     m_Target: 504.60022
     speed: 2
-    m_Value: 24.468002
+    m_Value: 0.24946223
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -1163,7 +1164,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 56}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 16375
+  controlID: 17932
   draggingID: 0
 --- !u!114 &12
 MonoBehaviour:
@@ -1242,7 +1243,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Donut/Weapon Test
+    - Assets/Enemy
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -1252,7 +1253,7 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Donut/Weapon Test
+  - Assets/Enemy
   m_LastFoldersGridSize: -1
   m_LastProjectPath: E:\Perforjack\A_Untitled\scr
   m_LockTracker:
@@ -1261,17 +1262,15 @@ MonoBehaviour:
   m_FolderTreeState:
     scrollPos: {x: 0, y: 79}
     m_SelectedIDs:
-    - m_Data: 365900
+    - m_Data: 121986
     m_LastClickedID:
-      m_Data: 365900
+      m_Data: 121986
     m_ExpandedIDs:
     - m_Data: 0
     - m_Data: 121716
     - m_Data: 121718
     - m_Data: 121720
     - m_Data: 121984
-    - m_Data: 121990
-    - m_Data: 368300
     - m_Data: 1000000000
     - m_Data: 2147483647
     m_RenameOverlay:
@@ -1337,9 +1336,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs:
-    - m_Data: 125044
-    m_LastClickedInstanceID: 125044
+    m_SelectedInstanceIDs: []
+    m_LastClickedInstanceID: 0
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs:
     - m_Data: 63722

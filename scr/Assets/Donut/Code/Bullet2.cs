@@ -8,7 +8,12 @@ public class ExplosiveBullet : MonoBehaviour
     public float explosionForce = 20f;
     public float lifeTime = 5f;
     public GameObject explosionEffect;
-    public LayerMask targetLayers;
+
+    [Header("Layer Setup")]
+    public LayerMask targetLayers;  // เลเยอร์ที่จะโดนดาเมจจากแรงระเบิด
+    public LayerMask ignoreLayers;  // เลเยอร์ที่ชนแล้ว "ไม่ระเบิด" (ให้ข้ามไปเลย เช่น Player, Bullet)
+
+    [Header("Audio")]
     public AudioClip explosionSound;
     private bool hasExploded = false;
 
@@ -27,7 +32,12 @@ public class ExplosiveBullet : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (hasExploded || other.CompareTag("Player") || other.CompareTag("Bullet")) return;
+        // 1. ถ้าระเบิดไปแล้ว ให้หยุดการทำงานทันที
+        if (hasExploded) return;
+
+        // 2. เช็ค Layer ว่าสิ่งที่ชนอยู่ในหมวด ignoreLayers (เลเยอร์ที่ต้องละเว้น) หรือไม่
+        // (เราใช้การคำนวณ Bitwise สลับบิตเพื่อเช็คว่า Layer ของสิ่งที่ชน ตรงกับ LayerMask ที่ตั้งไว้ไหม)
+        if (((1 << other.gameObject.layer) & ignoreLayers) != 0) return;
 
         Vector3 hitPos = transform.position;
         Vector3 hitNormal = Vector3.up;
