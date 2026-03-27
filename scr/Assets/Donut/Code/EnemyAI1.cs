@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
+using System.Collections.Generic; // จำเป็นสำหรับการใช้ List
 
 public enum EnemyState { Idle, Chase, Attack, Retreat, Knockback, Dead }
 
@@ -23,16 +24,14 @@ public class EnemyAI1 : MonoBehaviour
     public float maxSpeed = 5f;
     public float rotationSpeed = 10f;
 
-    // --- ส่วนที่เพิ่ม/แก้ไขสำหรับ Knockback ---
     [Header("Knockback Settings")]
     [Tooltip("ระยะเวลาขั้นต่ำที่ตัวละครจะติดสถานะ Knockback (วินาที)")]
-    public float knockbackDuration = 0.5f; 
+    public float knockbackDuration = 0.5f;
     [Tooltip("ความเร็วที่เหลืออยู่เท่าไหร่ถึงจะยอมให้กลับไปเดินได้ (ยิ่งน้อยยิ่งต้องรอให้นิ่งจริง)")]
     public float knockbackThreshold = 0.5f;
     [Tooltip("หลังจาก Knockback เสร็จ จะให้เปลี่ยนไป State ไหน")]
     public EnemyState postKnockbackState = EnemyState.Retreat;
     public bool useHitAnimation = true;
-    // ---------------------------------------
 
     [Header("State Machine")]
     public EnemyState currentState = EnemyState.Idle;
@@ -42,23 +41,45 @@ public class EnemyAI1 : MonoBehaviour
     private Rigidbody rb;
     public Animator anim;
     private Transform player;
+
     [Header("Audio Settings")]
-    public AudioSource audioSource; // ลาก AudioSource มาใส่ที่นี่
-    public AudioClip alertSFX;      // เสียงตอนเจอ Player
-    public AudioClip attackSFX;     // เสียงตอนโจมตี
-    public AudioClip hitSFX;        // เสียงตอนโดนตี (Knockback)
-    public AudioClip deathSFX;      // เสียงตอนตาย
-    public AudioClip footstepSFX;   // เสียงเดิน (ถ้ามี)
+    public AudioSource audioSource;
+    public AudioClip alertSFX;
+    public AudioClip attackSFX;
+    public AudioClip hitSFX;
+    public AudioClip deathSFX;
+    public AudioClip footstepSFX;
 
-    private bool hasAlerted = false; // เอาไว้เช็คเพื่อให้ส่งเสียง Alert แค่ครั้งเดียวตอนเจอ
-
+    private bool hasAlerted = false;
     public bool isDead = false;
+
+    // ==========================================
+    // --- ระบบ Visual Effects (นำมาจาก Player) ---
+    // ==========================================
+    [System.Serializable]
+    public class EffectSlot
+    {
+        public string effectName;
+        public GameObject vfxPrefab;
+        public Transform spawnPoint;
+        public bool attachToEnemy = true; // เปลี่ยนชื่อจาก attachToPlayer
+
+        [Header("Settings")]
+        public bool isLooping = false;
+        public bool autoDestroy = true;
+        public float duration = 2f;
+
+        [HideInInspector] public GameObject spawnedInstance;
+    }
+
+    [Header("Visual Effects")]
+    public List<EffectSlot> effectsList;
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
-        if (audioSource == null) audioSource = GetComponent<AudioSource>(); // ถ้าลืมใส่ ให้ลองหาในตัว
+        if (audioSource == null) audioSource = GetComponent<AudioSource>();
 
         if (rb != null) rb.constraints = RigidbodyConstraints.FreezeRotation;
         if (agent != null) { agent.updatePosition = false; agent.updateRotation = false; }
@@ -80,10 +101,10 @@ public class EnemyAI1 : MonoBehaviour
         {
             if (currentState != EnemyState.Retreat)
             {
-                // --- เพิ่มเสียง Alert เมื่อเจอ Player ครั้งแรก ---
                 if (!hasAlerted)
                 {
                     PlaySound(alertSFX);
+                    PlayEffect(0); // <--- [VFX Index 0] เรียกเอฟเฟคตอนตกใจ/เจอผู้เล่น
                     hasAlerted = true;
                 }
                 currentState = EnemyState.Chase;
@@ -93,12 +114,12 @@ public class EnemyAI1 : MonoBehaviour
         else
         {
             currentState = EnemyState.Idle;
-            hasAlerted = false; // รีเซ็ตเพื่อให้ร้องใหม่เมื่อเดินกลับมาเจออีกครั้ง
+            hasAlerted = false;
         }
 
         if (currentState == EnemyState.Retreat) HandleRetreat(dist);
         UpdateAnimation();
-        HandleFootsteps(); // เพิ่มฟังก์ชันเสียงเดิน
+        HandleFootsteps();
     }
 
     IEnumerator AttackSequence()
@@ -106,8 +127,8 @@ public class EnemyAI1 : MonoBehaviour
         isPerformingAction = true;
         currentState = EnemyState.Attack;
 
-        // --- เล่นเสียงโจมตี ---
         PlaySound(attackSFX);
+        PlayEffect(1); // <--- [VFX Index 1] เรียกเอฟเฟคตอนโจมตี
 
         if (agent.isActiveAndEnabled) agent.isStopped = true;
         rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, 0);
@@ -164,7 +185,7 @@ public class EnemyAI1 : MonoBehaviour
     {
         if (isDead) return;
 
-        StopAllCoroutines(); 
+        StopAllCoroutines();
         isPerformingAction = false;
         StartCoroutine(KnockbackRoutine(dir, force));
     }
@@ -172,7 +193,8 @@ public class EnemyAI1 : MonoBehaviour
     IEnumerator KnockbackRoutine(Vector3 dir, float force)
     {
         currentState = EnemyState.Knockback;
-        PlaySound(hitSFX); // เล่นเสียงโดนตี
+        PlaySound(hitSFX);
+        PlayEffect(2); // <--- [VFX Index 2] เรียกเอฟเฟคเลือดสาด หรือประกายไฟตอนโดนตี
 
         if (useHitAnimation && anim != null) anim.SetBool("isHit", true);
         agent.enabled = false;
@@ -193,13 +215,66 @@ public class EnemyAI1 : MonoBehaviour
         isDead = true;
         StopAllCoroutines();
 
-        // --- เล่นเสียงตาย ---
         PlaySound(deathSFX);
+        PlayEffect(3); // <--- [VFX Index 3] เรียกเอฟเฟคตอนตาย
 
         if (agent != null) agent.enabled = false;
         if (anim != null) anim.SetBool("isDead", true);
         rb.isKinematic = true;
     }
+
+    // ==========================================
+    // --- ฟังก์ชันจัดการ Visual Effects ---
+    // ==========================================
+    public void PlayEffect(int index)
+    {
+        if (index < 0 || index >= effectsList.Count) return;
+
+        EffectSlot slot = effectsList[index];
+        if (slot.vfxPrefab == null) return;
+
+        if (slot.isLooping)
+        {
+            if (slot.spawnedInstance != null)
+            {
+                Destroy(slot.spawnedInstance);
+                slot.spawnedInstance = null;
+            }
+            else
+            {
+                SpawnEffectInstance(slot);
+            }
+        }
+        else
+        {
+            GameObject vfx = SpawnEffectInstance(slot);
+            if (slot.autoDestroy)
+            {
+                Destroy(vfx, slot.duration);
+            }
+        }
+    }
+
+    private GameObject SpawnEffectInstance(EffectSlot slot)
+    {
+        Vector3 pos = slot.spawnPoint != null ? slot.spawnPoint.position : transform.position;
+        Quaternion rot = slot.spawnPoint != null ? slot.spawnPoint.rotation : transform.rotation;
+
+        Transform parentObj = null;
+        if (slot.attachToEnemy)
+        {
+            parentObj = slot.spawnPoint != null ? slot.spawnPoint : transform;
+        }
+
+        GameObject vfx = Instantiate(slot.vfxPrefab, pos, rot, parentObj);
+        slot.spawnedInstance = vfx;
+
+        return vfx;
+    }
+
+    // ==========================================
+    // --- ฟังก์ชันจัดการ Audio และ Animation ---
+    // ==========================================
     private void PlaySound(AudioClip clip)
     {
         if (audioSource != null && clip != null)
@@ -207,14 +282,12 @@ public class EnemyAI1 : MonoBehaviour
             audioSource.PlayOneShot(clip);
         }
     }
+
     private void HandleFootsteps()
     {
         float speed = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z).magnitude;
         if (speed > 1f && !audioSource.isPlaying && footstepSFX != null)
         {
-            // ถ้าใช้ PlayOneShot กับเสียงเดินมันจะรัวเกินไป 
-            // แนะนำให้ใส่เสียงเดินยาวๆ แล้วสั่ง Play() หรือใช้วิธีเช็คระยะเวลาเอาครับ
-            // ในที่นี้ถ้ายังไม่มีเสียงเล่นอยู่ ให้เล่นเสียงเดิน
             audioSource.clip = footstepSFX;
             audioSource.loop = true;
             audioSource.Play();
@@ -224,6 +297,7 @@ public class EnemyAI1 : MonoBehaviour
             audioSource.Stop();
         }
     }
+
     private void UpdateAnimation()
     {
         if (anim == null) return;

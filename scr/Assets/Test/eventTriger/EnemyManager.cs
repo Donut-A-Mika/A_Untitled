@@ -9,6 +9,7 @@ public class EnemyManager : MonoBehaviour
     [Header("UI text Disply")]
     public string CountingText = "";
     public string finishCountingText = "";
+    public GameObject Setsenario;
 
     [Header("UI Reference")]
     public Trigerevent uiSystem; // ลากตัวกลางข้อความมาใส่
@@ -65,6 +66,10 @@ public class EnemyManager : MonoBehaviour
                 uiSystem.DisplayNewMessage(finishCountingText);
 
                 door = true;
+                if (Setsenario)
+                {
+                    Setsenario.SetActive(true);
+                }
             }
             anim.SetBool("isOpen", door);
         }

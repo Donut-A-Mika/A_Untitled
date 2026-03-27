@@ -18,17 +18,20 @@ public class wincindtion : MonoBehaviour
 
     [Header("UI Reference")]
     public Trigerevent uiSystem; // ลากตัวกลางข้อความมาใส่
+    private bool ative = false;
 
-    
 
 
-    private void Start()
+    private void FixedUpdate()
     {
-        
+        if (ative)
+        {
+
+
+            UpdateUIWithCount();
+        }
     }
-    /// <summary>
-    /// ฟังก์ชันสำหรับนับศัตรูที่ยังไม่ถูกทำลาย
-    /// </summary>
+    
     public int GetRemainingEnemyCount()
     {
         // ลบข้อมูลใน List ที่กลายเป็น Null (ถูกทำลายไปแล้ว) ออกให้หมด
@@ -55,9 +58,11 @@ public class wincindtion : MonoBehaviour
             else
             {
                 StartLoading(Sreenloding);
+                SceneManager.LoadScene("Winsreen");
             }
             
         }
+        ative = true;
     }
     public void StartLoading(string sceneName)
     {

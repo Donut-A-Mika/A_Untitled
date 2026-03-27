@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
+using System.Collections.Generic; // จำเป็นสำหรับการใช้ List
 
 public class EnemyAI_Ranged : MonoBehaviour
 {
@@ -45,6 +46,28 @@ public class EnemyAI_Ranged : MonoBehaviour
 
     public bool isDead = false;
 
+    // ==========================================
+    // --- ระบบ Visual Effects (นำมาจาก Player) ---
+    // ==========================================
+    [System.Serializable]
+    public class EffectSlot
+    {
+        public string effectName;
+        public GameObject vfxPrefab;
+        public Transform spawnPoint;
+        public bool attachToEnemy = true;
+
+        [Header("Settings")]
+        public bool isLooping = false;
+        public bool autoDestroy = true;
+        public float duration = 2f;
+
+        [HideInInspector] public GameObject spawnedInstance;
+    }
+
+    [Header("Visual Effects")]
+    public List<EffectSlot> effectsList;
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -83,7 +106,12 @@ public class EnemyAI_Ranged : MonoBehaviour
         }
         else if (dist <= detectionRange && dist > stopDistance)
         {
-            if (!hasAlerted) { PlaySound(alertSFX); hasAlerted = true; }
+            if (!hasAlerted)
+            {
+                PlaySound(alertSFX);
+                PlayEffect(0); // <--- [VFX Index 0] เรียกเอฟเฟคตอนตกใจ/เจอผู้เล่น
+                hasAlerted = true;
+            }
             currentState = EnemyState.Chase;
         }
         else
@@ -111,6 +139,7 @@ public class EnemyAI_Ranged : MonoBehaviour
     {
         currentState = EnemyState.Knockback;
         PlaySound(hitSFX); // เล่นเสียงเจ็บ
+        PlayEffect(2); // <--- [VFX Index 2] เรียกเอฟเฟคเลือดสาด หรือประกายไฟตอนโดนตี
 
         if (useHitAnimation && anim != null) anim.SetBool("isHit", true);
 
@@ -160,6 +189,7 @@ public class EnemyAI_Ranged : MonoBehaviour
                     {
                         attackScript.ShootProjectile();
                         PlaySound(shootSFX);
+                        PlayEffect(1); // <--- [VFX Index 1] เรียกเอฟเฟคประกายไฟตอนยิงกระสุน
                     }
                     hasShot = true;
                 }
@@ -168,7 +198,12 @@ public class EnemyAI_Ranged : MonoBehaviour
         }
         else
         {
-            if (attackScript != null) { attackScript.ShootProjectile(); PlaySound(shootSFX); }
+            if (attackScript != null)
+            {
+                attackScript.ShootProjectile();
+                PlaySound(shootSFX);
+                PlayEffect(1); // <--- [VFX Index 1] กรณีไม่มี Animator
+            }
             yield return new WaitForSeconds(0.5f);
         }
 
@@ -177,9 +212,58 @@ public class EnemyAI_Ranged : MonoBehaviour
         if (agent != null && agent.isActiveAndEnabled) agent.isStopped = false;
     }
 
-    // ... (ส่วนที่เหลือ: LookAtPlayer, UpdateAnimation, FixedUpdate, Die เหมือนเดิม) ...
+    // ==========================================
+    // --- ฟังก์ชันจัดการ Visual Effects ---
+    // ==========================================
+    public void PlayEffect(int index)
+    {
+        if (index < 0 || index >= effectsList.Count) return;
+
+        EffectSlot slot = effectsList[index];
+        if (slot.vfxPrefab == null) return;
+
+        if (slot.isLooping)
+        {
+            if (slot.spawnedInstance != null)
+            {
+                Destroy(slot.spawnedInstance);
+                slot.spawnedInstance = null;
+            }
+            else
+            {
+                SpawnEffectInstance(slot);
+            }
+        }
+        else
+        {
+            GameObject vfx = SpawnEffectInstance(slot);
+            if (slot.autoDestroy)
+            {
+                Destroy(vfx, slot.duration);
+            }
+        }
+    }
+
+    private GameObject SpawnEffectInstance(EffectSlot slot)
+    {
+        Vector3 pos = slot.spawnPoint != null ? slot.spawnPoint.position : transform.position;
+        Quaternion rot = slot.spawnPoint != null ? slot.spawnPoint.rotation : transform.rotation;
+
+        Transform parentObj = null;
+        if (slot.attachToEnemy)
+        {
+            parentObj = slot.spawnPoint != null ? slot.spawnPoint : transform;
+        }
+
+        GameObject vfx = Instantiate(slot.vfxPrefab, pos, rot, parentObj);
+        slot.spawnedInstance = vfx;
+
+        return vfx;
+    }
+
+    // ... (ส่วนที่เหลือ: LookAtPlayer, UpdateAnimation, FixedUpdate, Die, PlaySound, HandleFootsteps) ...
     void LookAtPlayer()
-    { /* โค้ดหมุนตัวเดิม */
+    {
         Vector3 dir = (player.position - transform.position).normalized;
         dir.y = 0;
         if (dir != Vector3.zero)
@@ -216,7 +300,10 @@ public class EnemyAI_Ranged : MonoBehaviour
         if (isDead) return;
         isDead = true;
         StopAllCoroutines();
+
         PlaySound(deathSFX);
+        PlayEffect(3); // <--- [VFX Index 3] เรียกเอฟเฟคตอนตาย
+
         if (agent != null) agent.enabled = false;
         if (anim != null) anim.SetBool("isDead", true);
         if (rb != null) rb.isKinematic = true;
