@@ -2000,7 +2000,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 30
+  m_Speed: 25
   m_Acceleration: 300
   avoidancePriority: 50
   m_AngularSpeed: 200
@@ -2030,7 +2030,7 @@ MonoBehaviour:
   stopRetreatRange: 2
   attackCooldown: 3
   attackStandTime: 2
-  moveForce: 100
+  moveForce: 80
   maxSpeed: 200
   rotationSpeed: 30
   knockbackDuration: 0.5

@@ -18,6 +18,8 @@ public class EnemyManager : MonoBehaviour
     private Animator anim;
     [SerializeField] private bool door;
 
+    private bool ative = false;
+
 
     private void Start()
     {
@@ -33,6 +35,15 @@ public class EnemyManager : MonoBehaviour
 
         // คืนค่าจำนวนที่เหลืออยู่จริงๆ
         return enemies.Count;
+    }
+    private void FixedUpdate()
+    {
+        if (ative)
+        {
+
+
+            UpdateUIWithCount();
+        }
     }
 
     /// <summary>
@@ -57,6 +68,7 @@ public class EnemyManager : MonoBehaviour
             }
             anim.SetBool("isOpen", door);
         }
+        ative = true;
     }
 
     // ตัวอย่าง: ถ้าอยากให้เช็คทุกครั้งที่เดินเข้าพื้นที่ (Trigger)
