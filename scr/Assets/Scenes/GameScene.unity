@@ -1732,6 +1732,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: textTriger (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 16931528156048737, guid: 4bf49bb160d23df478b0eb458759af55, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 16931528156048737, guid: 4bf49bb160d23df478b0eb458759af55, type: 3}
+      propertyPath: m_TagString
+      value: map
+      objectReference: {fileID: 0}
     - target: {fileID: 1746759490411564803, guid: 4bf49bb160d23df478b0eb458759af55, type: 3}
       propertyPath: myMessage
       value: 0!
@@ -2481,6 +2489,14 @@ PrefabInstance:
     - target: {fileID: 16931528156048737, guid: 4bf49bb160d23df478b0eb458759af55, type: 3}
       propertyPath: m_Name
       value: textTriger (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 16931528156048737, guid: 4bf49bb160d23df478b0eb458759af55, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 16931528156048737, guid: 4bf49bb160d23df478b0eb458759af55, type: 3}
+      propertyPath: m_TagString
+      value: map
       objectReference: {fileID: 0}
     - target: {fileID: 1746759490411564803, guid: 4bf49bb160d23df478b0eb458759af55, type: 3}
       propertyPath: myMessage
@@ -3575,6 +3591,14 @@ PrefabInstance:
     - target: {fileID: 16931528156048737, guid: 4bf49bb160d23df478b0eb458759af55, type: 3}
       propertyPath: m_Name
       value: textTriger (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 16931528156048737, guid: 4bf49bb160d23df478b0eb458759af55, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 16931528156048737, guid: 4bf49bb160d23df478b0eb458759af55, type: 3}
+      propertyPath: m_TagString
+      value: map
       objectReference: {fileID: 0}
     - target: {fileID: 1746759490411564803, guid: 4bf49bb160d23df478b0eb458759af55, type: 3}
       propertyPath: myMessage
@@ -29836,6 +29860,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: textTriger (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 16931528156048737, guid: 4bf49bb160d23df478b0eb458759af55, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 16931528156048737, guid: 4bf49bb160d23df478b0eb458759af55, type: 3}
+      propertyPath: m_TagString
+      value: map
+      objectReference: {fileID: 0}
     - target: {fileID: 1746759490411564803, guid: 4bf49bb160d23df478b0eb458759af55, type: 3}
       propertyPath: myMessage
       value: 0!
@@ -30769,6 +30801,14 @@ PrefabInstance:
     - target: {fileID: 16931528156048737, guid: 4bf49bb160d23df478b0eb458759af55, type: 3}
       propertyPath: m_Name
       value: textTriger (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 16931528156048737, guid: 4bf49bb160d23df478b0eb458759af55, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 16931528156048737, guid: 4bf49bb160d23df478b0eb458759af55, type: 3}
+      propertyPath: m_TagString
+      value: map
       objectReference: {fileID: 0}
     - target: {fileID: 1746759490411564803, guid: 4bf49bb160d23df478b0eb458759af55, type: 3}
       propertyPath: myMessage

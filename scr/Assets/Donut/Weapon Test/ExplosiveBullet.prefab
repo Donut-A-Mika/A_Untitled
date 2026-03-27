@@ -69,7 +69,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 05797a37d5bc8724c9088d32707f96d9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -133,7 +133,7 @@ MonoBehaviour:
   explosionEffect: {fileID: 100012, guid: 3364c97de68d3a147af572d1c71c6455, type: 3}
   targetLayers:
     serializedVersion: 2
-    m_Bits: 95
+    m_Bits: 73
   explosionSound: {fileID: 8300000, guid: 4cf68a3b47182b9429ac30b304df7d73, type: 3}
 --- !u!54 &3025812452253237859
 Rigidbody:
