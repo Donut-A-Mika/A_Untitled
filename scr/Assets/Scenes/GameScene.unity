@@ -28217,7 +28217,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5117076145332131170, guid: 43a554f7dea59ee4dabef7057d1e8a2b, type: 3}
       propertyPath: maxHealth
-      value: 100
+      value: 1500
       objectReference: {fileID: 0}
     - target: {fileID: 5895136135078838798, guid: 43a554f7dea59ee4dabef7057d1e8a2b, type: 3}
       propertyPath: m_Height
@@ -28241,7 +28241,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7908850659230415574, guid: 43a554f7dea59ee4dabef7057d1e8a2b, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8267320423814610427, guid: 43a554f7dea59ee4dabef7057d1e8a2b, type: 3}
       propertyPath: fireRate
@@ -28261,7 +28261,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8267320423814610427, guid: 43a554f7dea59ee4dabef7057d1e8a2b, type: 3}
       propertyPath: roamRadius
-      value: 35
+      value: 23.2
       objectReference: {fileID: 0}
     - target: {fileID: 8267320423814610427, guid: 43a554f7dea59ee4dabef7057d1e8a2b, type: 3}
       propertyPath: anchorObject
