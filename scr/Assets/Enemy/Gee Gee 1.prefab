@@ -2138,15 +2138,16 @@ MonoBehaviour:
   postKnockbackState: 3
   useHitAnimation: 1
   audioSource: {fileID: 7172401168128446053}
-  alertSFX: {fileID: 0}
-  shootSFX: {fileID: 0}
-  hitSFX: {fileID: 0}
+  alertSFX: {fileID: 8300000, guid: 641bfc1bcbf97a8468d6a1c77f9665db, type: 3}
+  shootSFX: {fileID: 8300000, guid: 71aafdbcad7543b4680ad851e71e44e9, type: 3}
+  hitSFX: {fileID: 8300000, guid: f9aa1a2646db49b48aa4d4842deef273, type: 3}
   deathSFX: {fileID: 0}
   footstepSFX: {fileID: 0}
   currentState: 0
   anim: {fileID: 7447493851859137699}
   player: {fileID: 6429088519451864308, guid: b7e86e63e95ea084fa3f13cada2acbeb, type: 3}
   isDead: 0
+  effectsList: []
 --- !u!195 &4941429600468661568
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2226,6 +2227,16 @@ MonoBehaviour:
   damage: 10
   spreadAngle: 5
   bulletsPerShot: 1
+  explosionVFXList: []
+  vfxScale: {x: 1, y: 1, z: 1}
+  explosionRadius: 7
+  knockbackForce: 25
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  audioSource: {fileID: 7172401168128446053}
+  shootSound: {fileID: 8300000, guid: f725adea25a091244bcb0f4a0753dae7, type: 3}
+  explosionSound: {fileID: 0}
 --- !u!82 &7172401168128446053
 AudioSource:
   m_ObjectHideFlags: 0

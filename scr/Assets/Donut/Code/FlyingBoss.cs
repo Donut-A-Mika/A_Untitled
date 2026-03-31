@@ -1,111 +1,138 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 public class FlyingBoss : MonoBehaviour
 {
-    [Header("Movement (Area & Speed)")]
-    public Transform anchorObject;    // จุดศูนย์กลางการบิน (ถ้าว่างจะใช้จุดเริ่มของตัวเอง)
-    public float roamRadius = 10f;     // รัศมีบินวน
-    public float minHeight = 3f;      // สูงต่ำสุด
-    public float maxHeight = 8f;      // สูงสูงสุด
-    public float moveSpeed = 4f;      // ความเร็วการบิน
+    public enum BossState { Normal, Dashing, AoEAttack }
+    public BossState currentState = BossState.Normal;
 
-    [Header("Detection & Shooting")]
+    [Header("Movement Settings (Roaming)")]
+    public Transform anchorObject;
+    public float roamRadius = 10f;
+    public float minHeight = 4f;
+    public float moveSpeed = 4f;     // ⭐ ความเร็วตอนบินไปมาปกติ
+
+    [Header("Dash Attack Settings")]
+    public float dashSpeed = 22f;    // ⭐ ความเร็วตอนพุ่งโจมตี (แยกอิสระ)
+    public float dashTurnSpeed = 15f; // ความเร็วในการหันหน้าตอนพุ่ง
+
+    [Header("Combat Settings (Normal)")]
     public Transform player;
-    public float detectionRange = 18f; // ระยะที่เริ่มเห็นผู้เล่น
-    public float attackRange = 12f;    // ระยะที่จะเริ่มกดยิง
-    public float fireRate = 2f;        // ยิงทุกๆ X วินาที
+    public float detectionRange = 18f;
+    public float attackRange = 12f;
+    [Tooltip("จำนวนนัดต่อวินาที")]
+    public float fireRate = 2f;
 
-    [Header("References")]
-    private EnemyRangedAttack rangedAttack; // เชื่อมกับสคริปต์ยิงที่คุณให้มา
+    [Header("Phase Control")]
+    public float timeBetweenDash = 12f;
+    public float delayAfterExplosion = 2f;
 
+    private EnemyRangedAttack rangedAttack;
     private Vector3 targetPosition;
-    private float nextActionTime;
-    private float fireTimer;
-    private Vector3 centerPoint;
+    private float fireTimer, phaseTimer, nextActionTime;
+
+    [Header("Audio Settings")]
+    public AudioSource bossVoiceSource;
+    public AudioClip dashWarningSound;
+    public AudioClip chargeExplosionSound;
 
     void Start()
     {
-        // ดึงสคริปต์การยิงมาไว้ใช้งาน
         rangedAttack = GetComponent<EnemyRangedAttack>();
-
-        centerPoint = (anchorObject != null) ? anchorObject.position : transform.position;
-
-        if (player == null)
-            player = GameObject.FindGameObjectWithTag("Player")?.transform;
-
+        if (player == null) player = GameObject.FindGameObjectWithTag("Player")?.transform;
         SetNewRandomTarget();
     }
 
     void Update()
     {
-        HandleMovement();
-
-        if (player != null && Vector3.Distance(transform.position, player.position) <= detectionRange)
+        switch (currentState)
         {
-            LookAtPlayer();
-            HandleCombat();
+            case BossState.Normal: UpdateNormalPhase(); break;
+            case BossState.Dashing: UpdateDashPhase(); break;
         }
     }
 
-    void HandleMovement()
+    void UpdateNormalPhase()
     {
-        // บินไปที่จุดหมายแบบ Linear
+        // ⭐ ใช้ moveSpeed สำหรับการบินวนปกติ
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
 
-        // ถ้าถึงจุดหมาย หรือบินวนอยู่นานเกินไป ให้สุ่มจุดใหม่
-        if (Vector3.Distance(transform.position, targetPosition) < 0.3f || Time.time > nextActionTime)
-        {
+        if (Vector3.Distance(transform.position, targetPosition) < 0.5f || Time.time > nextActionTime)
             SetNewRandomTarget();
+
+        if (player != null && Vector3.Distance(transform.position, player.position) <= detectionRange)
+        {
+            LookAt(player.position, 5f);
+
+            fireTimer += Time.deltaTime;
+            if (fireTimer >= 1f / fireRate)
+            {
+                if (Vector3.Distance(transform.position, player.position) <= attackRange)
+                {
+                    rangedAttack.ShootProjectile();
+                }
+                fireTimer = 0;
+            }
         }
+
+        phaseTimer += Time.deltaTime;
+        if (phaseTimer >= timeBetweenDash && player != null) StartDash();
+    }
+
+    void StartDash()
+    {
+        currentState = BossState.Dashing;
+        if (bossVoiceSource != null && dashWarningSound != null)
+            bossVoiceSource.PlayOneShot(dashWarningSound);
+
+        float anchorY = (anchorObject != null) ? anchorObject.position.y : 0f;
+        Vector3 dashTarget = player.position;
+        dashTarget.y = Mathf.Max(dashTarget.y, anchorY + minHeight);
+        targetPosition = dashTarget;
+    }
+
+    void UpdateDashPhase()
+    {
+        // ⭐ ใช้ dashTurnSpeed เพื่อให้หันหน้าไปหาจุดพุ่งได้ไวขึ้น
+        LookAt(targetPosition, dashTurnSpeed);
+
+        // ⭐ ใช้ dashSpeed สำหรับจังหวะพุ่งเข้าใส่เป้าหมายเท่านั้น
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, dashSpeed * Time.deltaTime);
+
+        if (Vector3.Distance(transform.position, targetPosition) < 0.5f)
+            StartCoroutine(ExplosionRoutine());
+    }
+
+    IEnumerator ExplosionRoutine()
+    {
+        currentState = BossState.AoEAttack;
+        if (bossVoiceSource != null && chargeExplosionSound != null)
+            bossVoiceSource.PlayOneShot(chargeExplosionSound);
+
+        yield return new WaitForSeconds(0.2f);
+
+        if (rangedAttack != null)
+            rangedAttack.PerformAreaExplosion();
+
+        yield return new WaitForSeconds(delayAfterExplosion);
+
+        phaseTimer = 0;
+        SetNewRandomTarget();
+        currentState = BossState.Normal;
+    }
+
+    void LookAt(Vector3 pos, float speed)
+    {
+        Vector3 dir = (pos - transform.position).normalized;
+        if (dir != Vector3.zero)
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * speed);
     }
 
     void SetNewRandomTarget()
     {
-        if (anchorObject != null) centerPoint = anchorObject.position;
-
-        // สุ่มตำแหน่งในวงกลมรอบจุด Anchor + สุ่มความสูง
-        Vector2 randomCircle = Random.insideUnitCircle * roamRadius;
-        float randomY = Random.Range(minHeight, maxHeight);
-
-        targetPosition = new Vector3(centerPoint.x + randomCircle.x, centerPoint.y + randomY, centerPoint.z + randomCircle.y);
-
-        // สุ่มเวลาที่จะเปลี่ยนจุดครั้งถัดไป (3-6 วินาที)
-        nextActionTime = Time.time + Random.Range(3f, 6f);
-    }
-
-    void LookAtPlayer()
-    {
-        // หันหน้าไปหาผู้เล่น (แบบ Smooth)
-        Vector3 direction = (player.position - transform.position).normalized;
-        Quaternion lookRotation = Quaternion.LookRotation(direction);
-        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
-    }
-
-    void HandleCombat()
-    {
-        // เช็คระยะยิง
-        if (Vector3.Distance(transform.position, player.position) > attackRange) return;
-
-        fireTimer += Time.deltaTime;
-        if (fireTimer >= 1f / fireRate)
-        {
-            // ⭐ เรียกใช้ฟังก์ชันยิงจากสคริปต์ EnemyRangedAttack ของคุณ
-            if (rangedAttack != null)
-            {
-                rangedAttack.ShootProjectile();
-            }
-            fireTimer = 0;
-        }
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        // วาดขอบเขตการบินให้เห็นใน Scene View
-        Gizmos.color = Color.yellow;
-        Vector3 cp = (anchorObject != null) ? anchorObject.position : transform.position;
-        Gizmos.DrawWireSphere(cp, roamRadius);
-
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, attackRange);
+        Vector3 center = (anchorObject != null) ? anchorObject.position : transform.position;
+        Vector2 circle = Random.insideUnitCircle * roamRadius;
+        targetPosition = new Vector3(center.x + circle.x, center.y + Random.Range(minHeight, minHeight + 3f), center.z + circle.y);
+        nextActionTime = Time.time + Random.Range(3f, 5f);
     }
 }
