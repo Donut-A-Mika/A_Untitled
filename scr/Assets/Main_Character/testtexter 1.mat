@@ -42,8 +42,14 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _OutlineWidth: 1.41
+    - _CelShadeMidPoint: 0.68
+    - _CelShadeSoftness: 0
+    - _DirectLightMultiplier: 1
+    - _EmissionMulByBaseColor: 1
+    - _IndirectLightMultiplier: 1
+    - _OutlineWidth: 1.01
     m_Colors:
+    - _IndirectLightMinColor: {r: 1, g: 1, b: 1, a: 1}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
