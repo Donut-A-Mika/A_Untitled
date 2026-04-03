@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
+using UnityEngine.InputSystem; // ต้องเพิ่มอันนี้
 
 public class WeaponManager : MonoBehaviour
 {
     [Header("Weapon Hold Points")]
     public Transform weaponSlot1;
     public Transform weaponSlot2;
-    public Transform backSlot; // ⭐ จุดติดปืนสำรอง
+    public Transform backSlot;
 
     [Header("Current Weapon")]
     public GameObject currentWeapon;
@@ -13,16 +14,46 @@ public class WeaponManager : MonoBehaviour
 
     private GameObject[] equippedWeapons = new GameObject[4];
 
+    // --- เพิ่มตัวแปรสำหรับ New Input System ---
+    private InputSystem_Actions inputActions;
+
+    private void Awake()
+    {
+        inputActions = new InputSystem_Actions();
+    }
+
+    private void OnEnable()
+    {
+        inputActions.Enable();
+    }
+
+    private void OnDisable()
+    {
+        inputActions.Disable();
+    }
+
     void Start()
     {
         LoadWeaponsFromPlaystate();
         SwitchToSlot(1);
     }
 
-    public void SwitchWeapon(int slotNumber)
+    void Update()
     {
-        SwitchToSlot(slotNumber);
+        // ใช้ Action "Previous" แทนการกดเลข 1
+        if (inputActions.Player.Previous.WasPressedThisFrame())
+        {
+            SwitchToSlot(1);
+        }
+
+        // ใช้ Action "Next" แทนการกดเลข 2
+        if (inputActions.Player.Next.WasPressedThisFrame())
+        {
+            SwitchToSlot(2);
+        }
     }
+
+    // --- ฟังก์ชันเดิมคงไว้ทั้งหมด ---
 
     void LoadWeaponsFromPlaystate()
     {
@@ -38,24 +69,16 @@ public class WeaponManager : MonoBehaviour
         if (equippedWeapons[slotNumber - 1] != null)
         {
             Destroy(equippedWeapons[slotNumber - 1]);
-            print("ใช้งานได้");
         }
 
         GameObject newWeapon = Instantiate(weaponPrefab, targetSlot);
         newWeapon.transform.localPosition = Vector3.zero;
         newWeapon.transform.localRotation = Quaternion.identity;
 
-        // --- ส่วนการจัดการขนาด (Scale) ---
-        RangedWeapon ranged = newWeapon.GetComponent<RangedWeapon>();
-        MeleeWeapon melee = newWeapon.GetComponent<MeleeWeapon>();
-
-       
-        
-
         equippedWeapons[slotNumber - 1] = newWeapon;
     }
 
-    void SwitchToSlot(int slotNumber)
+    public void SwitchToSlot(int slotNumber) // เปลี่ยนเป็น public เพื่อให้สคริปต์อื่นเรียกได้ถ้าจำเป็น
     {
         if (slotNumber < 1 || slotNumber > equippedWeapons.Length) return;
 
@@ -87,7 +110,6 @@ public class WeaponManager : MonoBehaviour
         weapon.transform.SetParent(handSlot);
         weapon.transform.localPosition = Vector3.zero;
         weapon.transform.localRotation = Quaternion.identity;
-
         ApplyCorrectScale(weapon);
     }
 
@@ -96,8 +118,8 @@ public class WeaponManager : MonoBehaviour
         weapon.transform.SetParent(backSlot);
         weapon.transform.localPosition = Vector3.zero;
         weapon.transform.localRotation = Quaternion.identity;
-
     }
+
     void ApplyCorrectScale(GameObject weapon)
     {
         RangedWeapon rw = weapon.GetComponent<RangedWeapon>();
@@ -114,7 +136,6 @@ public class WeaponManager : MonoBehaviour
         RangedWeapon rw = weapon.GetComponent<RangedWeapon>();
         if (rw != null) rw.enabled = enable;
 
-        // ⭐ อย่าลืมปิด/เปิด MeleeWeapon ด้วยนะครับ
         MeleeWeapon mw = weapon.GetComponent<MeleeWeapon>();
         if (mw != null) mw.enabled = enable;
     }
@@ -128,7 +149,7 @@ public class WeaponManager : MonoBehaviour
             default: return null;
         }
     }
-    // เพิ่มฟังก์ชันเหล่านี้ใน WeaponManager
+
     public GameObject GetWeaponFromSlot(int slot)
     {
         if (slot < 1 || slot > equippedWeapons.Length) return null;

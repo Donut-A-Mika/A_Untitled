@@ -124,22 +124,9 @@ public class PlayerController : MonoBehaviour
         GetInput();
         CalculatePositionVelocity();
         UpdateAnimations();
-
+        if (Gamepad.current != null) Gamepad.current.SetMotorSpeeds(0.2f, 0.2f);
         // --- ส่วนการสลับอาวุธด้วย New Input System ---
-        if (weaponSwitcher != null)
-        {
-            // เมื่อกด Previous (เช่น 1 หรือ D-Pad Left) -> สลับไป Slot 1
-            if (inputActions.Player.Previous.WasPressedThisFrame())
-            {
-                weaponSwitcher.SwitchWeapon(1);
-            }
 
-            // เมื่อกด Next (เช่น 2 หรือ D-Pad Right) -> สลับไป Slot 2
-            if (inputActions.Player.Next.WasPressedThisFrame())
-            {
-                weaponSwitcher.SwitchWeapon(2);
-            }
-        }
 
         // ส่วนการโจมตีและการเคลื่อนไหวอื่นๆ
         if (inputActions.Player.Attack.WasPressedThisFrame()) TryUseWeapon();
@@ -155,8 +142,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!isDashing) Move();
     }
-
-    // --- ส่วนระบบเอฟเฟคที่ปรับปรุงใหม่ ---
+    
     public void PlayEffect(int index)
     {
         if (index < 0 || index >= effectsList.Count) return;
@@ -370,6 +356,7 @@ public class PlayerController : MonoBehaviour
             if (weapon != null)
             {
                 weapon.Attack();
+                
                 if (weaponSwitcher.currentWeapon.GetComponent<MeleeWeapon>() != null)
                 {
                     if (animatorPlayer != null) animatorPlayer.SetTrigger("attack");
