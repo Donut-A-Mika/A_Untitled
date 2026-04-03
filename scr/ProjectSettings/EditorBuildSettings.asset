@@ -24,5 +24,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Winsreen.unity
     guid: 8da11d0e632eee34cbcae42447e608db
   m_configObjects:
+    com.unity.input.settings: {fileID: 11400000, guid: 153d5958356bf364fbf219e52e22e257, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
