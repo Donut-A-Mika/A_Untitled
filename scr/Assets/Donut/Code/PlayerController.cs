@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.InputSystem; // เพิ่ม Namespace สำหรับ New Input System
 
 public class PlayerController : MonoBehaviour
 {
@@ -60,21 +61,44 @@ public class PlayerController : MonoBehaviour
     [System.Serializable]
     public class EffectSlot
     {
-        public string effectName; // ตั้งชื่อให้เรียกง่าย
+        public string effectName;
         public GameObject vfxPrefab;
         public Transform spawnPoint;
         public bool attachToPlayer = true;
 
         [Header("Settings")]
-        public bool isLooping = false; // ถ้า true จะไม่ลบเอง จนกว่าจะเรียกซ้ำ (Toggle)
-        public bool autoDestroy = true; // ถ้า true จะลบ Object ทิ้งเมื่อหมดเวลา (สำหรับ One-shot)
-        public float duration = 2f;    // เวลาที่แสดงผล
+        public bool isLooping = false;
+        public bool autoDestroy = true;
+        public float duration = 2f;
 
         [HideInInspector] public GameObject spawnedInstance;
     }
 
     [Header("Visual Effects")]
     public List<EffectSlot> effectsList;
+
+    // ==========================================
+    // เพิ่มตัวแปรสำหรับ New Input System
+    // ==========================================
+    private InputSystem_Actions inputActions;
+
+    private void Awake()
+    {
+        // สร้าง Instance ของ Input System ที่เรา Generate มา
+        inputActions = new InputSystem_Actions();
+    }
+
+    private void OnEnable()
+    {
+        // เปิดใช้งาน Input เมื่อ Object ถูกเปิด
+        inputActions.Enable();
+    }
+
+    private void OnDisable()
+    {
+        // ปิดใช้งาน Input เมื่อ Object ถูกปิด
+        inputActions.Disable();
+    }
 
     void Start()
     {
@@ -92,19 +116,38 @@ public class PlayerController : MonoBehaviour
         Cursor.visible = false;
     }
 
+    // ใน PlayerController.cs -> ฟังก์ชัน Update()
+
     void Update()
     {
         CheckGround();
         GetInput();
-
         CalculatePositionVelocity();
         UpdateAnimations();
 
-        if (Input.GetButtonDown("Fire1")) TryUseWeapon();
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded) Jump();
+        // --- ส่วนการสลับอาวุธด้วย New Input System ---
+        if (weaponSwitcher != null)
+        {
+            // เมื่อกด Previous (เช่น 1 หรือ D-Pad Left) -> สลับไป Slot 1
+            if (inputActions.Player.Previous.WasPressedThisFrame())
+            {
+                weaponSwitcher.SwitchWeapon(1);
+            }
+
+            // เมื่อกด Next (เช่น 2 หรือ D-Pad Right) -> สลับไป Slot 2
+            if (inputActions.Player.Next.WasPressedThisFrame())
+            {
+                weaponSwitcher.SwitchWeapon(2);
+            }
+        }
+
+        // ส่วนการโจมตีและการเคลื่อนไหวอื่นๆ
+        if (inputActions.Player.Attack.WasPressedThisFrame()) TryUseWeapon();
+        if (inputActions.Player.Jump.WasPressedThisFrame() && isGrounded) Jump();
+
         HandleGlide();
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && CanDash())
+        if (inputActions.Player.Sprint.WasPressedThisFrame() && CanDash())
             StartCoroutine(Dash());
     }
 
@@ -113,7 +156,7 @@ public class PlayerController : MonoBehaviour
         if (!isDashing) Move();
     }
 
-    // --- ส่วนระบบเอฟเฟคที่ปรับปรุงใหม่ (Toggle & Child Object) ---
+    // --- ส่วนระบบเอฟเฟคที่ปรับปรุงใหม่ ---
     public void PlayEffect(int index)
     {
         if (index < 0 || index >= effectsList.Count) return;
@@ -121,22 +164,19 @@ public class PlayerController : MonoBehaviour
         EffectSlot slot = effectsList[index];
         if (slot.vfxPrefab == null) return;
 
-        // ถ้าเป็นแบบ Looping (Toggle เปิด-ปิด)
         if (slot.isLooping)
         {
             if (slot.spawnedInstance != null)
             {
-                // ถ้ามีตัวตนอยู่แล้ว (เปิดอยู่) ให้ทำลายทิ้ง (เป็นการปิด)
                 Destroy(slot.spawnedInstance);
                 slot.spawnedInstance = null;
             }
             else
             {
-                // ถ้ายังไม่มี ให้สร้างขึ้นมา
                 SpawnEffectInstance(slot);
             }
         }
-        else // แบบ One-shot (เกิดแล้วหายไปเอง)
+        else
         {
             GameObject vfx = SpawnEffectInstance(slot);
             if (slot.autoDestroy)
@@ -148,27 +188,21 @@ public class PlayerController : MonoBehaviour
 
     private GameObject SpawnEffectInstance(EffectSlot slot)
     {
-        // กำหนดตำแหน่งและจุดเกิด
         Vector3 pos = slot.spawnPoint != null ? slot.spawnPoint.position : transform.position;
         Quaternion rot = slot.spawnPoint != null ? slot.spawnPoint.rotation : transform.rotation;
 
-        // กำหนด Parent ถ้าต้องการ Attach (เป็น Obj ลูก)
         Transform parentObj = null;
         if (slot.attachToPlayer)
         {
             parentObj = slot.spawnPoint != null ? slot.spawnPoint : transform;
         }
 
-        // สร้าง Object
         GameObject vfx = Instantiate(slot.vfxPrefab, pos, rot, parentObj);
-
-        // เก็บ Instance ไว้เผื่อการทำ Toggle หรืออ้างอิงภายหลัง
         slot.spawnedInstance = vfx;
 
         return vfx;
     }
 
-    // --- ฟังก์ชันเดิมคงไว้ทั้งหมด ---
     void CalculatePositionVelocity()
     {
         Vector3 distanceMoved = transform.position - lastPosition;
@@ -229,8 +263,15 @@ public class PlayerController : MonoBehaviour
     void GetInput()
     {
         if (cameraTransform == null) return;
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
+
+        // ==========================================
+        // เปลี่ยนการรับค่าแกน X, Y จาก Input System ใหม่
+        // อ่านค่าจาก Action "Move" ซึ่งเป็น Vector2
+        // ==========================================
+        Vector2 movement = inputActions.Player.Move.ReadValue<Vector2>();
+        float x = movement.x;
+        float z = movement.y;
+
         Vector3 camForward = cameraTransform.forward;
         Vector3 camRight = cameraTransform.right;
         camForward.y = 0;
@@ -266,7 +307,9 @@ public class PlayerController : MonoBehaviour
 
     void HandleGlide()
     {
-        bool holdingFly = Input.GetKey(KeyCode.Space);
+        // เปลี่ยนการเช็คกดค้างให้ใช้ IsPressed() ของ Action: Jump
+        bool holdingFly = inputActions.Player.Jump.IsPressed();
+
         if (holdingFly && !isGrounded)
         {
             if (!isGliding) { isGliding = true; glideTimer = maxGlideTime; }

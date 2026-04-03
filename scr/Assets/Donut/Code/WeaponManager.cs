@@ -19,10 +19,9 @@ public class WeaponManager : MonoBehaviour
         SwitchToSlot(1);
     }
 
-    void Update()
+    public void SwitchWeapon(int slotNumber)
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1)) SwitchToSlot(1);
-        if (Input.GetKeyDown(KeyCode.Alpha2)) SwitchToSlot(2);
+        SwitchToSlot(slotNumber);
     }
 
     void LoadWeaponsFromPlaystate()
