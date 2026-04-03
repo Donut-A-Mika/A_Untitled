@@ -33,7 +33,7 @@ public class VirtualCursor : MonoBehaviour
         if (isUsingGamepad)
         {
             HandleGamepadMovement();
-            if (inputActions.Player.Attack.WasPressedThisFrame())
+            if (inputActions.Player.Sprint.WasPressedThisFrame())
             {
                 HandleClick();
             }
