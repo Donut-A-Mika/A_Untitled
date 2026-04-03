@@ -124,7 +124,7 @@ public class PlayerController : MonoBehaviour
         GetInput();
         CalculatePositionVelocity();
         UpdateAnimations();
-        if (Gamepad.current != null) Gamepad.current.SetMotorSpeeds(0.2f, 0.2f);
+        
         // --- ส่วนการสลับอาวุธด้วย New Input System ---
 
 
