@@ -4220,7 +4220,7 @@ MonoBehaviour:
   m_WindowGUID: cc27987af1a868c49b0894db9c0f5429
   m_Gizmos: 1
   m_OverrideSceneCullingMask: 6917529027641081856
-  m_SceneIsLit: 0
+  m_SceneIsLit: 1
   m_SceneLighting: 1
   m_2DMode: 1
   m_isRotationLocked: 0
@@ -4228,7 +4228,7 @@ MonoBehaviour:
   m_AudioPlay: 0
   m_DebugDrawModesUseInteractiveLightBakingData: 0
   m_Position:
-    m_Target: {x: 922.3854, y: 293.2201, z: 23.062708}
+    m_Target: {x: 1296.6078, y: 194.43648, z: -4.1310406}
     speed: 2
     m_Value: {x: 922.3854, y: 293.2201, z: 23.062708}
   m_RenderMode: 0
@@ -4280,7 +4280,7 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 306.0061
+    m_Target: 861.84845
     speed: 2
     m_Value: 306.0061
   m_Ortho:
@@ -4443,7 +4443,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/UnityURPToonLitShaderExample-master
+    - Assets
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -4467,7 +4467,7 @@ MonoBehaviour:
       m_Data: 173664
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 53782
+    - m_Data: 53806
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -4500,7 +4500,7 @@ MonoBehaviour:
       m_Data: 0
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 53782
+    - m_Data: 53806
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
