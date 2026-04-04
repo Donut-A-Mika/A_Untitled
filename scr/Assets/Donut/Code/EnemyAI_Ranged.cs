@@ -31,9 +31,11 @@ public class EnemyAI_Ranged : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip alertSFX;
     public AudioClip shootSFX;
-    public AudioClip hitSFX;        // เสียงตอนโดน Knockback
+    public AudioClip hitSFX;
     public AudioClip deathSFX;
     public AudioClip footstepSFX;
+    public float footstepInterval = 0.4f; // เพิ่มระยะห่างเสียงเท้า
+    private float nextFootstepTime;
     private bool hasAlerted = false;
 
     [Header("Components")]
@@ -312,19 +314,25 @@ public class EnemyAI_Ranged : MonoBehaviour
 
     private void PlaySound(AudioClip clip)
     {
-        if (audioSource != null && clip != null) audioSource.PlayOneShot(clip);
+        if (audioSource == null || clip == null) return;
+
+        // ป้องกันการเล่นเสียงซ้ำในเฟรมเดียวกัน (เช่น โดนดาเมจหลายครั้งพร้อมกัน)
+        if (clip == hitSFX && audioSource.isPlaying && audioSource.clip == hitSFX) return;
+
+        audioSource.PlayOneShot(clip);
     }
 
     private void HandleFootsteps()
     {
-        float speed = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z).magnitude;
-        if (speed > 0.5f && !audioSource.isPlaying && footstepSFX != null)
+        // คำนวณความเร็วแนวราบ
+        float speed = new Vector2(rb.linearVelocity.x, rb.linearVelocity.z).magnitude;
+
+        // เล่นเสียงเท้าตามระยะเวลา (Interval) แทนการเช็ค isPlaying อย่างเดียว
+        if (speed > 0.5f && Time.time >= nextFootstepTime && footstepSFX != null)
         {
-            audioSource.clip = footstepSFX; audioSource.loop = true; audioSource.Play();
-        }
-        else if (speed <= 0.5f && audioSource.clip == footstepSFX)
-        {
-            audioSource.Stop();
+            // ใช้ PlayOneShot เพื่อไม่ให้กวนเสียงอื่น และกำหนด Volume เล็กลงได้
+            audioSource.PlayOneShot(footstepSFX, 0.5f);
+            nextFootstepTime = Time.time + footstepInterval;
         }
     }
 }
