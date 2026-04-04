@@ -58,6 +58,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float animeX;
     [SerializeField] private float animeY;
 
+    [Header("Camera Settings")]
+    public float sensitivityX = 4.0f; // ความเร็วการหันซ้าย-ขวา
+    public float sensitivityY = 4.0f; // ความเร็วการหันก้ม-เงย
+    public bool invertY = false;
+
     [System.Serializable]
     public class EffectSlot
     {
@@ -93,7 +98,25 @@ public class PlayerController : MonoBehaviour
         // เปิดใช้งาน Input เมื่อ Object ถูกเปิด
         inputActions.Enable();
     }
+    private void HandleLook()
+    {
+        // 1. อ่านค่าจาก Analog ขวา (Action Look)
+        Vector2 lookInput = inputActions.Player.Look.ReadValue<Vector2>();
 
+        if (lookInput != Vector2.zero)
+        {
+            // 2. นำค่า Input มาคูณกับความเร็วที่เราตั้งไว้
+            float mouseX = lookInput.x * sensitivityX;
+            float mouseY = lookInput.y * sensitivityY;
+
+            // เช็คการกลับด้านแกน Y
+            if (invertY) mouseY *= -1f;
+
+            // 3. นำค่าที่คำนวณได้ไปสั่งหมุนกล้องหรือตัวละคร
+            // ตัวอย่าง: transform.Rotate(Vector3.up * mouseX);
+            // ตัวอย่าง: cameraPitch -= mouseY; 
+        }
+    }
     private void OnDisable()
     {
         // ปิดใช้งาน Input เมื่อ Object ถูกปิด

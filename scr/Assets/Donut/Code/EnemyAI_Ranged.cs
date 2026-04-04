@@ -303,8 +303,10 @@ public class EnemyAI_Ranged : MonoBehaviour
         isDead = true;
         StopAllCoroutines();
 
+        if (audioSource != null) audioSource.Stop(); // หยุดเสียงเท้า/เสียงอื่นๆ ทันที
         PlaySound(deathSFX);
-        PlayEffect(3); // <--- [VFX Index 3] เรียกเอฟเฟคตอนตาย
+
+        PlayEffect(3);
 
         if (agent != null) agent.enabled = false;
         if (anim != null) anim.SetBool("isDead", true);
@@ -321,7 +323,6 @@ public class EnemyAI_Ranged : MonoBehaviour
 
         audioSource.PlayOneShot(clip);
     }
-
     private void HandleFootsteps()
     {
         // คำนวณความเร็วแนวราบ
