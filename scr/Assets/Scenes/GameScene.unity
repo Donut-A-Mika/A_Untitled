@@ -30038,6 +30038,10 @@ PrefabInstance:
       propertyPath: bossVoiceSource
       value: 
       objectReference: {fileID: 1429455771}
+    - target: {fileID: 8267320423814610427, guid: 43a554f7dea59ee4dabef7057d1e8a2b, type: 3}
+      propertyPath: dashWarningSound
+      value: 
+      objectReference: {fileID: 8300000, guid: a76cb1320020be6419d7e71754d6db6c, type: 3}
     - target: {fileID: 8566061577104318955, guid: 43a554f7dea59ee4dabef7057d1e8a2b, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
