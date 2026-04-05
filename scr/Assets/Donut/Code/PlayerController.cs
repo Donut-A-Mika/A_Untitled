@@ -147,7 +147,7 @@ public class PlayerController : MonoBehaviour
         GetInput();
         CalculatePositionVelocity();
         UpdateAnimations();
-        
+
         // --- ส่วนการสลับอาวุธด้วย New Input System ---
 
 
@@ -165,7 +165,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!isDashing) Move();
     }
-    
+
     public void PlayEffect(int index)
     {
         if (index < 0 || index >= effectsList.Count) return;
@@ -379,7 +379,7 @@ public class PlayerController : MonoBehaviour
             if (weapon != null)
             {
                 weapon.Attack();
-                
+
                 if (weaponSwitcher.currentWeapon.GetComponent<MeleeWeapon>() != null)
                 {
                     if (animatorPlayer != null) animatorPlayer.SetTrigger("attack");

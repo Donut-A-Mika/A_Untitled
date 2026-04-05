@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.InputSystem; // ⭐ เพิ่ม Namespace สำหรับ New Input System
 
 public class RangedWeapon : MonoBehaviour, IWeapon
 {
@@ -11,12 +12,13 @@ public class RangedWeapon : MonoBehaviour, IWeapon
     public Vector3 weaponScale = Vector3.one;
 
     [Header("VFX Settings")]
-    public GameObject muzzleFlashPrefab;    // เอฟเฟกต์ไฟปลายกระบอก
-    public GameObject shellPrefab;          // Prefab ปลอกกระสุน
-    public Transform shellEjectionPoint;    // จุดที่ปลอกกระสุนกระเด็นออก
-    public float destroyEffectDelay = 1f;   // ระยะเวลาลบเอ็ฟเฟกต์ออกจาก Scene
-    // ⭐ ระบบกระสุน
-    [Header("Ammo System")]
+    public GameObject muzzleFlashPrefab;    // เอฟเฟกต์ไฟปลายกระบอก
+    public GameObject shellPrefab;          // Prefab ปลอกกระสุน
+    public Transform shellEjectionPoint;    // จุดที่ปลอกกระสุนกระเด็นออก
+    public float destroyEffectDelay = 1f;   // ระยะเวลาลบเอ็ฟเฟกต์ออกจาก Scene
+
+    // ⭐ ระบบกระสุน
+    [Header("Ammo System")]
     public int magazineSize = 30;
     public float reloadTime = 2f;
 
@@ -47,6 +49,29 @@ public class RangedWeapon : MonoBehaviour, IWeapon
     public AudioClip reloadSound;
     public AudioClip emptySound;
 
+    // ==========================================
+    // ⭐ เพิ่มตัวแปรสำหรับ New Input System
+    // ==========================================
+    private InputSystem_Actions inputActions;
+
+    private void Awake()
+    {
+        // สร้าง Instance ของ Input System
+        inputActions = new InputSystem_Actions();
+    }
+
+    private void OnEnable()
+    {
+        // เปิดใช้งาน Input เมื่อปืนนี้ถูกหยิบมาใช้ (Active)
+        inputActions.Enable();
+    }
+
+    private void OnDisable()
+    {
+        // ปิดใช้งาน Input เมื่อสลับปืนหรือเก็บปืน (Inactive)
+        inputActions.Disable();
+    }
+
     void Start()
     {
         currentAmmo = magazineSize;
@@ -54,8 +79,8 @@ public class RangedWeapon : MonoBehaviour, IWeapon
 
     void Update()
     {
-        // ⭐ กด R เพื่อรีโหลด
-        if (Input.GetKeyDown(KeyCode.R) && !isReloading && currentAmmo < magazineSize)
+        // ⭐ เปลี่ยนมาใช้ Action "Reload" จาก New Input System
+        if (inputActions.Player.Reload.WasPressedThisFrame() && !isReloading && currentAmmo < magazineSize)
         {
             StartCoroutine(Reload());
         }
@@ -93,30 +118,32 @@ public class RangedWeapon : MonoBehaviour, IWeapon
                 break;
         }
     }
+
     private void PlayVFX()
     {
-        // 1. สร้างไฟปลายกระบอก
-        if (muzzleFlashPrefab != null && firePoint != null)
+        // 1. สร้างไฟปลายกระบอก
+        if (muzzleFlashPrefab != null && firePoint != null)
         {
             GameObject flash = Instantiate(muzzleFlashPrefab, firePoint.position, firePoint.rotation);
             flash.transform.SetParent(firePoint); // ให้ขยับตามปืน
-            Destroy(flash, destroyEffectDelay);
+            Destroy(flash, destroyEffectDelay);
         }
 
-        // 2. ดีดปลอกกระสุน
-        if (shellPrefab != null && shellEjectionPoint != null)
+        // 2. ดีดปลอกกระสุน
+        if (shellPrefab != null && shellEjectionPoint != null)
         {
             GameObject shell = Instantiate(shellPrefab, shellEjectionPoint.position, shellEjectionPoint.rotation);
             Rigidbody shellRb = shell.GetComponent<Rigidbody>();
             if (shellRb != null)
             {
-                // ดีดปลอกออกไปทางขวาของจุดดีด
-                shellRb.AddForce(shellEjectionPoint.right * 5f, ForceMode.Impulse);
+                // ดีดปลอกออกไปทางขวาของจุดดีด
+                shellRb.AddForce(shellEjectionPoint.right * 5f, ForceMode.Impulse);
                 shellRb.AddTorque(Random.insideUnitSphere * 10f, ForceMode.Impulse);
             }
             Destroy(shell, 2f); // ปลอกกระสุนอยู่ 2 วิแล้วหายไป
-        }
+        }
     }
+
     private void SingleFire(float interval)
     {
         ExecuteShot();
@@ -150,11 +177,13 @@ public class RangedWeapon : MonoBehaviour, IWeapon
         nextFireTime = Time.time + interval;
         isFiring = false;
     }
-    // เพิ่มฟังก์ชันนี้ใน RangedWeapon.cs
-    public bool IsReloading()
+
+    // เพิ่มฟังก์ชันนี้ใน RangedWeapon.cs
+    public bool IsReloading()
     {
         return isReloading;
     }
+
     private void ExecuteShot()
     {
         if (currentAmmo <= 0) return;
@@ -166,8 +195,8 @@ public class RangedWeapon : MonoBehaviour, IWeapon
             CameraShake.Instance.Shake(2f, 0.1f);
         }
         PlayVFX();
-        // ⭐ เล่นเสียงยิง
-        if (audioSource && shootSound)
+        // ⭐ เล่นเสียงยิง
+        if (audioSource && shootSound)
         {
             audioSource.pitch = Random.Range(0.95f, 1.05f);
             audioSource.PlayOneShot(shootSound);
@@ -209,8 +238,9 @@ public class RangedWeapon : MonoBehaviour, IWeapon
             rb.AddForce(shootDirection * bulletForce, ForceMode.Impulse);
         }
     }
-    // เพิ่มฟังก์ชันเหล่านี้ใน RangedWeapon.cs
-    public int GetCurrentAmmo()
+
+    // เพิ่มฟังก์ชันเหล่านี้ใน RangedWeapon.cs
+    public int GetCurrentAmmo()
     {
         return currentAmmo;
     }
@@ -219,6 +249,7 @@ public class RangedWeapon : MonoBehaviour, IWeapon
     {
         return magazineSize;
     }
+
     IEnumerator Reload()
     {
         if (isReloading) yield break;
@@ -226,8 +257,8 @@ public class RangedWeapon : MonoBehaviour, IWeapon
         isReloading = true;
         Debug.Log("Reloading...");
 
-        // ⭐ เล่นเสียงรีโหลด
-        if (audioSource && reloadSound)
+        // ⭐ เล่นเสียงรีโหลด
+        if (audioSource && reloadSound)
             audioSource.PlayOneShot(reloadSound);
 
         yield return new WaitForSeconds(reloadTime);
