@@ -6,10 +6,13 @@ public class EnemyManager : MonoBehaviour
 {
     [Header("List of Enemies")]
     public List<GameObject> enemies = new List<GameObject>();
+
     [Header("UI text Disply")]
     public string CountingText = "";
     public string finishCountingText = "";
-    public GameObject Setsenario;
+
+    // เปลี่ยนเป็น List เพื่อรองรับหลายๆ GameObject
+    public List<GameObject> Setsenarios = new List<GameObject>();
 
     [Header("UI Reference")]
     public Trigerevent uiSystem; // ลากตัวกลางข้อความมาใส่
@@ -21,11 +24,14 @@ public class EnemyManager : MonoBehaviour
 
     private bool ative = false;
 
-
     private void Start()
     {
-        anim = Door.GetComponent<Animator>();
+        if (Door != null)
+        {
+            anim = Door.GetComponent<Animator>();
+        }
     }
+
     /// <summary>
     /// ฟังก์ชันสำหรับนับศัตรูที่ยังไม่ถูกทำลาย
     /// </summary>
@@ -37,12 +43,11 @@ public class EnemyManager : MonoBehaviour
         // คืนค่าจำนวนที่เหลืออยู่จริงๆ
         return enemies.Count;
     }
+
     private void FixedUpdate()
     {
         if (ative)
         {
-
-
             UpdateUIWithCount();
         }
     }
@@ -59,19 +64,30 @@ public class EnemyManager : MonoBehaviour
             if (count > 0)
             {
                 uiSystem.DisplayNewMessage($"{CountingText} {count} ");
-                
             }
             else
             {
                 uiSystem.DisplayNewMessage(finishCountingText);
 
                 door = true;
-                if (Setsenario)
+
+                // วนลูปเช็คและเปิดใช้งาน GameObject ทุกตัวใน List
+                if (Setsenarios != null && Setsenarios.Count > 0)
                 {
-                    Setsenario.SetActive(true);
+                    foreach (GameObject scenario in Setsenarios)
+                    {
+                        if (scenario != null)
+                        {
+                            scenario.SetActive(true);
+                        }
+                    }
                 }
             }
-            anim.SetBool("isOpen", door);
+
+            if (anim != null)
+            {
+                anim.SetBool("isOpen", door);
+            }
         }
         ative = true;
     }

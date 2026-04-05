@@ -2145,7 +2145,7 @@ MonoBehaviour:
   - {fileID: 525790029}
   CountingText: Target left
   finishCountingText: succeed
-  Setsenario: {fileID: 0}
+  Setsenarios: []
   uiSystem: {fileID: 357250303}
   Door: {fileID: 795239913}
   door: 0
@@ -4427,7 +4427,7 @@ MonoBehaviour:
   - {fileID: 1574734150}
   CountingText: need to ds
   finishCountingText: Dooropen
-  Setsenario: {fileID: 0}
+  Setsenarios: []
   uiSystem: {fileID: 587862140}
   Door: {fileID: 281136791}
   door: 0
@@ -5082,7 +5082,7 @@ MonoBehaviour:
   - {fileID: 328022011}
   CountingText: Target left
   finishCountingText: succeed
-  Setsenario: {fileID: 0}
+  Setsenarios: []
   uiSystem: {fileID: 738120915}
   Door: {fileID: 306189870}
   door: 0
@@ -26966,7 +26966,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 10141b5ddb6f5ab4b8c2e596a1e70d1d, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.25
+  m_Volume: 0.39
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -27040,7 +27040,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -29553,6 +29553,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 16931528156048737, guid: 4bf49bb160d23df478b0eb458759af55, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 16931528156048737, guid: 4bf49bb160d23df478b0eb458759af55, type: 3}
       propertyPath: m_TagString
       value: map
       objectReference: {fileID: 0}
@@ -29627,6 +29631,26 @@ PrefabInstance:
     - target: {fileID: 5619028957893071278, guid: 4bf49bb160d23df478b0eb458759af55, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8652184689746151590, guid: 4bf49bb160d23df478b0eb458759af55, type: 3}
+      propertyPath: m_Size.x
+      value: 5.690991
+      objectReference: {fileID: 0}
+    - target: {fileID: 8652184689746151590, guid: 4bf49bb160d23df478b0eb458759af55, type: 3}
+      propertyPath: m_Size.y
+      value: 0.9999998
+      objectReference: {fileID: 0}
+    - target: {fileID: 8652184689746151590, guid: 4bf49bb160d23df478b0eb458759af55, type: 3}
+      propertyPath: m_Size.z
+      value: 6.3506346
+      objectReference: {fileID: 0}
+    - target: {fileID: 8652184689746151590, guid: 4bf49bb160d23df478b0eb458759af55, type: 3}
+      propertyPath: m_Center.x
+      value: 0.432779
+      objectReference: {fileID: 0}
+    - target: {fileID: 8652184689746151590, guid: 4bf49bb160d23df478b0eb458759af55, type: 3}
+      propertyPath: m_Center.z
+      value: 2.675318
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -32902,7 +32926,9 @@ MonoBehaviour:
   - {fileID: 2017004221}
   CountingText: Target left
   finishCountingText: succeed
-  Setsenario: {fileID: 222261493}
+  Setsenarios:
+  - {fileID: 1338660989}
+  - {fileID: 222261493}
   uiSystem: {fileID: 1895536923}
   Door: {fileID: 795239914}
   door: 0
@@ -33508,7 +33534,7 @@ MonoBehaviour:
   enemies: []
   CountingText: Target left
   finishCountingText: succeed
-  Setsenario: {fileID: 0}
+  Setsenarios: []
   uiSystem: {fileID: 2026079698}
   Door: {fileID: 1698611702}
   door: 0
